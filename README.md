@@ -18,4 +18,6 @@ Our solution to the unifying reward points across many businesses involves selli
 
 > Link to our [Presentation](https://docs.google.com/presentation/d/e/2PACX-1vREr8j74FDXvrvTm-7d6b8uVqr7pwL-kQQ78UtvZLIQA-B5s5g1sftr8iy6GznI5GnVFWvYZbaVTXY1/pub?start=false&loop=false&delayms=3000)
 
+> A downloaded version of the presentation is available in `presentation/` in a [PDF](presentation/NPCI-Hackathon.pdf) and in a [PPTX](presentation/NPCI-Hackathon.pptx) version.
+
 
