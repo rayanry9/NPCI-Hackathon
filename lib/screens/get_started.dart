@@ -36,7 +36,7 @@ class GetStarted extends StatelessWidget{
                 children: [
                   Text("Earn the Reward Points you rightfully deserve",
                     textAlign: TextAlign.center,
-										style: Theme.of(context).textTheme.headlineLarge,
+										style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 10),
                   Text("Earn and Spend Reward Points on your day-to-day transactions and BIGG purchases. There's no one in this entire world who will be able to stop you from saving big now!",
