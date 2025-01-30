@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class StarterPanel extends StatelessWidget{
-  final String text;
+  final Widget child;
 
-  const StarterPanel({super.key, required this.text});
+  const StarterPanel({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +12,12 @@ class StarterPanel extends StatelessWidget{
       child: IntrinsicHeight(
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(top: 50,left: 30, right: 30,bottom: 20),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
           ),
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary, 
-            ),
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
+          child: child
         ),
       ),
     );
