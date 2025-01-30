@@ -28,6 +28,7 @@ class GetStarted extends StatelessWidget{
           	ElevatedButton(
             	onPressed: (){},
             	style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity,20),
               	backgroundColor: Colors.orange,
               	foregroundColor: Colors.white,
               	padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
@@ -41,10 +42,13 @@ class GetStarted extends StatelessWidget{
 							'Already have an Account? Login', 
 							style: Theme.of(context).textTheme.bodySmall
 						),
-            Text(
-							'Are you a seller? Login or SignUp here', 
-							style: Theme.of(context).textTheme.bodySmall,
-						),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                            'Are you a seller? Login or SignUp here', 
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+            ),
         	],
       	),
     	),
