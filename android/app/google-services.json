@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "612274265503",
+    "project_id": "uperks-1b5c1",
+    "storage_bucket": "uperks-1b5c1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612274265503:android:881b7fa8a35e7799e271aa",
+        "android_client_info": {
+          "package_name": "com.example.npci_hackathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612274265503-9mbmleuu9bp46tco7cmvboc0bkls5v61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCIbouI4NZJJsD2adwBSSbi9e-4u04W_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612274265503-9mbmleuu9bp46tco7cmvboc0bkls5v61.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "612274265503-c4r2qmmiq7d163pihu2080bje5innemv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.npciHackathon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
