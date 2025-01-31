@@ -47,13 +47,19 @@ class GetStarted extends StatelessWidget {
               child: Text('Get Started'),
             ),
             SizedBox(height: 10),
-            Text('Already have an Account? Login',
-                style: Theme.of(context).textTheme.bodySmall),
+            GestureDetector(
+              onTap: () {
+                print("dabaya");
+              },
+              child: Text('Already have an Account? Login',
+                style: Theme.of(context).textTheme.bodySmall)
+            ),
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Are you a seller? SignUp here',
-                style: Theme.of(context).textTheme.bodySmall,
+              child: GestureDetector(
+                onTap: () {print("dabaya");},
+                child: Text('Are you a seller? SignUp here',
+                style: Theme.of(context).textTheme.bodySmall)
               ),
             ),
           ],
