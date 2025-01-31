@@ -49,19 +49,19 @@ class Register extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               ElevatedButton(
-                onPressed: () {
-                  signInWithGoogle().then((val) {
-                    if (val) {
-                      if (context.mounted) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            "/home", (route) => false);
+                  onPressed: () {
+                    signInWithGoogle().then((val) {
+                      if (val) {
+                        if (context.mounted) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              "/home", (route) => false);
+                        }
+                      } else {
+                        SnackBar(content: Text("Error Signin In"));
                       }
-                    }else{
-                      SnackBar(content: Text("Error Signin In"));
-                    }
-                  });
-                },
-                child: Text("Sign In With Google"))
+                    });
+                  },
+                  child: Text("Sign In With Google"))
             ],
           ),
         ));
