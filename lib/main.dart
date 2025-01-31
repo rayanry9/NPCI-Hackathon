@@ -5,6 +5,7 @@ import 'package:uperks/constants/theme.dart';
 import 'package:uperks/firebase_options.dart';
 import 'package:uperks/screens/get_started.dart';
 import 'package:uperks/screens/home.dart';
+import 'package:uperks/screens/register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => Home(),
         '/get_started': (context) => GetStarted(),
+        '/register': (context) => Register(),
       },
     );
   }
