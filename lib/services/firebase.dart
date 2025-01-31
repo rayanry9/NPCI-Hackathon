@@ -3,15 +3,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
 
-class MyFireBaseAuth {
-	static bool isAuth=false;
-	static UserCredential? userCredential;
+class MyFireBase {
+  static bool isAuth = FirebaseAuth.instance.currentUser == null;
+  static final db = FirebaseFirestore.instance;
+  static User? user = FirebaseAuth.instance.currentUser;
+
+  static Future<void> _addUser(String uid, String name, String email,
+      String phoneNumber, UserType userType) {
+    return db.collection("users").doc(uid).set({
+      'name': name,
+      'email': email,
+      'userType': userType.name.toString(),
+      'phoneNumber': phoneNumber,
+    });
+  }
 
   static Future<bool> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser =
-        await GoogleSignIn(scopes: ["email"]).signIn();
-
+    if (isAuth) {
+      return true;
+    }
     try {
+      final GoogleSignInAccount? googleUser =
+          await GoogleSignIn(scopes: ["email"]).signIn();
+
       // Obtain the auth details from the request
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
@@ -23,14 +37,12 @@ class MyFireBaseAuth {
       );
 
       // Once signed in, return the UserCredential
-      userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-			isAuth = true;
-			MyFireBaseFireStoreDB.db.collection("users").doc(getUID()!).set({
-				'name': getName(),
-				'email': getEmail(),
-				'userType': UserType.customer.name.toString(),
-				'phoneNumber': 0000000000,
-			});
+      user =
+          (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+      isAuth = true;
+
+      await _addUser(user!.uid, user!.displayName!, user!.email!, "0000000000",
+          UserType.customer);
 
       return true;
     } catch (e) {
@@ -38,26 +50,5 @@ class MyFireBaseAuth {
     }
   }
 
-	static String? getName(){
-		if(userCredential == null){
-			return null;
-		}
-		return userCredential!.user!.displayName;
-	}	
-	static String? getEmail(){
-		if(userCredential == null){
-			return null;
-		}
-		return userCredential!.user!.email;
-	}
-	static String? getUID(){
-		if(userCredential == null){
-			return null;
-		}
-		return userCredential!.user!.uid;
-	}
-}
 
-class MyFireBaseFireStoreDB{
-	static final db = FirebaseFirestore.instance;
 }
