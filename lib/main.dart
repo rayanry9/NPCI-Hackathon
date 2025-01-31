@@ -24,10 +24,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'UPerks',
       theme: lightTheme,
-      initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/get_started' : '/',
+      initialRoute: FirebaseAuth.instance.currentUser == null ? '/get_started' : '/',
       routes: {
-        '/': (context) => Home(),
+        '/home': (context) => Home(),
         '/get_started': (context) => GetStarted(),
         '/register': (context) => Register(),
       },
