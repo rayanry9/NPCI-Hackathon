@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/widgets/starter_panel.dart';
 
-class Register extends StatelessWidget{
+class Register extends StatelessWidget {
   const Register({super.key});
   @override
-  Widget build(BuildContext context){
-    return StarterPanel(
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: StarterPanel(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -22,6 +24,7 @@ class Register extends StatelessWidget{
             ),
           ],
         ),
-     );
+      )
+    );
   }
 }
