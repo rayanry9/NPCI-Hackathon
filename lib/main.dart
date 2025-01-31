@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/theme.dart';
 import 'package:uperks/firebase_options.dart';
-import 'package:uperks/screens/get_started.dart';
+import 'package:uperks/screens/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       home: const Scaffold(
         body: Center(
-          child: GetStarted(),
+          child: Home(),
         ),
       ),
     );

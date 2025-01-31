@@ -13,7 +13,7 @@ class StarterPanel extends StatelessWidget {
         child: Container(
             width: double.infinity,
             padding:
-                const EdgeInsets.only(top: 50, left: 30, right: 30, bottom: 20),
+                const EdgeInsets.only(top: 50, left: 25, right: 25, bottom: 20),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius:
