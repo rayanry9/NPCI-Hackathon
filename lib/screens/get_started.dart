@@ -29,9 +29,7 @@ class GetStarted extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>const Home()),
-                );
+                Navigator.of(context).pushNamed('/');
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 20),
@@ -49,7 +47,7 @@ class GetStarted extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                'Are you a seller? Login or SignUp here',
+                'Are you a seller? SignUp here',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),

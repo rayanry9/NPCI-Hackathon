@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/theme.dart';
 import 'package:uperks/firebase_options.dart';
+import 'package:uperks/screens/get_started.dart';
 import 'package:uperks/screens/home.dart';
 
 void main() async {
@@ -21,11 +23,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'UPerks',
       theme: lightTheme,
-      home: const Scaffold(
-        body: Center(
-          child: Home(),
-        ),
-      ),
+      initialRoute: FirebaseAuth.instance.currentUser == null ?'/get_started':'/' ,
+      routes: {
+        '/': (context) => Home(),
+        '/get_started': (context) => GetStarted(),
+      },
     );
   }
 }
