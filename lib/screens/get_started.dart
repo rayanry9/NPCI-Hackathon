@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:uperks/screens/home.dart';
 import 'package:uperks/screens/register.dart';
 import 'package:uperks/widgets/starter_panel.dart';
 
