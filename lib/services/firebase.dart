@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
+import 'package:uperks/models/transaction_model.dart';
 
 class MyFireBase {
-  static bool isAuth = FirebaseAuth.instance.currentUser == null;
+  static bool isAuth = (FirebaseAuth.instance.currentUser != null);
   static final db = FirebaseFirestore.instance;
   static User? user = FirebaseAuth.instance.currentUser;
 
@@ -50,5 +51,7 @@ class MyFireBase {
     }
   }
 
-
+  static Future<String?> addTransaction(TransactionModel data) async {
+    return (await db.collection("transactions").add(data.toFirestore())).id;
+  }
 }

@@ -63,8 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '612274265503',
     projectId: 'uperks-1b5c1',
     storageBucket: 'uperks-1b5c1.firebasestorage.app',
-    iosClientId:
-        '612274265503-c4r2qmmiq7d163pihu2080bje5innemv.apps.googleusercontent.com',
+    androidClientId: '612274265503-nuuupkikudajuun8ciecfedl0hr6fnvu.apps.googleusercontent.com',
+    iosClientId: '612274265503-c4r2qmmiq7d163pihu2080bje5innemv.apps.googleusercontent.com',
     iosBundleId: 'com.example.npciHackathon',
   );
+
 }

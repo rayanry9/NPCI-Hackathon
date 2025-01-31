@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "612274265503-nuuupkikudajuun8ciecfedl0hr6fnvu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.npci_hackathon",
+            "certificate_hash": "d9b10aa769ffeb0662c72ea79865987b8649e832"
+          }
+        },
+        {
+          "client_id": "612274265503-v9shjfh99bqk1s0si2sr0g7l6f31dgaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.npci_hackathon",
+            "certificate_hash": "9ac946898c5325af0c320dd7f18608fbecbe2965"
+          }
+        },
+        {
           "client_id": "612274265503-9mbmleuu9bp46tco7cmvboc0bkls5v61.apps.googleusercontent.com",
           "client_type": 3
         }

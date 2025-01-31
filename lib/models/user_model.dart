@@ -5,8 +5,12 @@ class UserModel {
   final String? email;
   final String? phoneNumber;
   final UserType? userType;
+	String? profilePicUrl;
+	List<String>? transactionIds;
+	List<String>? upiIds;
+	List<String>? friendIds;
 
-  const UserModel({
+  UserModel({
     required this.name,
     required this.email,
     this.phoneNumber,
