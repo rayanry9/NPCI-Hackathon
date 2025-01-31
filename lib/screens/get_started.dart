@@ -62,10 +62,9 @@ class GetStarted extends StatelessWidget {
                       ),
                       TextSpan(
                         text: 'Login',
-                        style:
-                            Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             print("login ko dabaya");
@@ -86,10 +85,9 @@ class GetStarted extends StatelessWidget {
                       ),
                       TextSpan(
                         text: 'SignUp here',
-                        style:
-                            Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             print("signup ko dabaya");
@@ -102,7 +100,7 @@ class GetStarted extends StatelessWidget {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
