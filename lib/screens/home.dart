@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/screens/homescreen_container.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
@@ -47,9 +48,7 @@ class HomeState extends State<Home> {
         elevation: 0,
       ),
       body: switch (selectedIndex) {
-        NavigationTabs.home => Container(
-            color: Colors.blue,
-          ),
+        NavigationTabs.home => HomescreenContainer(),
         NavigationTabs.transactions => Container(
             color: Colors.grey,
           ),
