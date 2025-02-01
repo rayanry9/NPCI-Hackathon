@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/widgets/current_offers.dart';
 import 'package:uperks/widgets/home_balance.dart';
 
 class HomescreenContainer extends StatelessWidget {
@@ -12,6 +13,7 @@ class HomescreenContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             HomeBalance(),
+            CurrentOffers(),
           ],
         ),
       ),
