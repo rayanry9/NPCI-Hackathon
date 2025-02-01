@@ -43,8 +43,8 @@ class HomeBalanceState extends State<HomeBalance> {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {
-                  Scanner.scanQrCode(context);
+                onPressed: () async {
+                  print(await Scanner.scanQrCode(context));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
