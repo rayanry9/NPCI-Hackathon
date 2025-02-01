@@ -10,37 +10,35 @@ class TransactionModel {
   final String? sellerId;
   final String? buyerId;
   final TransactionType? type;
+  DateTime? transactionDate;
 
-  const TransactionModel(
-    this.id,
+  TransactionModel(this.id, this.buyerId, this.sellerId, this.transactionAmount,
+      this.rewardPoints, this.type, this.transactionDate);
+
+  TransactionModel.withoutId(
     this.buyerId,
     this.sellerId,
     this.transactionAmount,
     this.rewardPoints,
     this.type,
-  );
-
-  const TransactionModel.withoutId(
-    this.buyerId,
-    this.sellerId,
-    this.transactionAmount,
-    this.rewardPoints,
-    this.type,
-  ) : id = "";
+  )   : id = "",
+        transactionDate = DateTime.now();
 
   factory TransactionModel.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options) {
     final data = snapshot.data()!;
     return TransactionModel(
-        snapshot.id,
-        data["buyerId"],
-        data["sellerId"],
-        data["transactionAmount"],
-        data["rewardPoints"],
-        data["type"] == TransactionType.gainPoints.name
-            ? TransactionType.gainPoints
-            : TransactionType.redeemPoints);
+      snapshot.id,
+      data["buyerId"],
+      data["sellerId"],
+      data["transactionAmount"],
+      data["rewardPoints"],
+      data["type"] == TransactionType.gainPoints.name
+          ? TransactionType.gainPoints
+          : TransactionType.redeemPoints,
+      DateTime.fromMillisecondsSinceEpoch(data["date"]),
+    );
   }
 
   factory TransactionModel.makeRandomTransaction() {
@@ -49,13 +47,13 @@ class TransactionModel {
     return TransactionModel.withoutId(
       List.generate(
               10, (index) => characters[Random().nextInt(characters.length)])
-          .toString(),
+          .join(),
       List.generate(
               10, (index) => characters[Random().nextInt(characters.length)])
-          .toString(),
+          .join(),
       Random().nextDouble() * 10000,
       Random().nextInt(1000),
-      TransactionType.values[Random().nextInt(1)],
+      TransactionType.values[Random().nextInt(2)],
     );
   }
 
@@ -66,6 +64,7 @@ class TransactionModel {
       if (transactionAmount != null) "transactionAmount": transactionAmount,
       if (rewardPoints != null) 'rewardPoints': rewardPoints,
       if (type != null) 'type': type!.name,
+      'date': transactionDate!.millisecondsSinceEpoch,
     };
   }
 }
