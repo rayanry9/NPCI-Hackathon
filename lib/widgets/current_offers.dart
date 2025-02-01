@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CurrentOffers extends StatelessWidget {
-  const CurrentOffers({super.key});
+  CurrentOffers({super.key});
 
   final List<Map<String, String>> offers = [
     {
@@ -29,6 +29,7 @@ class CurrentOffers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(height: 25),
         Text(
@@ -39,59 +40,68 @@ class CurrentOffers extends StatelessWidget {
               ?.copyWith(color: Colors.black),
         ),
         SizedBox(height: 10.0),
-        Column(
-            children: offers.map((offer) {
-          return Container(
-            padding: EdgeInsets.all(12.0),
-            margin: EdgeInsets.only(bottom: 8.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.blue.shade400),
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        offer["name"]!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(color: Colors.black),
-                      ),
-                      Text(
-                        offer["category"]!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Colors.black),
-                      ),
-                      Text(
-                        offer["address"]!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: Colors.black),
-                      ),
-                    ],
+        IntrinsicHeight(
+          child: Column(
+            children: offers.map(
+              (offer) {
+                return Flexible(
+                  child: Container(
+                    padding: EdgeInsets.all(12.0),
+                    margin: EdgeInsets.only(bottom: 8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue.shade400),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  offer["name"]!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(color: Colors.black),
+                                ),
+                              ),
+                              Text(
+                                offer["category"]!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: Colors.black),
+                              ),
+                              Text(
+                                offer["address"]!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            offer["discount"]!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    offer["discount"]!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }).toList()),
+                );
+              },
+            ).toList(),
+          ),
+        ),
       ],
     );
   }

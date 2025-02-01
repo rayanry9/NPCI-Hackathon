@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UPerks',
-      theme: lightTheme,
+      theme: getLightTheme(context),
       initialRoute: MyFireBase.isAuth ? '/home' : '/get_started',
       routes: {
         '/home': (context) => Home(),

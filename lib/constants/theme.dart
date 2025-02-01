@@ -1,56 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final lightTheme = ThemeData(
+ThemeData getLightTheme(BuildContext context) {
+  return ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
     textTheme: TextTheme(
       headlineLarge: GoogleFonts.leagueSpartan(
-        fontSize: 64,
+        fontSize: MediaQuery.of(context).size.shortestSide / 7,
         fontWeight: FontWeight.w700,
         color: Colors.white,
         height: 1.2,
       ),
       headlineMedium: GoogleFonts.leagueSpartan(
-        fontSize: 56,
+        fontSize: MediaQuery.of(context).size.shortestSide / 8,
         fontWeight: FontWeight.w700,
         color: Colors.white,
         height: 1.2,
       ),
       headlineSmall: GoogleFonts.leagueSpartan(
-        fontSize: 48,
+        fontSize: MediaQuery.of(context).size.shortestSide / 10,
         fontWeight: FontWeight.w700,
         color: Colors.white,
         height: 1.2,
       ),
       titleLarge: GoogleFonts.leagueSpartan(
-        fontSize: 32,
+        fontSize: MediaQuery.of(context).size.shortestSide / 12,
         fontWeight: FontWeight.w600,
         color: Colors.white,
         height: 1.1,
       ),
       titleMedium: GoogleFonts.leagueSpartan(
-        fontSize: 24,
+        fontSize: MediaQuery.of(context).size.shortestSide / 15,
         fontWeight: FontWeight.w600,
         color: Colors.white,
         height: 1.1,
       ),
       titleSmall: GoogleFonts.leagueSpartan(
-        fontSize: 18,
+        fontSize: MediaQuery.of(context).size.shortestSide / 18,
         fontWeight: FontWeight.w600,
         color: Colors.white,
         height: 1.1,
       ),
       bodyLarge: GoogleFonts.leagueSpartan(
-        fontSize: 16,
+        fontSize: MediaQuery.of(context).size.shortestSide / 26,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
       bodyMedium: GoogleFonts.leagueSpartan(
-        fontSize: 12,
+        fontSize: MediaQuery.of(context).size.shortestSide / 29,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
       bodySmall: GoogleFonts.leagueSpartan(
-          fontSize: 10, fontWeight: FontWeight.w400, color: Colors.white),
-    ));
+        fontSize: MediaQuery.of(context).size.shortestSide / 32,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+      ),
+    ),
+  );
+}
