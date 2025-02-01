@@ -6,6 +6,7 @@ class HomescreenContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 32),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

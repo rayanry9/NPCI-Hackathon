@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 
 class HomeBalance extends StatefulWidget {
@@ -41,8 +40,34 @@ class HomeBalanceState extends State<HomeBalance> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: () {}, child: Text("Scan")),
-            OutlinedButton(onPressed: () {}, child: Text("Redeem"))
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text("Scan"),
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () {},
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text("Redeem"),
+              ),
+            ),
           ],
         ),
       ],
