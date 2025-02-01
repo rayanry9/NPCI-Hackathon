@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/models/transaction_model.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({super.key});
@@ -8,6 +10,16 @@ class HomeBalance extends StatefulWidget {
 }
 
 class HomeBalanceState extends State<HomeBalance> {
+  List<TransactionModel> data = [];
+
+  @override
+  void initState() {
+    for (int i = 0; i < 30; i++) {
+      data.add(TransactionModel.makeRandomTransaction());
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +32,7 @@ class HomeBalanceState extends State<HomeBalance> {
               .copyWith(color: Colors.black54),
         ),
         Text(
-          "42690",
+          data.rewardPoints.toString(),
           style: Theme.of(context)
               .textTheme
               .headlineLarge!

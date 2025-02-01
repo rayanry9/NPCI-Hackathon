@@ -24,9 +24,10 @@ class HomeState extends State<Home> {
     }
   }
 
-  Future<void> refreshScreen() async{
+  Future<void> refreshScreen() async {
     await Future.delayed(const Duration(seconds: 2));
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
+
     setState(() {});
   }
 
@@ -60,13 +61,13 @@ class HomeState extends State<Home> {
             switch (selectedIndex) {
               NavigationTabs.home => HomescreenContainer(),
               NavigationTabs.transactions => Container(
-                height: MediaQuery.of(context).size.height,
-                color: Colors.grey,
-              ),
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.grey,
+                ),
               NavigationTabs.profile => Container(
-                height: MediaQuery.of(context).size.height,
-                color: Colors.yellow,
-              ),
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.yellow,
+                ),
             },
           ],
         ),
