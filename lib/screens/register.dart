@@ -24,6 +24,7 @@ class Register extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
+            SizedBox(height: 40),
             SignInWithGoogleButton(),
           ],
         ),
@@ -31,3 +32,5 @@ class Register extends StatelessWidget {
     );
   }
 }
+
+

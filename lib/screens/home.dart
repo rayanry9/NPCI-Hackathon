@@ -28,7 +28,9 @@ class HomeState extends State<Home> {
     await Future.delayed(const Duration(seconds: 2));
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
 
-    setState(() {});
+    setState(() {
+      selectedIndex = NavigationTabs.home;
+    });
   }
 
   @override
