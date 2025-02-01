@@ -24,6 +24,12 @@ class HomeState extends State<Home> {
     }
   }
 
+  Future<void> refreshScreen() async{
+    await Future.delayed(const Duration(seconds: 2));
+    print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,15 +53,24 @@ class HomeState extends State<Home> {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
       ),
-      body: switch (selectedIndex) {
-        NavigationTabs.home => HomescreenContainer(),
-        NavigationTabs.transactions => Container(
-            color: Colors.grey,
-          ),
-        NavigationTabs.profile => Container(
-            color: Colors.yellow,
-          ),
-      },
+      body: RefreshIndicator(
+        onRefresh: refreshScreen,
+        child: ListView(
+          children: [
+            switch (selectedIndex) {
+              NavigationTabs.home => HomescreenContainer(),
+              NavigationTabs.transactions => Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.grey,
+              ),
+              NavigationTabs.profile => Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.yellow,
+              ),
+            },
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:
             Theme.of(context).bottomNavigationBarTheme.backgroundColor,
