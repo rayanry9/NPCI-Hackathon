@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/widgets/scanner.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({super.key});
@@ -42,7 +43,9 @@ class HomeBalanceState extends State<HomeBalance> {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Scanner.scanQrCode(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
