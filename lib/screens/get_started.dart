@@ -31,7 +31,7 @@ class GetStarted extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-									Navigator.of(context).pushNamed("/register");
+                  Navigator.of(context).pushNamed("/register");
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 20),
@@ -47,7 +47,7 @@ class GetStarted extends StatelessWidget {
               SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
-                  print("login ko dabaya");
+                  print("gesture ko dabaya");
                 },
                 child: RichText(
                   text: TextSpan(

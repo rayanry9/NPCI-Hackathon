@@ -42,8 +42,8 @@ class CurrentOffers extends StatelessWidget {
         Column(
             children: offers.map((offer) {
           return Container(
-            padding: EdgeInsets.all(12.0),
-            margin: EdgeInsets.only(bottom: 8.0),
+            padding: EdgeInsets.all(14.0),
+            margin: EdgeInsets.only(bottom: 16.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.blue.shade400),
               borderRadius: BorderRadius.circular(12.0),
@@ -66,7 +66,10 @@ class CurrentOffers extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
-                            ?.copyWith(color: Colors.black),
+                            ?.copyWith(color: Colors.black54),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Text(
                         offer["address"]!,
@@ -77,6 +80,9 @@ class CurrentOffers extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  width: 24,
                 ),
                 Align(
                   alignment: Alignment.centerRight,

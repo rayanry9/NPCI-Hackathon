@@ -61,7 +61,9 @@ class HomeBalanceState extends State<HomeBalance> {
             ),
             Expanded(
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  print(await Scanner.scanQrCode(context));
+                },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(

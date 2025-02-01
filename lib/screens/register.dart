@@ -26,11 +26,12 @@ class Register extends StatelessWidget {
             ),
             SizedBox(height: 40),
             SignInWithGoogleButton(),
+            SizedBox(
+              height: 16,
+            )
           ],
         ),
       ),
     );
   }
 }
-
-

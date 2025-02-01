@@ -48,18 +48,14 @@ class TransactionModel {
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0912875346';
     return TransactionModel.withoutId(
       List.generate(
-              10,
-              (index) =>
-                  characters[Random(12371983).nextInt(characters.length)])
+              10, (index) => characters[Random().nextInt(characters.length)])
           .toString(),
       List.generate(
-              10,
-              (index) =>
-                  characters[Random(89257035).nextInt(characters.length)])
+              10, (index) => characters[Random().nextInt(characters.length)])
           .toString(),
-      Random(45678972).nextDouble() * 10000,
-      Random(1230998).nextInt(1000),
-      TransactionType.values[Random(98980083).nextInt(1)],
+      Random().nextDouble() * 10000,
+      Random().nextInt(1000),
+      TransactionType.values[Random().nextInt(1)],
     );
   }
 
