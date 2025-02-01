@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/screens/homescreen_container.dart';
+import 'package:uperks/screens/profile_container.dart';
+import 'package:uperks/screens/transaction_container.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
@@ -58,21 +60,11 @@ class HomeState extends State<Home> {
       ),
       body: RefreshIndicator(
         onRefresh: refreshScreen,
-        child: ListView(
-          children: [
-            switch (selectedIndex) {
-              NavigationTabs.home => HomescreenContainer(),
-              NavigationTabs.transactions => Container(
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.grey,
-                ),
-              NavigationTabs.profile => Container(
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.yellow,
-                ),
-            },
-          ],
-        ),
+        child: switch (selectedIndex) {
+          NavigationTabs.home => HomescreenContainer(),
+          NavigationTabs.transactions => TransactionContainer(),
+          NavigationTabs.profile => ProfileContainer(),
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:
