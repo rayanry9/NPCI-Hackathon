@@ -1,9 +1,177 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/models/transaction_model.dart';
 
-class TransactionContainer extends StatelessWidget {
+class TransactionContainer extends StatefulWidget {
   const TransactionContainer({super.key});
+
+  @override
+  TransactionContainerState createState() => TransactionContainerState();
+}
+
+class TransactionContainerState extends State<TransactionContainer> {
+  List<TransactionModel> data = [];
+  List<TransactionModel> filteredData = [];
+  String searchQuery = "";
+
+  @override
+  void initState() {
+    for (int i = 0; i < 30; i++) {
+      data.add(TransactionModel.makeRandomTransaction());
+    }
+    filteredData = List.from(data);
+    super.initState();
+  }
+
+  void _filterTransactions(String filterType) {
+    setState(() {
+      if (filterType == 'clear') {
+        filteredData = List.from(data);
+      } else if (filterType == 'redeemed') {
+        filteredData =
+            data.where((t) => t.type == TransactionType.redeemPoints).toList();
+      } else if (filterType == 'earned') {
+        filteredData =
+            data.where((t) => t.type == TransactionType.gainPoints).toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: TextField(
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value;
+                filteredData = data
+                    .where((transaction) => transaction.sellerId!
+                        .toLowerCase()
+                        .contains(searchQuery.toLowerCase()))
+                    .toList();
+              });
+            },
+            decoration: InputDecoration(
+              hintText: 'Search by seller...',
+              suffixIcon: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: const Text("Clear"),
+                              onTap: () {
+                                _filterTransactions('clear');
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text("Redeemed"),
+                              onTap: () {
+                                _filterTransactions('redeemed');
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text("Earned"),
+                              onTap: () {
+                                _filterTransactions('earned');
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: filteredData.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            final transaction = filteredData[index];
+
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          transaction.sellerId!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(color: Colors.black),
+                        ),
+                        Text(
+                          transaction.transactionDate!
+                              .toString()
+                              .substring(0, 10),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 130),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          transaction.rewardPoints.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(color: Colors.black),
+                        ),
+                        Text(
+                          transaction.type! == TransactionType.gainPoints
+                              ? "Earned"
+                              : "Redeemed",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
   }
 }
+
+
