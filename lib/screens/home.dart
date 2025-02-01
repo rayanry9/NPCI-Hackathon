@@ -30,9 +30,6 @@ class HomeState extends State<Home> {
 
   Future<void> refreshScreen() async {
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
-    setState(() {
-      selectedIndex = NavigationTabs.home;
-    });
     return Future.delayed(const Duration(seconds: 2));
   }
 

@@ -1,22 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/models/user_model.dart';
 
-class MyFireBase {
+class MyFireBase extends ChangeNotifier {
   static bool isAuth = (FirebaseAuth.instance.currentUser != null);
   static final db = FirebaseFirestore.instance;
-  static User? user = FirebaseAuth.instance.currentUser;
+  static UserModel? user;
+  static List<TransactionModel> _transactions = [];
 
-  static Future<void> _addUser(String uid, String name, String email,
-      String phoneNumber, UserType userType) {
-    return db.collection("users").doc(uid).set({
-      'name': name,
-      'email': email,
-      'userType': userType.name.toString(),
-      'phoneNumber': phoneNumber,
-    });
+  static Future<void> _addUser(UserModel user) {
+    return db.collection("users").doc(user.id).set(user.toFirestore());
   }
 
   static Future<bool> signInWithGoogle() async {
@@ -38,12 +35,13 @@ class MyFireBase {
       );
 
       // Once signed in, return the UserCredential
-      user =
+      var creduser =
           (await FirebaseAuth.instance.signInWithCredential(credential)).user;
-      isAuth = true;
+      user = UserModel(creduser!.uid, creduser.displayName!, creduser.email!,
+          creduser.phoneNumber, UserType.customer);
 
-      await _addUser(user!.uid, user!.displayName!, user!.email!, "0000000000",
-          UserType.customer);
+      _addUser(user!);
+      isAuth = true;
 
       return true;
     } catch (e) {
@@ -53,5 +51,9 @@ class MyFireBase {
 
   static Future<String?> addTransaction(TransactionModel data) async {
     return (await db.collection("transactions").add(data.toFirestore())).id;
+  }
+
+  static Future<void> updateTransactions() async {
+    await db.collection("transactions").where("");
   }
 }
