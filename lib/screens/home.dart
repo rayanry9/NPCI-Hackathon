@@ -14,6 +14,8 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   NavigationTabs selectedIndex = NavigationTabs.home;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   String greeting() {
     int hour = DateTime.now().hour;
@@ -27,12 +29,20 @@ class HomeState extends State<Home> {
   }
 
   Future<void> refreshScreen() async {
-    await Future.delayed(const Duration(seconds: 2));
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
 
-    setState(() {
-      selectedIndex = NavigationTabs.home;
-    });
+    return Future.delayed(const Duration(seconds: 2));
+  }
+
+  Widget _getSelectedContainer() {
+    switch (selectedIndex) {
+      case NavigationTabs.home:
+        return HomescreenContainer();
+      case NavigationTabs.transactions:
+        return TransactionContainer();
+      case NavigationTabs.profile:
+        return ProfileContainer();
+    }
   }
 
   @override
@@ -59,12 +69,11 @@ class HomeState extends State<Home> {
         elevation: 0,
       ),
       body: RefreshIndicator(
+        key: _refreshIndicatorKey,
         onRefresh: refreshScreen,
-        child: switch (selectedIndex) {
-          NavigationTabs.home => HomescreenContainer(),
-          NavigationTabs.transactions => TransactionContainer(),
-          NavigationTabs.profile => ProfileContainer(),
-        },
+        child: ListView(
+          children: [_getSelectedContainer()],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor:
