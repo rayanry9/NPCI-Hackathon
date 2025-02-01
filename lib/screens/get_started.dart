@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:uperks/screens/home.dart';
 import 'package:uperks/screens/register.dart';
 import 'package:uperks/widgets/starter_panel.dart';
 
@@ -33,10 +32,7 @@ class GetStarted extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Register()),
-                  );
+									Navigator.of(context).pushNamed("/register");
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 20),
