@@ -32,8 +32,8 @@ class TransactionModel {
       snapshot.id,
       data["buyerId"],
       data["sellerId"],
-      data["transactionAmount"],
-      int.parse(data["rewardPoints"]),
+      double.parse(data["transactionAmount"].toString()),
+      int.parse(data["rewardPoints"].toString()),
       data["type"] == TransactionType.gainPoints.name
           ? TransactionType.gainPoints
           : TransactionType.redeemPoints,
