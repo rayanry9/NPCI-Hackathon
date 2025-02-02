@@ -36,10 +36,6 @@ class MyFireBase with ChangeNotifier {
     }
   }
 
-  Future<void> _addUser(UserModel user) {
-    return db.collection("users").doc(user.id).set(user.toFirestore());
-  }
-
   Future<bool> signInWithGoogle() async {
     if (isAuth) {
       return true;
@@ -75,6 +71,10 @@ class MyFireBase with ChangeNotifier {
 
   Future<String?> addTransaction(TransactionModel data) async {
     return (await db.collection("transactions").add(data.toFirestore())).id;
+  }
+
+  Future<void> _addUser(UserModel user) {
+    return db.collection("users").doc(user.id).set(user.toFirestore());
   }
 
   Future<bool> updateSellersWithId(String id) async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uperks/constants/payment_type.dart';
 import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase.dart';
+import 'package:uperks/widgets/request_sent.dart';
 
 class PaymentDialog extends StatelessWidget {
   final PaymentType type;
@@ -52,19 +53,16 @@ class PaymentDialog extends StatelessWidget {
                   .displaySmall!
                   .copyWith(color: Colors.black),
             ),
-           
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+            showDialog(context: context, builder: (context) => RequestSent());
+          },
           child: Icon(Icons.arrow_forward_ios, color: Colors.white),
         ),
       ),
     );
   }
 }
-
-
-
-
-
