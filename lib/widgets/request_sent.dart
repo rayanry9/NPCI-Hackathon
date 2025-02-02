@@ -12,7 +12,7 @@ class RequestSent extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assests/space_craft.gif', width: 200, height: 200),
+              Icon(Icons.check_circle_rounded),
               SizedBox(height: 20),
               Text(
                 'Request Sent',
