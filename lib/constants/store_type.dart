@@ -1,7 +1,7 @@
 enum StoreType {
-	cafe,
-	electronics,
-	groceries,
-	entertainment,
-	unknown,
+  cafe,
+  electronics,
+  groceries,
+  entertainment,
+  others,
 }

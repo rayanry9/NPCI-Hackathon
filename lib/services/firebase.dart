@@ -73,6 +73,20 @@ class MyFireBase with ChangeNotifier {
     return (await db.collection("transactions").add(data.toFirestore())).id;
   }
 
+  Future<bool> updateSellersWithId(String id) async {
+    if (_sellers.where((seller) => seller.id == id).isNotEmpty) {
+      return true;
+    } else {
+      try {
+        _sellers.add(UserModel.fromFirestore(
+            await db.collection("users").doc(id).get(), null));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+  }
+
   Future<bool> updateTransactions() async {
     try {
       _transactions = (await db

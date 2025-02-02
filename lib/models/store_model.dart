@@ -26,9 +26,8 @@ class StoreModel {
       data["address"],
       data["storeName"],
       data["offerValue"],
-      switch (data["type"]) {
-        _ => StoreType.unknown,
-      },
+      StoreType.values.firstWhere((type) => type.name == data["type"],
+          orElse: () => StoreType.others),
     );
   }
 

@@ -44,13 +44,16 @@ class HomeBalance extends StatelessWidget {
                         ),
                       );
                     } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => PaymentDialog(
-                          type: PaymentType.earn,
-                          id: qrValue,
-                        ),
-                      );
+                      await MyFireBase.instance.updateSellersWithId(qrValue);
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => PaymentDialog(
+                            type: PaymentType.earn,
+                            id: qrValue,
+                          ),
+                        );
+                      }
                     }
                   }
                 },
@@ -79,13 +82,16 @@ class HomeBalance extends StatelessWidget {
                         ),
                       );
                     } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => PaymentDialog(
-                          type: PaymentType.redeem,
-                          id: qrValue,
-                        ),
-                      );
+                      await MyFireBase.instance.updateSellersWithId(qrValue);
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => PaymentDialog(
+                            type: PaymentType.redeem,
+                            id: qrValue,
+                          ),
+                        );
+                      }
                     }
                   }
                 },
