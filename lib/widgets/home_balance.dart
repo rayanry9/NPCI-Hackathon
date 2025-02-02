@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uperks/constants/payment_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase.dart';
 import 'package:uperks/widgets/payment_dialog.dart';
@@ -36,9 +37,21 @@ class HomeBalance extends StatelessWidget {
                 onPressed: () async {
                   final qrValue = (await Scanner.scanQrCode(context));
                   if (context.mounted) {
-                    showDialog(
+                    if (qrValue == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Invalid Scan"),
+                        ),
+                      );
+                    } else {
+                      showDialog(
                         context: context,
-                        builder: (context) => PaymentDialog());
+                        builder: (context) => PaymentDialog(
+                          type: PaymentType.earn,
+                          id: qrValue,
+                        ),
+                      );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -57,7 +70,24 @@ class HomeBalance extends StatelessWidget {
             Expanded(
               child: OutlinedButton(
                 onPressed: () async {
-                  final qrValue = await Scanner.scanQrCode(context);
+                  final qrValue = (await Scanner.scanQrCode(context));
+                  if (context.mounted) {
+                    if (qrValue == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Invalid Scan"),
+                        ),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => PaymentDialog(
+                          type: PaymentType.redeem,
+                          id: qrValue,
+                        ),
+                      );
+                    }
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Theme.of(context).primaryColor,
