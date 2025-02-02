@@ -3,6 +3,7 @@ import 'package:flutter/services.dart'; // For TextInputFormatter
 import 'package:uperks/constants/payment_type.dart';
 import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase.dart';
+import 'package:uperks/widgets/request_sent.dart';
 
 class PaymentDialog extends StatefulWidget {
   final PaymentType type;
@@ -89,15 +90,13 @@ class _PaymentDialogState extends State<PaymentDialog> {
             if (enteredAmount.isNotEmpty) {
               print('Entered amount: \$${enteredAmount}');
             }
+            Navigator.of(context).pop();
+            showDialog(context: context, builder: (context) => RequestSent());
           },
           child: Icon(Icons.arrow_forward_ios, color: Colors.black),
+
         ),
       ),
     );
   }
 }
-
-
-
-
-
