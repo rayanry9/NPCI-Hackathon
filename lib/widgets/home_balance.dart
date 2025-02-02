@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase.dart';
+import 'package:uperks/widgets/payment_dialog.dart';
 import 'package:uperks/widgets/scanner.dart';
 
 class HomeBalance extends StatelessWidget {
@@ -34,6 +35,11 @@ class HomeBalance extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   final qrValue = (await Scanner.scanQrCode(context));
+                  if (context.mounted) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => PaymentDialog());
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
