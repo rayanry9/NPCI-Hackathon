@@ -33,7 +33,7 @@ class TransactionModel {
       data["buyerId"],
       data["sellerId"],
       data["transactionAmount"],
-      data["rewardPoints"],
+      int.parse(data["rewardPoints"]),
       data["type"] == TransactionType.gainPoints.name
           ? TransactionType.gainPoints
           : TransactionType.redeemPoints,
