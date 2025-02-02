@@ -6,17 +6,36 @@ import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
 
-class MyFireBase extends ChangeNotifier {
-  static bool isAuth = (FirebaseAuth.instance.currentUser != null);
-  static final db = FirebaseFirestore.instance;
-  static UserModel? user;
-  static List<TransactionModel> _transactions = [];
+class MyFireBase with ChangeNotifier {
+  bool isAuth = (FirebaseAuth.instance.currentUser != null);
+  final db = FirebaseFirestore.instance;
+  UserModel? user;
+  List<TransactionModel> _transactions = [];
 
-  static Future<void> _addUser(UserModel user) {
+  static MyFireBase instance = MyFireBase.init();
+
+  factory MyFireBase() {
+    return instance;
+  }
+
+  MyFireBase.init() {
+    if (isAuth) {
+      db
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((val) {
+        user = UserModel.fromFirestore(val, null);
+        instance.updateTransactions();
+      });
+    }
+  }
+
+  Future<void> _addUser(UserModel user) {
     return db.collection("users").doc(user.id).set(user.toFirestore());
   }
 
-  static Future<bool> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     if (isAuth) {
       return true;
     }
@@ -49,11 +68,28 @@ class MyFireBase extends ChangeNotifier {
     }
   }
 
-  static Future<String?> addTransaction(TransactionModel data) async {
+  Future<String?> addTransaction(TransactionModel data) async {
     return (await db.collection("transactions").add(data.toFirestore())).id;
   }
 
-  static Future<void> updateTransactions() async {
-    await db.collection("transactions").where("");
+  Future<bool> updateTransactions() async {
+    try {
+      _transactions = (await db
+              .collection("transactions")
+              .where("buyerId", isEqualTo: user!.id)
+              .get())
+          .docs
+          .map((val) => TransactionModel.fromFirestore(val, null))
+          .toList();
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  List<TransactionModel> get transactions {
+    return _transactions;
   }
 }

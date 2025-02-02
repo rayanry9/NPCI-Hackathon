@@ -9,7 +9,7 @@ class SignInWithGoogleButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: () {
-          MyFireBase.signInWithGoogle().then((val) {
+          MyFireBase.instance.signInWithGoogle().then((val) {
             if (val) {
               if (context.mounted) {
                 Navigator.of(context)
@@ -23,13 +23,11 @@ class SignInWithGoogleButton extends StatelessWidget {
             }
           });
         },
-      
         icon: Image.asset(
           'assets/google_icon.png',
           height: 24,
           width: 24,
         ),
-      
         label: const Text("Sign In With Google"),
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, 50),

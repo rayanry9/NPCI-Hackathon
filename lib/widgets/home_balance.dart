@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/services/firebase.dart';
 import 'package:uperks/widgets/scanner.dart';
 
-class HomeBalance extends StatefulWidget {
+class HomeBalance extends StatelessWidget {
   const HomeBalance({super.key});
-
-  @override
-  HomeBalanceState createState() => HomeBalanceState();
-}
-
-class HomeBalanceState extends State<HomeBalance> {
-  List<TransactionModel> data = [];
-
-  @override
-  void initState() {
-    for (int i = 0; i < 30; i++) {
-      data.add(TransactionModel.makeRandomTransaction());
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +18,15 @@ class HomeBalanceState extends State<HomeBalance> {
               .bodyMedium!
               .copyWith(color: Colors.black54),
         ),
-        Text(
-          data.rewardPoints.toString(),
-          style: Theme.of(context)
-              .textTheme
-              .headlineLarge!
-              .copyWith(color: Colors.black),
-        ),
+        Consumer<MyFireBase>(builder: (context, myFireBase, _) {
+          return Text(
+            myFireBase.transactions.rewardPoints.toString(),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge!
+                .copyWith(color: Colors.black),
+          );
+        }),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

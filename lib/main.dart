@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uperks/constants/theme.dart';
 import 'package:uperks/firebase_options.dart';
 import 'package:uperks/screens/get_started.dart';
@@ -24,9 +25,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'UPerks',
       theme: getLightTheme(context),
-      initialRoute: MyFireBase.isAuth ? '/home' : '/get_started',
+      initialRoute: MyFireBase.instance.isAuth ? '/home' : '/get_started',
       routes: {
-        '/home': (context) => Home(),
+        '/home': (context) => ChangeNotifierProvider(
+              create: (context) => MyFireBase(),
+              child: Home(),
+            ),
         '/get_started': (context) => GetStarted(),
         '/register': (context) => Register(),
       },

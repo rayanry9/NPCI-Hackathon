@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uperks/screens/homescreen_container.dart';
 import 'package:uperks/screens/profile_container.dart';
 import 'package:uperks/screens/transaction_container.dart';
+import 'package:uperks/services/firebase.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
@@ -30,7 +31,7 @@ class HomeState extends State<Home> {
 
   Future<void> refreshScreen() async {
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
-    return Future.delayed(const Duration(seconds: 2));
+    await MyFireBase.instance.updateTransactions();
   }
 
   Widget _getSelectedContainer() {
