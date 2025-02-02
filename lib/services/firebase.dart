@@ -11,6 +11,7 @@ class MyFireBase with ChangeNotifier {
   final db = FirebaseFirestore.instance;
   UserModel? user;
   List<TransactionModel> _transactions = [];
+  List<UserModel> _sellers = [];
 
   static MyFireBase instance = MyFireBase.init();
 
@@ -81,6 +82,12 @@ class MyFireBase with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
+      for (var elem in _transactions) {
+        if (_sellers.where((val) => val.id == elem.sellerId).isEmpty) {
+          _sellers.add(UserModel.fromFirestore(
+              (await db.collection("users").doc(elem.sellerId).get()), null));
+        }
+      }
       notifyListeners();
       return true;
     } catch (e) {
@@ -91,5 +98,9 @@ class MyFireBase with ChangeNotifier {
 
   List<TransactionModel> get transactions {
     return _transactions;
+  }
+
+  List<UserModel> get sellers {
+    return _sellers;
   }
 }

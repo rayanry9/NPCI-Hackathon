@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/models/user_model.dart';
+import 'package:uperks/services/firebase.dart';
 
 class TransactionContainer extends StatefulWidget {
   const TransactionContainer({super.key});
@@ -16,9 +18,7 @@ class TransactionContainerState extends State<TransactionContainer> {
 
   @override
   void initState() {
-    for (int i = 0; i < 30; i++) {
-      data.add(TransactionModel.makeRandomTransaction());
-    }
+    data = MyFireBase().transactions;
     filteredData = List.from(data);
     super.initState();
   }
@@ -49,7 +49,8 @@ class TransactionContainerState extends State<TransactionContainer> {
               setState(() {
                 searchQuery = value;
                 filteredData = data
-                    .where((transaction) => transaction.sellerId!
+                    .where((transaction) => MyFireBase.instance.sellers
+                        .getNameFromId(transaction.sellerId!)
                         .toLowerCase()
                         .contains(searchQuery.toLowerCase()))
                     .toList();
@@ -121,7 +122,8 @@ class TransactionContainerState extends State<TransactionContainer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          transaction.sellerId!,
+                          MyFireBase.instance.sellers
+                              .getNameFromId(transaction.sellerId!),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -173,5 +175,3 @@ class TransactionContainerState extends State<TransactionContainer> {
     );
   }
 }
-
-

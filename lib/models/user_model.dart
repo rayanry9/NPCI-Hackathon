@@ -60,6 +60,12 @@ class UserModel {
   }
 }
 
+extension Calculations on List<UserModel> {
+  String getNameFromId(String id) {
+    return where((user) => user.id == id).first.name;
+  }
+}
+
 /*
 	 user id
 	 name

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CurrentOffers extends StatelessWidget {
-  //const CurrentOffers({super.key});
+  CurrentOffers({super.key});
 
   final List<Map<String, String>> offers = [
     {
