@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uperks/constants/transaction_type.dart';
 
 class TransactionModel {
-  final String? id;
+  String? id;
   final double? transactionAmount;
   final int? rewardPoints;
   final String? sellerId;

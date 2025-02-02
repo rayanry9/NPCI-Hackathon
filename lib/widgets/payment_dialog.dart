@@ -92,7 +92,7 @@ class PaymentDialogState extends State<PaymentDialog> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             // Handle the input and proceed
             final enteredAmount = double.tryParse(_amountController.text);
             if (enteredAmount != 0 && _amountController.text != "") {
@@ -106,12 +106,16 @@ class PaymentDialogState extends State<PaymentDialog> {
                   int.parse((enteredAmount! / 10).toString()),
                   widget.type);
               // TODO : add check if failed
-              MyFireBaseTransactions().addTransaction(transact);
-              Navigator.of(context).pop();
+              final id =
+                  (await MyFireBaseTransactions().addTransaction(transact));
+              transact.id = id;
+              if (context.mounted) {
+                Navigator.of(context).pop();
 
-              showDialog(
-                  context: context,
-                  builder: (context) => RequestSent(transaction: transact));
+                showDialog(
+                    context: context,
+                    builder: (context) => RequestSent(transaction: transact));
+              }
             } else {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text("Value cannot be 0")));
