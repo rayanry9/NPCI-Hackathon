@@ -33,7 +33,7 @@ class HomeBalance extends StatelessWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
-                  print(await Scanner.scanQrCode(context));
+                  final qrValue = (await Scanner.scanQrCode(context));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
@@ -51,7 +51,7 @@ class HomeBalance extends StatelessWidget {
             Expanded(
               child: OutlinedButton(
                 onPressed: () async {
-                  print(await Scanner.scanQrCode(context));
+                  final qrValue = await Scanner.scanQrCode(context);
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Theme.of(context).primaryColor,
