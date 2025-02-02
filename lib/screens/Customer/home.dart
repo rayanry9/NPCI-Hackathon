@@ -48,6 +48,11 @@ class HomeState extends State<Home> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

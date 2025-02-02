@@ -15,8 +15,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await MyFireBaseAuth().updateUser();
-  await MyFireBaseTransactions().updateTransactions();
   runApp(const MyApp());
 }
 
@@ -31,15 +29,22 @@ class MyApp extends StatelessWidget {
       theme: getLightTheme(context),
       initialRoute: MyFireBaseAuth.isAuth == true ? '/home' : '/get_started',
       routes: {
-        '/home': (context) => MultiProvider(
-              providers: [
-                ChangeNotifierProvider(create: (context) => MyFireBaseAuth()),
-                ChangeNotifierProvider(
-                  create: (context) => MyFireBaseTransactions(),
-                ),
-              ],
-              child: Home(),
-            ),
+        '/home': (context) {
+          MyFireBaseAuth().updateUser().then((val) {
+            if (val) {
+              MyFireBaseTransactions().updateTransactions();
+            }
+          });
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (context) => MyFireBaseAuth()),
+              ChangeNotifierProvider(
+                create: (context) => MyFireBaseTransactions(),
+              ),
+            ],
+            child: Home(),
+          );
+        },
         '/get_started': (context) => GetStarted(),
         '/register': (context) => Register(),
       },
