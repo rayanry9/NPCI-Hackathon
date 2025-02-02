@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For TextInputFormatter
-import 'package:uperks/constants/payment_type.dart';
+import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
+import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 import 'package:uperks/widgets/request_sent.dart';
 
 class PaymentDialog extends StatefulWidget {
-  final PaymentType type;
+  final TransactionType type;
   final String id;
 
   const PaymentDialog({super.key, required this.type, required this.id});
@@ -91,11 +94,24 @@ class PaymentDialogState extends State<PaymentDialog> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Handle the input and proceed
-            final enteredAmount = int.tryParse(_amountController.text);
+            final enteredAmount = double.tryParse(_amountController.text);
             if (enteredAmount != 0 && _amountController.text != "") {
               print('Entered amount: \${enteredAmount}');
+
+              final transact = TransactionModel.withoutId(
+                  MyFireBaseAuth().user!.id,
+                  widget.id,
+                  "fafa",
+                  enteredAmount,
+                  int.parse((enteredAmount! / 10).toString()),
+                  widget.type);
+              // TODO : add check if failed
+              MyFireBaseTransactions().addTransaction(transact);
               Navigator.of(context).pop();
-              showDialog(context: context, builder: (context) => RequestSent());
+
+              showDialog(
+                  context: context,
+                  builder: (context) => RequestSent(transaction: transact));
             } else {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text("Value cannot be 0")));

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uperks/constants/payment_type.dart';
+import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_transactions.dart';
@@ -52,7 +52,7 @@ class HomeBalance extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) => PaymentDialog(
-                              type: PaymentType.earn,
+                              type: TransactionType.gainPoints,
                               id: qrValue,
                             ),
                           );
@@ -100,7 +100,7 @@ class HomeBalance extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) => PaymentDialog(
-                              type: PaymentType.redeem,
+                              type: TransactionType.redeemPoints,
                               id: qrValue,
                             ),
                           );

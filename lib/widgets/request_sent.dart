@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/models/transaction_model.dart';
 
 class RequestSent extends StatelessWidget {
-  const RequestSent({super.key});
+  final TransactionModel transaction;
+  const RequestSent({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,10 @@ class RequestSent extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 '540',
-                style:Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.black),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(color: Colors.black),
               ),
               Text(
                 'Reward Points',
