@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uperks/screens/homescreen_container.dart';
-import 'package:uperks/screens/profile_container.dart';
-import 'package:uperks/screens/transaction_container.dart';
+import 'package:uperks/screens/Customer/homescreen_container.dart';
+import 'package:uperks/screens/Customer/profile_container.dart';
+import 'package:uperks/screens/Customer/transaction_container.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 

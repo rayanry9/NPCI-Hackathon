@@ -10,50 +10,75 @@ class RequestSent extends StatelessWidget {
     return Dialog.fullscreen(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.check_circle_rounded),
-              SizedBox(height: 20),
-              Text(
-                '${transaction.rewardPoints}',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: Colors.black),
-              ),
-              Text(
-                'Reward Points',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.orange),
-              ),
-              Text(
-                'Request Sent',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.black),
-              ),
-              SizedBox(height: 70),
-              Text(
-                'Store {Store Name}',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
-              ),
-              Text(
-                'Transaction Value ${transaction.transactionAmount}',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
-              ),
-              Text(
-                'Transaction Id: ${transaction.id}',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
-              ),
-            ],
+        body: SingleChildScrollView(
+          
+        child:IntrinsicHeight(child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Spacer(), 
+                Column(
+                  children: [
+                    Icon(Icons.check_circle_rounded, size: 80, color: Colors.green),
+                    SizedBox(height: 20),
+                    Text(
+                      '${transaction.rewardPoints}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(color: Colors.black),
+                    ),
+                    Text(
+                      'Reward Points',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(color: Colors.orange),
+                    ),
+                    Text(
+                      'Request Sent',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: Colors.black),
+                    ),
+                  ],
+                ),
+                Spacer(), 
+                
+                  Column(
+                    children: [
+                      Text(
+                        'Store {Store Name}',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.black54),
+                      ),
+                      Text(
+                        'Transaction Value: ${transaction.transactionAmount}',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.black54),
+                      ),
+                      Text(
+                        'Transaction Date: ${transaction.transactionDate}',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.black54),
+                      ),
+                      Text(
+                        'Transaction Id: ${transaction.id}',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.black54),
+                      ),
+                      SizedBox(height: 40), 
+                    ],
+                  ),
+                
+                
+              ],
+            ),
           ),
         ),
+        ),
+      ),
       ),
     );
   }
 }
+

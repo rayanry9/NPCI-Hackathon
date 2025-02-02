@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uperks/constants/theme.dart';
 import 'package:uperks/firebase_options.dart';
-import 'package:uperks/screens/get_started.dart';
-import 'package:uperks/screens/home.dart';
-import 'package:uperks/screens/register.dart';
+import 'package:uperks/screens/Customer/get_started.dart';
+import 'package:uperks/screens/Customer/home.dart';
+import 'package:uperks/screens/Customer/register.dart';
+import 'package:uperks/screens/Seller/signup_form.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
