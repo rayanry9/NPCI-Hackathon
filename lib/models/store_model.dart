@@ -41,3 +41,15 @@ class StoreModel {
     };
   }
 }
+
+extension Calculations on List<StoreModel> {
+  String getNameFromStoreId(String id) {
+    return where((store) => store.storeId == id).first.storeName;
+  }
+
+  List<String> getNamesFromOwnerId(String id) {
+    return where((store) => store.ownerId == id)
+        .map((store) => store.storeName)
+        .toList();
+  }
+}
