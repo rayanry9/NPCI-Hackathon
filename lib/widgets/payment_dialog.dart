@@ -95,15 +95,17 @@ class PaymentDialogState extends State<PaymentDialog> {
           onPressed: () async {
             // Handle the input and proceed
             final enteredAmount = double.tryParse(_amountController.text);
-            if (enteredAmount != 0 && _amountController.text != "") {
-              print('Entered amount: \${enteredAmount}');
+            if (enteredAmount != 0 &&
+                _amountController.text != "" &&
+                enteredAmount != null) {
+              print('Entered amount: ${enteredAmount}');
 
               final transact = TransactionModel.withoutId(
                   MyFireBaseAuth().user!.id,
                   widget.id,
                   "fafa",
                   enteredAmount,
-                  int.parse((enteredAmount! / 10).toString()),
+                  (enteredAmount / 10).floor(),
                   widget.type);
               // TODO : add check if failed
               final id =
