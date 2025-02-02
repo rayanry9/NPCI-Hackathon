@@ -13,8 +13,8 @@ class PaymentDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog.fullscreen(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      child: SafeArea(
-        child: Column(
+      child: Scaffold(
+        body: Column(
           children: [
             Align(
               alignment: Alignment.topLeft,
@@ -37,15 +37,6 @@ class PaymentDialog extends StatelessWidget {
                   .bodyMedium!
                   .copyWith(color: Colors.black),
             ),
-            /*
-            Text(
-              "Requesting {Seller Name}",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.black),
-            ),
-						*/
             Text(
               "Store {Store Name}",
               style: Theme.of(context)
@@ -61,25 +52,19 @@ class PaymentDialog extends StatelessWidget {
                   .displaySmall!
                   .copyWith(color: Colors.black),
             ),
-            SizedBox(height: 350),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(16),
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                ),
-              ),
-            ),
+           
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.arrow_forward_ios, color: Colors.white),
         ),
       ),
     );
   }
 }
+
+
+
+
+

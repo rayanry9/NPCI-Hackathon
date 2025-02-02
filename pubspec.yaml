@@ -97,3 +97,4 @@ flutter:
   # see https://flutter.dev/to/font-from-package
   assets:
     - assets/google_icon.png
+    - assets/space_craft.gif
