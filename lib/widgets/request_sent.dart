@@ -17,7 +17,7 @@ class RequestSent extends StatelessWidget {
               Icon(Icons.check_circle_rounded),
               SizedBox(height: 20),
               Text(
-                '540',
+                '${transaction.rewardPoints}',
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
@@ -36,6 +36,19 @@ class RequestSent extends StatelessWidget {
                     .textTheme
                     .bodyLarge!
                     .copyWith(color: Colors.black),
+              ),
+              SizedBox(height: 70),
+              Text(
+                'Store {Store Name}',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
+              ),
+              Text(
+                'Transaction Value ${transaction.transactionAmount}',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
+              ),
+              Text(
+                'Transaction Id: ${transaction.id}',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
               ),
             ],
           ),
