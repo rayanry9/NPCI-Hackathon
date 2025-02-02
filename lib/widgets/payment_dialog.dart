@@ -91,12 +91,15 @@ class PaymentDialogState extends State<PaymentDialog> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Handle the input and proceed
-            final enteredAmount = _amountController.text;
-            if (enteredAmount.isNotEmpty) {
+            final enteredAmount = int.tryParse(_amountController.text);
+            if (enteredAmount != 0 && _amountController.text != "") {
               print('Entered amount: \${enteredAmount}');
+              Navigator.of(context).pop();
+              showDialog(context: context, builder: (context) => RequestSent());
+            } else {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Value cannot be 0")));
             }
-            Navigator.of(context).pop();
-            showDialog(context: context, builder: (context) => RequestSent());
           },
           child: Icon(Icons.arrow_forward_ios, color: Colors.black),
         ),
