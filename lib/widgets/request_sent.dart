@@ -15,10 +15,21 @@ class RequestSent extends StatelessWidget {
               Icon(Icons.check_circle_rounded),
               SizedBox(height: 20),
               Text(
-                'Request Sent',
+                '540',
+                style:Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.black),
+              ),
+              Text(
+                'Reward Points',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
+                    .copyWith(color: Colors.orange),
+              ),
+              Text(
+                'Request Sent',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
                     .copyWith(color: Colors.black),
               ),
             ],
