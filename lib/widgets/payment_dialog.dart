@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For TextInputFormatter
 import 'package:uperks/constants/payment_type.dart';
 import 'package:uperks/models/user_model.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/widgets/request_sent.dart';
 
 class PaymentDialog extends StatefulWidget {
@@ -41,7 +41,7 @@ class PaymentDialogState extends State<PaymentDialog> {
             ),
             SizedBox(height: 10),
             Text(
-              "Requesting ${MyFireBase.instance.sellers.getNameFromId(widget.id)}",
+              "Requesting ${MyFireBaseSellers().sellers.getNameFromId(widget.id)}",
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!

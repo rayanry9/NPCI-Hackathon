@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uperks/constants/payment_type.dart';
 import 'package:uperks/models/transaction_model.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 import 'package:uperks/widgets/payment_dialog.dart';
 import 'package:uperks/widgets/scanner.dart';
 
@@ -20,15 +21,16 @@ class HomeBalance extends StatelessWidget {
               .bodyMedium!
               .copyWith(color: Colors.black54),
         ),
-        Consumer<MyFireBase>(builder: (context, myFireBase, _) {
-          return Text(
-            myFireBase.transactions.rewardPoints.toString(),
-            style: Theme.of(context)
-                .textTheme
-                .headlineLarge!
-                .copyWith(color: Colors.black),
-          );
-        }),
+        Text(
+          Provider.of<MyFireBaseTransactions>(context)
+              .transactions
+              .rewardPoints
+              .toString(),
+          style: Theme.of(context)
+              .textTheme
+              .headlineLarge!
+              .copyWith(color: Colors.black),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -44,7 +46,7 @@ class HomeBalance extends StatelessWidget {
                         ),
                       );
                     } else {
-                      if (await MyFireBase.instance
+                      if (await MyFireBaseSellers()
                           .updateSellersWithId(qrValue)) {
                         if (context.mounted) {
                           showDialog(
@@ -92,7 +94,7 @@ class HomeBalance extends StatelessWidget {
                         ),
                       );
                     } else {
-                      if (await MyFireBase.instance
+                      if (await MyFireBaseSellers()
                           .updateSellersWithId(qrValue)) {
                         if (context.mounted) {
                           showDialog(

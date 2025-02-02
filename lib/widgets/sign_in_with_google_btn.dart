@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_auth.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({super.key});
@@ -9,19 +9,31 @@ class SignInWithGoogleButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: () {
-          MyFireBase.instance.signInWithGoogle().then((val) {
-            if (val) {
-              if (context.mounted) {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil("/home", (route) => false);
+          try {
+            MyFireBaseAuth.signInWithGoogle().then((val) {
+              if (val) {
+                if (context.mounted) {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("/home", (route) => false);
+                }
+              } else {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Error Signing In"),
+                    ),
+                  );
+                }
               }
-            } else {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Error Signing In")));
-              }
+            });
+          } catch (e) {
+            print(e);
+
+            if (context.mounted) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Error Signing In")));
             }
-          });
+          }
         },
         icon: Image.asset(
           'assets/google_icon.png',

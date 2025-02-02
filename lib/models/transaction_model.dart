@@ -9,15 +9,24 @@ class TransactionModel {
   final int? rewardPoints;
   final String? sellerId;
   final String? buyerId;
+  final String? storeId;
   final TransactionType? type;
   DateTime? transactionDate;
 
-  TransactionModel(this.id, this.buyerId, this.sellerId, this.transactionAmount,
-      this.rewardPoints, this.type, this.transactionDate);
+  TransactionModel(
+      this.id,
+      this.buyerId,
+      this.sellerId,
+      this.storeId,
+      this.transactionAmount,
+      this.rewardPoints,
+      this.type,
+      this.transactionDate);
 
   TransactionModel.withoutId(
     this.buyerId,
     this.sellerId,
+    this.storeId,
     this.transactionAmount,
     this.rewardPoints,
     this.type,
@@ -32,6 +41,7 @@ class TransactionModel {
       snapshot.id,
       data["buyerId"],
       data["sellerId"],
+      data["storeId"],
       double.parse(data["transactionAmount"].toString()),
       int.parse(data["rewardPoints"].toString()),
       data["type"] == TransactionType.gainPoints.name
@@ -51,6 +61,9 @@ class TransactionModel {
       List.generate(
               10, (index) => characters[Random().nextInt(characters.length)])
           .join(),
+      List.generate(
+              10, (index) => characters[Random().nextInt(characters.length)])
+          .join(),
       Random().nextDouble() * 10000,
       Random().nextInt(1000),
       TransactionType.values[Random().nextInt(2)],
@@ -61,6 +74,7 @@ class TransactionModel {
     return {
       if (buyerId != null) "buyerId": buyerId,
       if (sellerId != null) "sellerId": sellerId,
+      if (storeId != null) "storeId": storeId,
       if (transactionAmount != null) "transactionAmount": transactionAmount,
       if (rewardPoints != null) 'rewardPoints': rewardPoints,
       if (type != null) 'type': type!.name,

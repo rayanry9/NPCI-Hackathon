@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 class TransactionContainer extends StatefulWidget {
   const TransactionContainer({super.key});
@@ -18,7 +19,7 @@ class TransactionContainerState extends State<TransactionContainer> {
 
   @override
   void initState() {
-    data = MyFireBase().transactions;
+    data = MyFireBaseTransactions().transactions;
     filteredData = List.from(data);
     super.initState();
   }
@@ -49,7 +50,8 @@ class TransactionContainerState extends State<TransactionContainer> {
               setState(() {
                 searchQuery = value;
                 filteredData = data
-                    .where((transaction) => MyFireBase.instance.sellers
+                    .where((transaction) => MyFireBaseSellers()
+                        .sellers
                         .getNameFromId(transaction.sellerId!)
                         .toLowerCase()
                         .contains(searchQuery.toLowerCase()))
@@ -122,7 +124,8 @@ class TransactionContainerState extends State<TransactionContainer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          MyFireBase.instance.sellers
+                          MyFireBaseSellers()
+                              .sellers
                               .getNameFromId(transaction.sellerId!),
                           style: Theme.of(context)
                               .textTheme

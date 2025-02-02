@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:uperks/screens/homescreen_container.dart';
 import 'package:uperks/screens/profile_container.dart';
 import 'package:uperks/screens/transaction_container.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_auth.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
@@ -32,7 +33,7 @@ class HomeState extends State<Home> {
 
   Future<void> refreshScreen() async {
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
-    await MyFireBase.instance.updateTransactions();
+    await MyFireBaseTransactions().updateTransactions();
   }
 
   Widget _getSelectedContainer() {
@@ -51,7 +52,7 @@ class HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       appBar: AppBar(
-        title: Consumer<MyFireBase>(
+        title: Consumer<MyFireBaseAuth>(
           builder: (context, data, _) => Text(
             greeting() + ((data.user == null) ? "" : data.user!.name),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

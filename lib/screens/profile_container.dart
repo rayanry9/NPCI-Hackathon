@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_auth.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
@@ -20,14 +20,14 @@ class ProfileContainer extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  MyFireBase.instance.user!.name,
+                  MyFireBaseAuth().user!.name,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
                       .copyWith(color: Colors.black),
                 ),
                 Text(
-                  "User ID: ${MyFireBase.instance.user!.id}",
+                  "User ID: ${MyFireBaseAuth().user!.id}",
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -38,7 +38,7 @@ class ProfileContainer extends StatelessWidget {
           ),
           SizedBox(height: 20),
           QrImageView(
-            data: MyFireBase.instance.user!.id,
+            data: MyFireBaseAuth().user!.id,
             version: QrVersions.auto,
             size: 150.0,
           ),

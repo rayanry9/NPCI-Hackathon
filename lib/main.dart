@@ -6,14 +6,16 @@ import 'package:uperks/firebase_options.dart';
 import 'package:uperks/screens/get_started.dart';
 import 'package:uperks/screens/home.dart';
 import 'package:uperks/screens/register.dart';
-import 'package:uperks/services/firebase.dart';
+import 'package:uperks/services/firebase_auth.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  MyFireBase();
+  await MyFireBaseAuth().updateUser();
+  await MyFireBaseTransactions().updateTransactions();
   runApp(const MyApp());
 }
 
@@ -26,10 +28,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'UPerks',
       theme: getLightTheme(context),
-      initialRoute: MyFireBase.instance.isAuth ? '/home' : '/get_started',
+      initialRoute: MyFireBaseAuth.isAuth == true ? '/home' : '/get_started',
       routes: {
-        '/home': (context) => ChangeNotifierProvider(
-              create: (context) => MyFireBase(),
+        '/home': (context) => MultiProvider(
+              providers: [
+                ChangeNotifierProvider(create: (context) => MyFireBaseAuth()),
+                ChangeNotifierProvider(
+                  create: (context) => MyFireBaseTransactions(),
+                ),
+              ],
               child: Home(),
             ),
         '/get_started': (context) => GetStarted(),
