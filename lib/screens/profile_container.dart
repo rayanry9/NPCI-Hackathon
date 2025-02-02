@@ -23,7 +23,7 @@ class ProfileContainer extends StatelessWidget {
                   "USERNAME",
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMedium!
+                      .bodyMedium!  
                       .copyWith(color: Colors.black),
                 ),
                 Text(
@@ -53,51 +53,53 @@ class ProfileContainer extends StatelessWidget {
           SizedBox(height: 20),
           Column(
             children: [
-              ElevatedButton(
+              TextButton(
                 onPressed: () {
                   print('share points ko dabaya');
                 },
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // Ensures spacing
                   children: [
-                    Icon(Icons.paid), // Left-aligned icon
+                    Icon(Icons.paid),
+                    SizedBox(width: 8), 
                     Text("Share points",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    Icon(Icons.arrow_forward), // Right-aligned icon
                   ],
                 ),
               ),
-              ElevatedButton(
+              Divider(
+                color: Colors.black54,
+                thickness: 1,
+              ),
+              TextButton(
                 onPressed: () {
                   print('manage your acccount ko dabaya');
                 },
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // Ensures spacing
                   children: [
-                    Icon(Icons.account_circle), // Left-aligned icon
+                    Icon(Icons.account_circle),
+                    SizedBox(width: 8),
                     Text("Manage your account",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    Icon(Icons.arrow_forward), // Right-aligned icon
                   ],
                 ),
               ),
-              ElevatedButton(
+              Divider(
+                color: Colors.black54,
+                thickness: 1,
+              ),
+              TextButton(
                 onPressed: () {
                   print('help and feedback ko dabaya');
                 },
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // Ensures spacing
                   children: [
-                    Icon(Icons.help), // Left-aligned icon
+                    Icon(Icons.help),
+                    SizedBox(width: 8), 
                     Text("Help and feedback",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    Icon(Icons.arrow_forward), // Right-aligned icon
                   ],
                 ),
               ),
