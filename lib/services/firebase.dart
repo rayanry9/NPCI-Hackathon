@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
+import 'package:uperks/models/store_model.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
 
@@ -12,6 +13,7 @@ class MyFireBase with ChangeNotifier {
   UserModel? user;
   List<TransactionModel> _transactions = [];
   List<UserModel> _sellers = [];
+  List<StoreModel> _stores = [];
 
   static MyFireBase instance = MyFireBase.init();
 
@@ -27,8 +29,9 @@ class MyFireBase with ChangeNotifier {
           .get()
           .then((val) {
         user = UserModel.fromFirestore(val, null);
-        instance.updateTransactions();
-        notifyListeners();
+        instance.updateTransactions().then((val) {
+          notifyListeners();
+        });
       });
     }
   }
@@ -79,9 +82,13 @@ class MyFireBase with ChangeNotifier {
       return true;
     } else {
       try {
-        _sellers.add(UserModel.fromFirestore(
-            await db.collection("users").doc(id).get(), null));
-        return true;
+        final result = await db.collection("users").doc(id).get();
+        if (result.exists) {
+          _sellers.add(UserModel.fromFirestore(result, null));
+          return true;
+        } else {
+          return false;
+        }
       } catch (e) {
         return false;
       }
@@ -99,8 +106,14 @@ class MyFireBase with ChangeNotifier {
           .toList();
       for (var elem in _transactions) {
         if (_sellers.where((val) => val.id == elem.sellerId).isEmpty) {
-          _sellers.add(UserModel.fromFirestore(
-              (await db.collection("users").doc(elem.sellerId).get()), null));
+          final result =
+              (await db.collection("users").doc(elem.sellerId).get());
+          if (result.exists) {
+            _sellers.add(UserModel.fromFirestore(result, null));
+            return true;
+          } else {
+            return false;
+          }
         }
       }
       notifyListeners();
@@ -117,5 +130,9 @@ class MyFireBase with ChangeNotifier {
 
   List<UserModel> get sellers {
     return _sellers;
+  }
+
+  List<StoreModel> get stores {
+    return _stores;
   }
 }

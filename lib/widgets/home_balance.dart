@@ -44,15 +44,25 @@ class HomeBalance extends StatelessWidget {
                         ),
                       );
                     } else {
-                      await MyFireBase.instance.updateSellersWithId(qrValue);
-                      if (context.mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => PaymentDialog(
-                            type: PaymentType.earn,
-                            id: qrValue,
-                          ),
-                        );
+                      if (await MyFireBase.instance
+                          .updateSellersWithId(qrValue)) {
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => PaymentDialog(
+                              type: PaymentType.earn,
+                              id: qrValue,
+                            ),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Invalid Scan"),
+                            ),
+                          );
+                        }
                       }
                     }
                   }
@@ -82,15 +92,25 @@ class HomeBalance extends StatelessWidget {
                         ),
                       );
                     } else {
-                      await MyFireBase.instance.updateSellersWithId(qrValue);
-                      if (context.mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => PaymentDialog(
-                            type: PaymentType.redeem,
-                            id: qrValue,
-                          ),
-                        );
+                      if (await MyFireBase.instance
+                          .updateSellersWithId(qrValue)) {
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => PaymentDialog(
+                              type: PaymentType.redeem,
+                              id: qrValue,
+                            ),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Invalid Scan"),
+                            ),
+                          );
+                        }
                       }
                     }
                   }
