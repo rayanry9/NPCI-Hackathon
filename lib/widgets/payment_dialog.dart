@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // For TextInputFormatter
 import 'package:uperks/constants/payment_type.dart';
 import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase.dart';
 
-class PaymentDialog extends StatelessWidget {
+class PaymentDialog extends StatefulWidget {
   final PaymentType type;
   final String id;
 
   const PaymentDialog({super.key, required this.type, required this.id});
+
+  @override
+  _PaymentDialogState createState() => _PaymentDialogState();
+}
+
+class _PaymentDialogState extends State<PaymentDialog> {
+  final TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,7 @@ class PaymentDialog extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              "Requesting ${MyFireBase.instance.sellers.getNameFromId(id)}",
+              "Requesting ${MyFireBase.instance.sellers.getNameFromId(widget.id)}",
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
@@ -45,19 +53,44 @@ class PaymentDialog extends StatelessWidget {
                   .copyWith(color: Colors.grey),
             ),
             SizedBox(height: 10),
+            // TextField for user input
+            TextField(
+              controller: _amountController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                // Restrict input to 2 decimal places
+                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+              ],
+              decoration: InputDecoration(
+                labelText: 'Amount',
+                hintText: '0',
+                border: OutlineInputBorder(),
+              ),
+              style: TextStyle(
+                color: Colors.black,
+              )
+            ),
+            SizedBox(height: 10),
             Text(
-              "\$500.55",
+              _amountController.text.isEmpty
+                  ? '\$0.00'
+                  : '\$${_amountController.text}',
               style: Theme.of(context)
                   .textTheme
                   .displaySmall!
                   .copyWith(color: Colors.black),
             ),
-           
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.arrow_forward_ios, color: Colors.white),
+          onPressed: () {
+            // Handle the input and proceed
+            final enteredAmount = _amountController.text;
+            if (enteredAmount.isNotEmpty) {
+              print('Entered amount: \$${enteredAmount}');
+            }
+          },
+          child: Icon(Icons.arrow_forward_ios, color: Colors.black),
         ),
       ),
     );
