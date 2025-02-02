@@ -12,11 +12,12 @@ class PaymentDialog extends StatefulWidget {
   const PaymentDialog({super.key, required this.type, required this.id});
 
   @override
-  _PaymentDialogState createState() => _PaymentDialogState();
+  PaymentDialogState createState() => PaymentDialogState();
 }
 
-class _PaymentDialogState extends State<PaymentDialog> {
-  final TextEditingController _amountController = TextEditingController();
+class PaymentDialogState extends State<PaymentDialog> {
+  final TextEditingController _amountController =
+      TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
@@ -43,44 +44,48 @@ class _PaymentDialogState extends State<PaymentDialog> {
               "Requesting ${MyFireBase.instance.sellers.getNameFromId(widget.id)}",
               style: Theme.of(context)
                   .textTheme
-                  .bodyMedium!
+                  .bodyLarge!
                   .copyWith(color: Colors.black),
             ),
             Text(
               "Store {Store Name}",
               style: Theme.of(context)
                   .textTheme
-                  .bodySmall!
-                  .copyWith(color: Colors.grey),
+                  .bodyMedium!
+                  .copyWith(color: Colors.black54),
             ),
             SizedBox(height: 10),
             // TextField for user input
-            TextField(
-              controller: _amountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                // Restrict input to 2 decimal places
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-              ],
-              decoration: InputDecoration(
-                labelText: 'Amount',
-                hintText: '0',
-                border: OutlineInputBorder(),
+            IntrinsicWidth(
+              child: TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+                autofocus: true,
+                textAlign: TextAlign.center,
+                inputFormatters: [
+                  // Restrict input to 2 decimal places
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                ],
+                decoration: InputDecoration(
+                  prefixText: '\$',
+                  border: InputBorder.none,
+                  hintText: '0',
+                  constraints: BoxConstraints(),
+                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(color: Colors.black),
               ),
-              style: TextStyle(
-                color: Colors.black,
-              )
             ),
-            SizedBox(height: 10),
             Text(
-              _amountController.text.isEmpty
-                  ? '\$0.00'
-                  : '\$${_amountController.text}',
+              "Transaction Value",
               style: Theme.of(context)
                   .textTheme
-                  .displaySmall!
-                  .copyWith(color: Colors.black),
-            ),
+                  .bodyMedium!
+                  .copyWith(color: Colors.black45),
+            )
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -88,13 +93,12 @@ class _PaymentDialogState extends State<PaymentDialog> {
             // Handle the input and proceed
             final enteredAmount = _amountController.text;
             if (enteredAmount.isNotEmpty) {
-              print('Entered amount: \$${enteredAmount}');
+              print('Entered amount: \${enteredAmount}');
             }
             Navigator.of(context).pop();
             showDialog(context: context, builder: (context) => RequestSent());
           },
           child: Icon(Icons.arrow_forward_ios, color: Colors.black),
-
         ),
       ),
     );
