@@ -28,6 +28,7 @@ class MyFireBase with ChangeNotifier {
           .then((val) {
         user = UserModel.fromFirestore(val, null);
         instance.updateTransactions();
+        notifyListeners();
       });
     }
   }

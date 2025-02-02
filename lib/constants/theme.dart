@@ -50,12 +50,12 @@ ThemeData getLightTheme(BuildContext context) {
         height: 1.1,
       ),
       bodyLarge: GoogleFonts.leagueSpartan(
-        fontSize: MediaQuery.of(context).size.shortestSide / 26,
+        fontSize: MediaQuery.of(context).size.shortestSide / 22,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
       bodyMedium: GoogleFonts.leagueSpartan(
-        fontSize: MediaQuery.of(context).size.shortestSide / 29,
+        fontSize: MediaQuery.of(context).size.shortestSide / 28,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),

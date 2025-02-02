@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uperks/screens/homescreen_container.dart';
 import 'package:uperks/screens/profile_container.dart';
 import 'package:uperks/screens/transaction_container.dart';
@@ -21,11 +22,11 @@ class HomeState extends State<Home> {
   String greeting() {
     int hour = DateTime.now().hour;
     if (hour >= 5 && hour < 12) {
-      return "Good Morning";
+      return "Good Morning, ";
     } else if (hour >= 12 && hour < 17) {
-      return "Good Afternoon";
+      return "Good Afternoon, ";
     } else {
-      return "Good Evening";
+      return "Good Evening, ";
     }
   }
 
@@ -50,9 +51,11 @@ class HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       appBar: AppBar(
-        title: Text(
-          greeting(),
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        title: Consumer<MyFireBase>(
+          builder: (context, data, _) => Text(
+            greeting() + ((data.user == null) ? "" : data.user!.name),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ),
         scrolledUnderElevation: 0,
         actions: [

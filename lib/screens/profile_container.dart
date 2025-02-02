@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:uperks/services/firebase.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
   @override
   Widget build(BuildContext context) {
-    String upiID = "yadavsaransh06@okicici";
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -20,14 +20,14 @@ class ProfileContainer extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "USERNAME",
+                  MyFireBase.instance.user!.name,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMedium!  
+                      .bodyLarge!
                       .copyWith(color: Colors.black),
                 ),
                 Text(
-                  "UPI ID: $upiID",
+                  "User ID: ${MyFireBase.instance.user!.id}",
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -38,7 +38,7 @@ class ProfileContainer extends StatelessWidget {
           ),
           SizedBox(height: 20),
           QrImageView(
-            data: upiID,
+            data: MyFireBase.instance.user!.id,
             version: QrVersions.auto,
             size: 150.0,
           ),
@@ -60,7 +60,7 @@ class ProfileContainer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.paid),
-                    SizedBox(width: 8), 
+                    SizedBox(width: 8),
                     Text("Share points",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
@@ -96,7 +96,7 @@ class ProfileContainer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.help),
-                    SizedBox(width: 8), 
+                    SizedBox(width: 8),
                     Text("Help and feedback",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
