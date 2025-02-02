@@ -48,12 +48,13 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       appBar: AppBar(
         title: Text(
           greeting(),
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        scrolledUnderElevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -65,8 +66,7 @@ class HomeState extends State<Home> {
             ),
           ),
         ],
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        elevation: 0,
+        backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,

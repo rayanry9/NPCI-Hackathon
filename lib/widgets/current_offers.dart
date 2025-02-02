@@ -23,6 +23,24 @@ class CurrentOffers extends StatelessWidget {
       "address": "2616 N Mount Street, Jefferson City, Missouri, 89997",
       "discount": "2%",
     },
+    {
+      "name": "Nescafe Day",
+      "category": "Cafe",
+      "address": "2616 N Mount Street, Jefferson City, Missouri, 89997",
+      "discount": "2%",
+    },
+    {
+      "name": "Nescafe Day",
+      "category": "Cafe",
+      "address": "2616 N Mount Street, Jefferson City, Missouri, 89997",
+      "discount": "2%",
+    },
+    {
+      "name": "Nescafe Day",
+      "category": "Cafe",
+      "address": "2616 N Mount Street, Jefferson City, Missouri, 89997",
+      "discount": "2%",
+    },
   ];
 
   @override

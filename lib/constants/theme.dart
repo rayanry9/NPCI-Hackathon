@@ -5,6 +5,13 @@ ThemeData getLightTheme(BuildContext context) {
   return ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+    scaffoldBackgroundColor: Colors.white,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Colors.white,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+    ),
     textTheme: TextTheme(
       headlineLarge: GoogleFonts.leagueSpartan(
         fontSize: MediaQuery.of(context).size.shortestSide / 7,
