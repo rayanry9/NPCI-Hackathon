@@ -1,57 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/models/transaction_model.dart';
 
-class NotificationsSeller extends StatefulWidget {
-  @override
-  NotificationsSellerState createState() => NotificationsSellerState();
-}
+class NotificationCardAD extends StatelessWidget{
 
-class NotificationsSellerState extends State<NotificationsSeller> {
-  final List<Map<String, dynamic>> transactions = [
-    {"name": "Mana Schneider", "status": ""},
-    {"name": "Truman Hartman", "status": ""},
-    {"name": "Les Bordelon", "status": ""},
-    {"name": "Alishia Tillman", "status": ""},
-    {"name": "Les Bordelon", "status": ""},
-  ];
+	final TransactionModel transaction;
 
-  void updateStatus(int index, String newStatus) {
-    setState(() {
-      transactions[index]["status"] = newStatus;
-    });
-  }
+	const NotificationCardAD({super.key, required this.transaction});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ListView.builder(
-        itemCount: transactions.length,
-        itemBuilder: (context, index) {
-          return TransactionCard(
-            name: transactions[index]["name"],
-            status: transactions[index]["status"],
-            onStatusChange: (String newStatus) {
-              updateStatus(index, newStatus);
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class TransactionCard extends StatefulWidget {
-  final String name;
-  final String status;
-  final Function(String) onStatusChange;
-
-  TransactionCard({required this.name, required this.status, required this.onStatusChange});
-
-  @override
-  _TransactionCardState createState() => _TransactionCardState();
-}
-
-class _TransactionCardState extends State<TransactionCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
