@@ -32,11 +32,12 @@ class MyFireBaseTransactions with ChangeNotifier {
       _transactions = (await _db
               .collection("transactions")
               .where("buyerId", isEqualTo: MyFireBaseAuth().user!.id)
-              .where("acceptStatus", isEqualTo: true)
+              .where("acceptStatus", isEqualTo: AcceptStatus.accepted.name)
               .get())
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
+      /*
       _transactions.addAll((await _db
               .collection("transactions")
               .where("sellerId", isEqualTo: MyFireBaseAuth().user!.id)
@@ -45,6 +46,7 @@ class MyFireBaseTransactions with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
+			*/
 
       for (var elem in _transactions) {
         if (MyFireBaseSellers()
@@ -74,7 +76,7 @@ class MyFireBaseTransactions with ChangeNotifier {
       _transactions = (await _db
               .collection("transactions")
               .where("sellerId", isEqualTo: MyFireBaseAuth().user!.id)
-              .where("acceptStatus", isEqualTo: true)
+              .where("acceptStatus", isEqualTo: AcceptStatus.accepted.name)
               .get())
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
@@ -108,7 +110,7 @@ class MyFireBaseTransactions with ChangeNotifier {
       _requests = (await _db
               .collection("transactions")
               .where("buyerId", isEqualTo: MyFireBaseAuth().user!.id)
-              .where("acceptStatus", isEqualTo: false)
+              .where("acceptStatus", isEqualTo: AcceptStatus.pending.name)
               .get())
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
@@ -142,7 +144,7 @@ class MyFireBaseTransactions with ChangeNotifier {
       _requests = (await _db
               .collection("transactions")
               .where("sellerId", isEqualTo: MyFireBaseAuth().user!.id)
-              .where("acceptStatus", isEqualTo: false)
+              .where("acceptStatus", isEqualTo: AcceptStatus.pending.name)
               .get())
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))

@@ -41,14 +41,14 @@ class TransactionModel {
       data["storeId"],
       double.parse(data["transactionAmount"].toString()),
       int.parse(data["rewardPoints"].toString()),
-      switch (TransactionType.values.indexOf(data["type"])) {
+      switch (TransactionType.values.indexWhere((tran)=>tran.name.contains(data["type"]))) {
         0 => TransactionType.gainPoints,
         1 => TransactionType.redeemPoints,
         2 => TransactionType.sharePoints,
         3 => TransactionType.buyPoints,
         _ => TransactionType.sharePoints
       },
-      switch (AcceptStatus.values.indexOf(data["type"])) {
+      switch (AcceptStatus.values.indexWhere((stat)=>stat.name.contains(["acceptStatus"].toString()))) {
         0 => AcceptStatus.accepted,
         1 => AcceptStatus.declined,
         2 => AcceptStatus.pending,
