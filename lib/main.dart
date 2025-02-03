@@ -18,14 +18,15 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final bool userDataFilled = await MyFireBaseAuth().updateUser();
-  if (MyFireBaseAuth().user!.userType == UserType.seller) {
-    await MyFireBaseTransactions().updateTransactionsSeller();
-    await MyFireBaseTransactions().updateRequestsSeller();
-  } else {
-    await MyFireBaseTransactions().updateTransactionsCustomer();
-    await MyFireBaseTransactions().updateRequestsCustomer();
+  if (MyFireBaseAuth.isAuth) {
+    if (MyFireBaseAuth().user!.userType == UserType.seller) {
+      await MyFireBaseTransactions().updateTransactionsSeller();
+      await MyFireBaseTransactions().updateRequestsSeller();
+    } else {
+      await MyFireBaseTransactions().updateTransactionsCustomer();
+      await MyFireBaseTransactions().updateRequestsCustomer();
+    }
   }
-
   runApp(MyApp(
     userDataFilled: userDataFilled,
   ));

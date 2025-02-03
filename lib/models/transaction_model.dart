@@ -11,7 +11,7 @@ class TransactionModel {
   final String? buyerId;
   final String? storeId;
   final TransactionType? type;
-  final bool? acceptStatus;
+  final AcceptStatus? acceptStatus;
   DateTime? transactionDate;
 
   TransactionModel(
@@ -41,10 +41,19 @@ class TransactionModel {
       data["storeId"],
       double.parse(data["transactionAmount"].toString()),
       int.parse(data["rewardPoints"].toString()),
-      data["type"] == TransactionType.gainPoints.name
-          ? TransactionType.gainPoints
-          : TransactionType.redeemPoints,
-      data["acceptStatus"],
+      switch (TransactionType.values.indexOf(data["type"])) {
+        0 => TransactionType.gainPoints,
+        1 => TransactionType.redeemPoints,
+        2 => TransactionType.sharePoints,
+        3 => TransactionType.buyPoints,
+        _ => TransactionType.sharePoints
+      },
+      switch (AcceptStatus.values.indexOf(data["type"])) {
+        0 => AcceptStatus.accepted,
+        1 => AcceptStatus.declined,
+        2 => AcceptStatus.pending,
+        _ => AcceptStatus.pending
+      },
       DateTime.fromMillisecondsSinceEpoch(data["date"]),
     );
   }
@@ -65,7 +74,7 @@ class TransactionModel {
       Random().nextDouble() * 10000,
       Random().nextInt(1000),
       TransactionType.values[Random().nextInt(2)],
-      true,
+      AcceptStatus.pending,
     );
   }
 
@@ -78,7 +87,7 @@ class TransactionModel {
       if (rewardPoints != null) 'rewardPoints': rewardPoints,
       if (type != null) 'type': type!.name,
       'date': transactionDate!.millisecondsSinceEpoch,
-      if (acceptStatus != null) 'acceptStatus': acceptStatus,
+      if (acceptStatus != null) 'acceptStatus': acceptStatus!.name,
     };
   }
 }

@@ -4,3 +4,5 @@ enum TransactionType {
   sharePoints,
   buyPoints,
 }
+
+enum AcceptStatus { accepted, declined, pending }

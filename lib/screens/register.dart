@@ -8,7 +8,7 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-		final fromType = ModalRoute.of(context)!.settings.arguments;
+    final fromType = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       body: StarterPanel(
@@ -27,7 +27,11 @@ class Register extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 40),
-            SignInWithGoogleButton(userType: fromType!.toString().contains("seller")?UserType.seller:UserType.customer,),
+            SignInWithGoogleButton(
+              userType: fromType!.toString().contains("seller")
+                  ? UserType.seller
+                  : UserType.customer,
+            ),
           ],
         ),
       ),
