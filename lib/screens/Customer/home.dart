@@ -34,14 +34,13 @@ class HomeState extends State<Home> {
   Future<void> refreshScreen() async {
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
     await MyFireBaseTransactions().updateTransactionsCustomer();
+    await MyFireBaseTransactions().updateRequestsCustomer();
   }
 
   Widget _getSelectedContainer() {
     switch (selectedIndex) {
       case NavigationTabs.home:
-        {
-          return HomescreenContainer();
-        }
+        return HomescreenContainer();
       case NavigationTabs.transactions:
         return TransactionContainer();
       case NavigationTabs.profile:

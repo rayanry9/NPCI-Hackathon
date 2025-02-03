@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
-class NotificationCardAD extends StatelessWidget{
+class NotificationCardAD extends StatelessWidget {
+  final TransactionModel transaction;
 
-	final TransactionModel transaction;
-
-	const NotificationCardAD({super.key, required this.transaction});
+  const NotificationCardAD({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,9 @@ class NotificationCardAD extends StatelessWidget{
                 children: [
                   Text(
                     //Widget.name,
-                    transaction.buyerId!,
+                    MyFireBaseSellers()
+                        .sellers
+                        .getNameFromId(transaction.buyerId!),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   SizedBox(height: 4),
@@ -55,16 +57,16 @@ class NotificationCardAD extends StatelessWidget{
                       ),
                     ],
                   ),
-                 
-                    SizedBox(height: 8),
-                    Text(
-                      "Status: ${transaction.acceptStatus.name}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color:transaction.acceptStatus == AcceptStatus.accepted ? Colors.green : Colors.red,
-                      ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Status: ${transaction.acceptStatus.name}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: transaction.acceptStatus == AcceptStatus.accepted
+                          ? Colors.green
+                          : Colors.red,
                     ),
-                 
+                  ),
                 ],
               ),
             ),
@@ -72,7 +74,8 @@ class NotificationCardAD extends StatelessWidget{
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    MyFireBaseTransactions().sellerRequestStatusChange(transaction.id!, AcceptStatus.accepted);
+                    MyFireBaseTransactions().sellerRequestStatusChange(
+                        transaction.id!, AcceptStatus.accepted);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
@@ -84,7 +87,8 @@ class NotificationCardAD extends StatelessWidget{
                 SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
-                    MyFireBaseTransactions().sellerRequestStatusChange(transaction.id!, AcceptStatus.declined);
+                    MyFireBaseTransactions().sellerRequestStatusChange(
+                        transaction.id!, AcceptStatus.declined);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
@@ -101,5 +105,3 @@ class NotificationCardAD extends StatelessWidget{
     );
   }
 }
-
-

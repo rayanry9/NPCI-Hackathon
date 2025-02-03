@@ -37,6 +37,15 @@ class MyFireBaseTransactions with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
+			
+      _transactions.addAll((await _db
+              .collection("transactions")
+              .where("buyerId", isEqualTo: MyFireBaseAuth().user!.id)
+              .where("acceptStatus", isEqualTo: AcceptStatus.declined.name)
+              .get())
+          .docs
+          .map((val) => TransactionModel.fromFirestore(val, null))
+          .toList());
       /*
       _transactions.addAll((await _db
               .collection("transactions")
