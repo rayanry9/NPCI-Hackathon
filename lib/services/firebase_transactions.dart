@@ -175,7 +175,7 @@ class MyFireBaseTransactions with ChangeNotifier {
 
   Future<bool> sellerRequestStatusChange(
       String requestId, AcceptStatus status) async {
-    await _db.collection("transactions").doc("requestId").update({
+    await _db.collection("transactions").doc(requestId).update({
       "acceptStatus": status.name,
     });
 

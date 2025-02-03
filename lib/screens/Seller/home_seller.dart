@@ -34,7 +34,8 @@ class HomeSellerState extends State<HomeSeller> {
 
   Future<void> refreshScreen() async {
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
-    await MyFireBaseTransactions().updateTransactionsCustomer();
+    await MyFireBaseTransactions().updateTransactionsSeller();
+    await MyFireBaseTransactions().updateRequestsSeller();
   }
 
   Widget _getSelectedContainer() {
