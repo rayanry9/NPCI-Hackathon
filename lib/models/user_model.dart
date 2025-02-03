@@ -8,7 +8,6 @@ class UserModel {
   final String? phoneNumber;
   String? profilePicUrl;
   final UserType userType;
-  List<String>? transactionIds;
   String? upiId;
   List<String>? friendIds;
 
@@ -41,7 +40,6 @@ class UserModel {
           : UserType.customer,
     )
       ..profilePicUrl = data["profilePicUrl"]
-      ..transactionIds = data["transactionsIds"]
       ..upiId = data["upiId"]
       ..friendIds = data["friendIds"];
   }
@@ -53,7 +51,6 @@ class UserModel {
       'phoneNumber': phoneNumber,
       'type': userType.name,
       'profilePicUrl': profilePicUrl,
-      'transactionIds': transactionIds,
       'upiId': upiId,
       'friendIds': friendIds,
     };
@@ -90,7 +87,6 @@ extension Calculations on List<UserModel> {
 	 upi id[]
 	 profile pic
 	 friends []
-	 transactions_id[]
 	 user type
 	 storee deatils
 	 points redeemed

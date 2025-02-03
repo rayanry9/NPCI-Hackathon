@@ -164,12 +164,14 @@ class SellerTransactionContainerState
                               .copyWith(color: Colors.black),
                         ),
                         Text(
-                          switch (transaction.type!) {
-                            TransactionType.buyPoints => "Bought",
-                            TransactionType.gainPoints => "Given",
-                            TransactionType.redeemPoints => "Redeemed",
-                            _ => "Others"
-                          },
+                          transaction.acceptStatus == AcceptStatus.accepted
+                              ? switch (transaction.type!) {
+                                  TransactionType.buyPoints => "Bought",
+                                  TransactionType.gainPoints => "Given",
+                                  TransactionType.redeemPoints => "Redeemed",
+                                  _ => "Others"
+                                }
+                              : "Declined",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

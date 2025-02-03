@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uperks/models/transaction_model.dart';
-import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/constants/transaction_type.dart';
@@ -37,7 +36,7 @@ class MyFireBaseTransactions with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
-			
+
       _transactions.addAll((await _db
               .collection("transactions")
               .where("buyerId", isEqualTo: MyFireBaseAuth().user!.id)
@@ -46,7 +45,7 @@ class MyFireBaseTransactions with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
-      /*
+
       _transactions.addAll((await _db
               .collection("transactions")
               .where("sellerId", isEqualTo: MyFireBaseAuth().user!.id)
@@ -55,7 +54,18 @@ class MyFireBaseTransactions with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
-			*/
+
+      _transactions.addAll((await _db
+              .collection("transactions")
+              .where("buyerId", isEqualTo: MyFireBaseAuth().user!.id)
+              .where("type", isEqualTo: TransactionType.sharePoints.name)
+              .get())
+          .docs
+          .map((val) => TransactionModel.fromFirestore(val, null))
+          .toList());
+
+      _transactions
+          .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
 
       for (var elem in _transactions) {
         if (MyFireBaseSellers()
@@ -86,19 +96,25 @@ class MyFireBaseTransactions with ChangeNotifier {
 
       _transactions.addAll((await _db
               .collection("transactions")
-              .where("sellerId", isEqualTo: MyFireBaseAuth().user!.id)
+              .where(
+                "sellerId",
+                isEqualTo: MyFireBaseAuth().user!.id,
+              )
               .where("acceptStatus", isEqualTo: AcceptStatus.declined.name)
               .get())
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
 
+      _transactions
+          .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
+
       for (var elem in _transactions) {
         if (MyFireBaseSellers()
             .sellers
             .where((val) => val.id == elem.buyerId)
             .isEmpty) {
-          await MyFireBaseSellers().updateSellersWithId(elem.sellerId!);
+          await MyFireBaseSellers().updateSellersWithId(elem.buyerId!);
         }
       }
       notifyListeners();
@@ -120,6 +136,8 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
 
+      _requests
+          .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
       for (var elem in _requests) {
         if (MyFireBaseSellers()
             .sellers
@@ -147,12 +165,16 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
 
+      _requests
+          .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
+
       for (var elem in _requests) {
         if (MyFireBaseSellers()
             .sellers
             .where((val) => val.id == elem.buyerId)
             .isEmpty) {
-          print((await MyFireBaseSellers().updateSellersWithId(elem.buyerId!)).toString()+ " sfsfsefsf");
+          (await MyFireBaseSellers().updateSellersWithId(elem.buyerId!))
+              .toString();
         }
       }
       notifyListeners();

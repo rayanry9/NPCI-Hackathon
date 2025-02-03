@@ -50,7 +50,7 @@ class TransactionModel {
         _ => TransactionType.sharePoints
       },
       switch (AcceptStatus.values.indexWhere(
-          (stat) => stat.name.contains(["acceptStatus"].toString()))) {
+          (stat) => stat.name.contains(data["acceptStatus"].toString()))) {
         0 => AcceptStatus.accepted,
         1 => AcceptStatus.declined,
         2 => AcceptStatus.pending,
