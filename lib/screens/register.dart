@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/widgets/sign_in_with_google_btn.dart';
 import 'package:uperks/widgets/starter_panel.dart';
 
@@ -7,6 +8,7 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+		final fromType = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       body: StarterPanel(
@@ -25,7 +27,7 @@ class Register extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 40),
-            SignInWithGoogleButton(),
+            SignInWithGoogleButton(userType: fromType!.toString().contains("seller")?UserType.seller:UserType.customer,),
           ],
         ),
       ),

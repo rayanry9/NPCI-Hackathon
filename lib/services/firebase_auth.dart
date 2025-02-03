@@ -34,7 +34,7 @@ class MyFireBaseAuth with ChangeNotifier {
     }
   }
 
-  static Future<bool> signInWithGoogle() async {
+  static Future<bool> signInWithGoogle(UserType userType) async {
     if (isAuth) {
       return true;
     } else {
@@ -56,7 +56,7 @@ class MyFireBaseAuth with ChangeNotifier {
         var creduser =
             (await FirebaseAuth.instance.signInWithCredential(credential)).user;
         _user = UserModel(creduser!.uid, creduser.displayName!, creduser.email!,
-            creduser.phoneNumber, UserType.customer);
+            creduser.phoneNumber, userType);
         await _db.collection("users").doc(_user!.id).set(_user!.toFirestore());
         isAuth = true;
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/services/firebase_auth.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
-  const SignInWithGoogleButton({super.key});
+  final UserType userType;
+  const SignInWithGoogleButton({super.key, required this.userType});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -10,11 +12,16 @@ class SignInWithGoogleButton extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: () {
           try {
-            MyFireBaseAuth.signInWithGoogle().then((val) {
+            MyFireBaseAuth.signInWithGoogle(userType).then((val) {
               if (val) {
                 if (context.mounted) {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil("/home", (route) => false);
+                  if (userType == UserType.customer) {
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil("/home", (route) => false);
+                  } else {
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil("/signUp", (route) => false);
+                  }
                 }
               } else {
                 if (context.mounted) {

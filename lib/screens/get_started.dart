@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/widgets/starter_panel.dart';
 
 class GetStarted extends StatelessWidget {
@@ -31,7 +32,8 @@ class GetStarted extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("/register");
+                  Navigator.of(context).pushNamed("/register",
+                      arguments: UserType.customer.name);
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 20),
@@ -61,7 +63,8 @@ class GetStarted extends StatelessWidget {
                             ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            print("signup ko dabaya");
+                            Navigator.of(context).pushNamed("/register",
+                                arguments: UserType.seller.name);
                           },
                       ),
                     ],

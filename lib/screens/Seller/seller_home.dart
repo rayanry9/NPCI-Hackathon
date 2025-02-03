@@ -8,14 +8,14 @@ import 'package:uperks/services/firebase_transactions.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class SellerHome extends StatefulWidget {
+  const SellerHome({super.key});
 
   @override
-  HomeState createState() => HomeState();
+  SellerHomeState createState() => SellerHomeState();
 }
 
-class HomeState extends State<Home> {
+class SellerHomeState extends State<SellerHome> {
   NavigationTabs selectedIndex = NavigationTabs.home;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
