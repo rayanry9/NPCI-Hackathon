@@ -120,7 +120,7 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
 
-      for (var elem in _transactions) {
+      for (var elem in _requests) {
         if (MyFireBaseSellers()
             .sellers
             .where((val) => val.id == elem.sellerId)
@@ -147,12 +147,12 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
 
-      for (var elem in _transactions) {
+      for (var elem in _requests) {
         if (MyFireBaseSellers()
             .sellers
             .where((val) => val.id == elem.buyerId)
             .isEmpty) {
-          await MyFireBaseSellers().updateSellersWithId(elem.buyerId!);
+          print((await MyFireBaseSellers().updateSellersWithId(elem.buyerId!)).toString()+ " sfsfsefsf");
         }
       }
       notifyListeners();
