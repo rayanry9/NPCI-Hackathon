@@ -1,107 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
-import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
-class NotificationCardAD extends StatelessWidget {
-  final TransactionModel transaction;
+class NotificationCardAd extends StatelessWidget{
 
-  const NotificationCardAD({super.key, required this.transaction});
+  final TransactionModel transaction;
+  const NotificationCardAd({super.key, required this.transaction});
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 2,
-      margin: EdgeInsets.symmetric(vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    //Widget.name,
-                    MyFireBaseSellers()
-                        .sellers
-                        .getNameFromId(transaction.buyerId!),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Text(
-                        "Transaction Value: ",
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      Text(
-                        transaction.transactionAmount!.toStringAsFixed(2),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Reward Points Request: ",
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      Text(
-                        transaction.rewardPoints!.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "Status: ${transaction.acceptStatus.name}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: transaction.acceptStatus == AcceptStatus.accepted
-                          ? Colors.green
-                          : Colors.red,
-                    ),
-                  ),
-                ],
+  Widget build(BuildContext context){
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.blue, width: 1),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text(
+                transaction.buyerId!,
+                style: TextStyle(fontSize: 10, color: Colors.black54),
               ),
-            ),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    MyFireBaseTransactions().sellerRequestStatusChange(
-                        transaction.id!, AcceptStatus.accepted);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                  child: Text("Accept"),
+              Text(
+                "Transaction Value: ",
+                  style: TextStyle(color: Colors.black54),
+                  textAlign: TextAlign.left,
+              ),
+              Text(
+                  transaction.transactionAmount!.toStringAsFixed(2),
+                  style: TextStyle(color: Colors.black54),
+              ),
+              Text(
+                "Reward Points Request: ",
+                style: TextStyle(color: Colors.black54),
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                transaction.rewardPoints!.toString(),
+                style: TextStyle(color: Colors.black54),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                   MyFireBaseTransactions().sellerRequestStatusChange(transaction.id!, AcceptStatus.accepted);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
                 ),
-                SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    MyFireBaseTransactions().sellerRequestStatusChange(
-                        transaction.id!, AcceptStatus.declined);
+                child: Text("Accept"),
+              ),
+              SizedBox(width: 15),
+              ElevatedButton(
+                onPressed: () {
+                    MyFireBaseTransactions().sellerRequestStatusChange(transaction.id!, AcceptStatus.declined);
                   },
                   style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     backgroundColor: Colors.red,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(20)),
                   ),
                   child: Text("Decline"),
                 ),
-              ],
-            )
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
+
