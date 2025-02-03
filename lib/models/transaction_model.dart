@@ -96,11 +96,13 @@ class TransactionModel {
 
 extension Calculations on List<TransactionModel> {
   int get totalRewardPointsBalance {
-    return where(
-            (tranasctionModel) =>
-                tranasctionModel.type == TransactionType.gainPoints).fold<int>(
-            0,
-            (prevValue, transaction) => prevValue + transaction.rewardPoints!) -
+    return where((model) => model.acceptStatus == AcceptStatus.accepted)
+            .where((tranasctionModel) =>
+                tranasctionModel.type == TransactionType.gainPoints)
+            .fold<int>(
+                0,
+                (prevValue, transaction) =>
+                    prevValue + transaction.rewardPoints!) -
         where((tranasctionModel) =>
                 tranasctionModel.type == TransactionType.redeemPoints)
             .fold<int>(
