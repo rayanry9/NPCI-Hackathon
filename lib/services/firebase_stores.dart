@@ -18,7 +18,7 @@ class MyFireBaseStores with ChangeNotifier {
     return (await _db.collection("stores").add(store.toFirestore())).id;
   }
 
-  Future<bool> updateStoresWithStoreId(String id) async {
+  Future<bool> updateStoreWithStoreId(String id) async {
     if (_stores.where((store) => store.storeId == id).isNotEmpty) {
       return true;
     } else {
@@ -33,7 +33,7 @@ class MyFireBaseStores with ChangeNotifier {
     }
   }
 
-  Future<bool> updateStoresWithOwnerId(String id) async {
+  Future<bool> updateStoreWithOwnerId(String id) async {
     if (_stores.where((store) => store.ownerId == id).isNotEmpty) {
       return true;
     } else {
@@ -42,8 +42,7 @@ class MyFireBaseStores with ChangeNotifier {
           .where("ownerId", isEqualTo: id)
           .get());
       if (result.docs.isNotEmpty) {
-        _stores.addAll(
-            result.docs.map((doc) => StoreModel.fromFirestore(doc, null)));
+        _stores.add(StoreModel.fromFirestore(result.docs.first, null));
         notifyListeners();
         return true;
       } else {

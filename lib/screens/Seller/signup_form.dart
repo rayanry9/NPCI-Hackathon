@@ -44,7 +44,7 @@ class SignUpFormState extends State<SignUpForm> {
               StoreType.cafe);
 
           MyFireBaseStores().addStore(store).then((val) {
-            MyFireBaseStores().updateStoresWithStoreId(val!);
+            MyFireBaseStores().updateStoreWithStoreId(val!);
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

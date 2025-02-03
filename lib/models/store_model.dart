@@ -59,7 +59,7 @@ extension Calculations on List<StoreModel> {
     return where((store) => store.storeId == id).first;
   }
 
-  List<StoreModel> getStoresFromOwnerId(String id) {
-    return where((store) => store.ownerId == id).toList();
+  StoreModel getStoreFromOwnerId(String id) {
+    return where((store) => store.ownerId == id).first;
   }
 }
