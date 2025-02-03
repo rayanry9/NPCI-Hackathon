@@ -38,7 +38,7 @@ class NotificationCardAD extends StatelessWidget{
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       Text(
-                        "4200",
+                        transaction.transactionAmount!.toStringAsFixed(2),
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -50,7 +50,7 @@ class NotificationCardAD extends StatelessWidget{
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       Text(
-                        "420",
+                        transaction.rewardPoints!.toString(),
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
