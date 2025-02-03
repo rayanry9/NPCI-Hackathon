@@ -58,6 +58,23 @@ class UserModel {
       'friendIds': friendIds,
     };
   }
+
+  static Map<String, dynamic> toFirestoreForUpdate(
+      {String? name,
+      String? email,
+      String? phoneNumber,
+      String? profilePicUrl,
+      String? upiId}) {
+    var map = <String, dynamic>{};
+    if (name != null) map.putIfAbsent("name", () => name);
+    if (email != null) map.putIfAbsent("email", () => email);
+    if (phoneNumber != null) map.putIfAbsent("phoneNumber", () => phoneNumber);
+    if (profilePicUrl != null) {
+      map.putIfAbsent("profilePicUrl", () => profilePicUrl);
+    }
+    if (upiId != null) map.putIfAbsent("upiId", () => upiId);
+    return map;
+  }
 }
 
 extension Calculations on List<UserModel> {

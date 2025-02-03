@@ -9,13 +9,20 @@ class StoreModel {
   final double offerPercent;
   final double offerThreshold;
   final StoreType type;
+  final String storeUpiID;
 
-  StoreModel.withoutId(this.ownerId, this.address, this.storeName,
-      this.offerPercent, this.offerThreshold, this.type)
-      : storeId = "";
+  StoreModel.withoutId(
+    this.ownerId,
+    this.address,
+    this.storeName,
+    this.offerPercent,
+    this.offerThreshold,
+    this.storeUpiID,
+    this.type,
+  ) : storeId = "";
 
   StoreModel(this.storeId, this.ownerId, this.address, this.storeName,
-      this.offerPercent, this.offerThreshold, this.type);
+      this.offerPercent, this.offerThreshold, this.storeUpiID, this.type);
 
   factory StoreModel.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -28,6 +35,7 @@ class StoreModel {
       data["storeName"],
       data["offerPercent"],
       data["offerThreshold"],
+      data["storeUpiID"],
       StoreType.values.firstWhere((type) => type.name == data["type"],
           orElse: () => StoreType.others),
     );
@@ -40,6 +48,7 @@ class StoreModel {
       "storeName": storeName,
       'offerPercent': offerPercent,
       'offerThreshold': offerThreshold,
+      'storeUpiID': storeUpiID,
       'type': type.name,
     };
   }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/store_type.dart';
+import 'package:uperks/models/store_model.dart';
+import 'package:uperks/services/firebase_auth.dart';
+import 'package:uperks/services/firebase_stores.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -10,17 +14,57 @@ class SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneController = TextEditingController();
 
+  String? sellerName;
+  String? storeName;
+  String? upiID;
+  String? address;
+  String? phoneNumber;
+  String? emailId;
+  double offerPercent = 10;
+  double offerThreshold = 40;
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Signup Successful!"),
-          backgroundColor: Colors.green,
-        ),
-      );
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("/home_seller", (route) => false);
+      _formKey.currentState!.save();
+      MyFireBaseAuth()
+          .updateUserData(
+        name: sellerName,
+        email: emailId,
+        phoneNumber: phoneNumber,
+      )
+          .then((_) {
+        if (context.mounted) {
+          final store = StoreModel.withoutId(
+              MyFireBaseAuth().user!.id,
+              address!,
+              storeName!,
+              offerPercent,
+              offerThreshold,
+              upiID!,
+              StoreType.cafe);
+
+          MyFireBaseStores().addStore(store).then((val) {
+            MyFireBaseStores().updateStoresWithStoreId(val!);
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Signup Successful!"),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil("/home_seller", (route) => false);
+            }
+          });
+        }
+      });
     }
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,6 +92,9 @@ class SignUpFormState extends State<SignUpForm> {
                       }
                       return null;
                     },
+                    onSaved: (val) {
+                      sellerName = val;
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -61,6 +108,9 @@ class SignUpFormState extends State<SignUpForm> {
                         return "Please enter store name";
                       }
                       return null;
+                    },
+                    onSaved: (val) {
+                      storeName = val;
                     },
                   ),
                   TextFormField(
@@ -76,6 +126,9 @@ class SignUpFormState extends State<SignUpForm> {
                       }
                       return null;
                     },
+                    onSaved: (val) {
+                      upiID = val;
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -89,6 +142,9 @@ class SignUpFormState extends State<SignUpForm> {
                         return "Please enter address";
                       }
                       return null;
+                    },
+                    onSaved: (val) {
+                      address = val;
                     },
                   ),
                   TextFormField(
@@ -108,6 +164,9 @@ class SignUpFormState extends State<SignUpForm> {
                       }
                       return null;
                     },
+                    onSaved: (val) {
+                      phoneNumber = val;
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -126,6 +185,9 @@ class SignUpFormState extends State<SignUpForm> {
                         return "Enter a valid email";
                       }
                       return null;
+                    },
+                    onSaved: (val) {
+                      emailId = val;
                     },
                   ),
                   const SizedBox(height: 20),

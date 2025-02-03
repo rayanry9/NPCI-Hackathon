@@ -34,9 +34,9 @@ class MyFireBaseAuth with ChangeNotifier {
       notifyListeners();
 
       if (_user!.userType == UserType.seller) {
-        if (_user!.upiId == null ||
-            _user!.upiId == "null" ||
-            _user!.upiId == "") {
+        if (_user!.phoneNumber == null ||
+            _user!.phoneNumber == "null" ||
+            _user!.phoneNumber == "") {
           return false;
         }
       }
@@ -46,6 +46,22 @@ class MyFireBaseAuth with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Future<void> updateUserData({
+    String? name,
+    String? email,
+    String? phoneNumber,
+    String? profilePicUrl,
+    String? upiId,
+  }) async {
+    (await _db.collection("users").doc(MyFireBaseAuth().user!.id).update(
+        UserModel.toFirestoreForUpdate(
+            name: name,
+            email: email,
+            phoneNumber: phoneNumber,
+            profilePicUrl: profilePicUrl,
+            upiId: upiId)));
   }
 
   static Future<SignInStatus> signInWithGoogle(UserType userType) async {
@@ -75,9 +91,9 @@ class MyFireBaseAuth with ChangeNotifier {
         isAuth = true;
         if (userData.exists) {
           _user = UserModel.fromFirestore(userData, null);
-          if (_user!.upiId == null ||
-              _user!.upiId == "null" ||
-              _user!.upiId == "") {
+          if (_user!.phoneNumber == null ||
+              _user!.phoneNumber == "null" ||
+              _user!.phoneNumber == "") {
             return SignInStatus.sellerDataNotFound;
           }
         } else {
