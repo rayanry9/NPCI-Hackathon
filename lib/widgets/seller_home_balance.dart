@@ -7,8 +7,8 @@ import 'package:uperks/services/firebase_transactions.dart';
 import 'package:uperks/widgets/payment_dialog.dart';
 import 'package:uperks/widgets/scanner.dart';
 
-class HomeBalance extends StatelessWidget {
-  const HomeBalance({super.key});
+class SellerHomeBalance extends StatelessWidget {
+  const SellerHomeBalance({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class HomeBalance extends StatelessWidget {
         Text(
           Provider.of<MyFireBaseTransactions>(context)
               .transactions
-              .totalRewardPointsBalanceCustomer
+              .totalRewardPointsBalanceSeller
               .toString(),
           style: Theme.of(context)
               .textTheme

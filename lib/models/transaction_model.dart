@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uperks/constants/transaction_type.dart';
 
@@ -95,7 +94,7 @@ class TransactionModel {
 }
 
 extension Calculations on List<TransactionModel> {
-  int get totalRewardPointsBalance {
+  int get totalRewardPointsBalanceCustomer {
     return where((model) => model.acceptStatus == AcceptStatus.accepted)
             .where((tranasctionModel) =>
                 tranasctionModel.type == TransactionType.gainPoints)
@@ -103,8 +102,26 @@ extension Calculations on List<TransactionModel> {
                 0,
                 (prevValue, transaction) =>
                     prevValue + transaction.rewardPoints!) -
-        where((tranasctionModel) =>
+        where((model) => model.acceptStatus == AcceptStatus.accepted)
+            .where((tranasctionModel) =>
                 tranasctionModel.type == TransactionType.redeemPoints)
+            .fold<int>(
+                0,
+                (prevValue, transaction) =>
+                    prevValue + transaction.rewardPoints!);
+  }
+
+  int get totalRewardPointsBalanceSeller {
+    return where((model) => model.acceptStatus == AcceptStatus.accepted)
+            .where((tranasctionModel) =>
+                tranasctionModel.type == TransactionType.buyPoints)
+            .fold<int>(
+                0,
+                (prevValue, transaction) =>
+                    prevValue + transaction.rewardPoints!) -
+        where((model) => model.acceptStatus == AcceptStatus.accepted)
+            .where((tranasctionModel) =>
+                tranasctionModel.type == TransactionType.gainPoints)
             .fold<int>(
                 0,
                 (prevValue, transaction) =>
