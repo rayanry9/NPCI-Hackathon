@@ -17,13 +17,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await MyFireBaseAuth().updateUser();
+  final bool userDataFilled= await MyFireBaseAuth().updateUser();
   await MyFireBaseTransactions().updateTransactions();
-  runApp(const MyApp());
+
+  runApp(MyApp(userDataFilled: userDataFilled, ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+	final bool userDataFilled;
+  const MyApp({super.key, required this.userDataFilled});
 
   // This widget is the root of your application.
   @override
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
       initialRoute: MyFireBaseAuth.isAuth == true
           ? (MyFireBaseAuth().user!.userType == UserType.customer
               ? '/home'
-              : '/home_seller')
+              :(userDataFilled?'/home_seller':'/signUp') )
           : '/get_started',
       routes: {
         '/home': (context) {

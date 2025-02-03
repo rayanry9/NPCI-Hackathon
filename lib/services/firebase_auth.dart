@@ -5,6 +5,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/models/user_model.dart';
 
+enum SignInStatus {
+  error,
+  ok,
+  sellerDataNotFound,
+}
+
 class MyFireBaseAuth with ChangeNotifier {
   static bool isAuth = (FirebaseAuth.instance.currentUser != null);
   static final _db = FirebaseFirestore.instance;
@@ -26,6 +32,14 @@ class MyFireBaseAuth with ChangeNotifier {
       _user = UserModel.fromFirestore(result, null);
 
       notifyListeners();
+
+      if (_user!.userType == UserType.seller) {
+        if (_user!.upiId == null ||
+            _user!.upiId == "null" ||
+            _user!.upiId == "") {
+          return false;
+        }
+      }
       return true;
     } else if (user != null) {
       return true;
@@ -34,9 +48,9 @@ class MyFireBaseAuth with ChangeNotifier {
     }
   }
 
-  static Future<bool> signInWithGoogle(UserType userType) async {
+  static Future<SignInStatus> signInWithGoogle(UserType userType) async {
     if (isAuth) {
-      return true;
+      return SignInStatus.ok;
     } else {
       try {
         final GoogleSignInAccount? googleUser =
@@ -55,15 +69,30 @@ class MyFireBaseAuth with ChangeNotifier {
         // Once signed in, return the UserCredential
         var creduser =
             (await FirebaseAuth.instance.signInWithCredential(credential)).user;
-        _user = UserModel(creduser!.uid, creduser.displayName!, creduser.email!,
-            creduser.phoneNumber, userType);
-        await _db.collection("users").doc(_user!.id).set(_user!.toFirestore());
-        isAuth = true;
+        final userData =
+            (await _db.collection("users").doc(creduser!.uid).get());
 
-        return true;
+        isAuth = true;
+        if (userData.exists) {
+          _user = UserModel.fromFirestore(userData, null);
+          if (_user!.upiId == null ||
+              _user!.upiId == "null" ||
+              _user!.upiId == "") {
+            return SignInStatus.sellerDataNotFound;
+          }
+        } else {
+          _user = UserModel(creduser.uid, creduser.displayName!,
+              creduser.email!, creduser.phoneNumber, userType);
+          await _db
+              .collection("users")
+              .doc(_user!.id)
+              .set(_user!.toFirestore());
+        }
+
+        return SignInStatus.ok;
       } catch (e) {
         print(e);
-        return false;
+        return SignInStatus.error;
       }
     }
   }

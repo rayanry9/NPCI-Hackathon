@@ -13,23 +13,28 @@ class SignInWithGoogleButton extends StatelessWidget {
         onPressed: () {
           try {
             MyFireBaseAuth.signInWithGoogle(userType).then((val) {
-              if (val) {
+              if (val == SignInStatus.ok) {
                 if (context.mounted) {
                   if (userType == UserType.customer) {
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil("/home", (route) => false);
                   } else {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("/signUp", (route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "/home_seller", (route) => false);
                   }
                 }
-              } else {
+              } else if (val == SignInStatus.error) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("Error Signing In"),
                     ),
                   );
+                }
+              } else if (val == SignInStatus.sellerDataNotFound) {
+                if (context.mounted) {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("/signUp", (route) => false);
                 }
               }
             });
