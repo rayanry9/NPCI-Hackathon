@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:uperks/constants/theme.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/firebase_options.dart';
-import 'package:uperks/screens/Seller/seller_home.dart';
+import 'package:uperks/screens/Seller/home_seller.dart';
 import 'package:uperks/screens/Seller/signup_form.dart';
 import 'package:uperks/screens/get_started.dart';
 import 'package:uperks/screens/Customer/home.dart';
@@ -17,14 +17,16 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final bool userDataFilled= await MyFireBaseAuth().updateUser();
+  final bool userDataFilled = await MyFireBaseAuth().updateUser();
   await MyFireBaseTransactions().updateTransactions();
 
-  runApp(MyApp(userDataFilled: userDataFilled, ));
+  runApp(MyApp(
+    userDataFilled: userDataFilled,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-	final bool userDataFilled;
+  final bool userDataFilled;
   const MyApp({super.key, required this.userDataFilled});
 
   // This widget is the root of your application.
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: MyFireBaseAuth.isAuth == true
           ? (MyFireBaseAuth().user!.userType == UserType.customer
               ? '/home'
-              :(userDataFilled?'/home_seller':'/signUp') )
+              : (userDataFilled ? '/home_seller' : '/signUp'))
           : '/get_started',
       routes: {
         '/home': (context) {
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => MyFireBaseTransactions(),
               ),
             ],
-            child: SellerHome(),
+            child: HomeSeller(),
           );
         },
       },

@@ -5,14 +5,16 @@ import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
-class TransactionContainer extends StatefulWidget {
-  const TransactionContainer({super.key});
+class SellerTransactionContainer extends StatefulWidget {
+  const SellerTransactionContainer({super.key});
 
   @override
-  TransactionContainerState createState() => TransactionContainerState();
+  SellerTransactionContainerState createState() =>
+      SellerTransactionContainerState();
 }
 
-class TransactionContainerState extends State<TransactionContainer> {
+class SellerTransactionContainerState
+    extends State<SellerTransactionContainer> {
   List<TransactionModel> data = [];
   List<TransactionModel> filteredData = [];
   String searchQuery = "";

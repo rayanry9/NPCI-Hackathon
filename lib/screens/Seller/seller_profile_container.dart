@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:uperks/services/firebase_auth.dart';
 
-class ProfileContainer extends StatelessWidget {
-  const ProfileContainer({super.key});
+class SellerProfileContainer extends StatelessWidget {
+  const SellerProfileContainer({super.key});
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

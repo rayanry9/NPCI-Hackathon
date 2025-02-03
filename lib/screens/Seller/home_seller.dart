@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uperks/screens/Customer/home.dart';
-import 'package:uperks/screens/Customer/homescreen_container.dart';
-import 'package:uperks/screens/Customer/profile_container.dart';
-import 'package:uperks/screens/Customer/transaction_container.dart';
+import 'package:uperks/screens/Seller/seller_homescreen_container.dart';
+import 'package:uperks/screens/Seller/seller_profile_container.dart';
+import 'package:uperks/screens/Seller/seller_transaction_container.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
-class HomeSeller extends StatefulWidget{
+class HomeSeller extends StatefulWidget {
   const HomeSeller({super.key});
 
   @override
   HomeSellerState createState() => HomeSellerState();
 }
 
-class HomeSellerState extends State<HomeSeller>{
+class HomeSellerState extends State<HomeSeller> {
   NavigationTabs selectedIndex = NavigationTabs.home;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -40,11 +39,11 @@ class HomeSellerState extends State<HomeSeller>{
   Widget _getSelectedContainer() {
     switch (selectedIndex) {
       case NavigationTabs.home:
-        return HomescreenContainer();
+        return SellerHomescreenContainer();
       case NavigationTabs.transactions:
-        return TransactionContainer();
+        return SellerTransactionContainer();
       case NavigationTabs.profile:
-        return ProfileContainer();
+        return SellerProfileContainer();
     }
   }
 
