@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
+import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
@@ -58,6 +59,10 @@ class TransactionContainerState extends State<TransactionContainer> {
                     .toList();
               });
             },
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Colors.black),
             decoration: InputDecoration(
               hintText: 'Search by seller...',
               suffixIcon: IconButton(
@@ -158,9 +163,15 @@ class TransactionContainerState extends State<TransactionContainer> {
                               .copyWith(color: Colors.black),
                         ),
                         Text(
-                          transaction.type! == TransactionType.gainPoints
-                              ? "Earned"
-                              : "Redeemed",
+                          switch (transaction.type!) {
+                            TransactionType.sharePoints =>
+                              transaction.sellerId! == MyFireBaseAuth().user!.id
+                                  ? "Shared Given"
+                                  : "Shared Taken",
+                            TransactionType.gainPoints => "Earned",
+                            TransactionType.redeemPoints => "Redeemed",
+                            _ => "Others"
+                          },
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

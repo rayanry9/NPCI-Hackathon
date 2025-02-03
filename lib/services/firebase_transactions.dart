@@ -82,6 +82,15 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
 
+      _transactions.addAll((await _db
+              .collection("transactions")
+              .where("sellerId", isEqualTo: MyFireBaseAuth().user!.id)
+              .where("acceptStatus", isEqualTo: AcceptStatus.declined.name)
+              .get())
+          .docs
+          .map((val) => TransactionModel.fromFirestore(val, null))
+          .toList());
+
       for (var elem in _transactions) {
         if (MyFireBaseSellers()
             .sellers
@@ -121,14 +130,7 @@ class MyFireBaseTransactions with ChangeNotifier {
             .sellers
             .where((val) => val.id == elem.sellerId)
             .isEmpty) {
-          final result =
-              (await _db.collection("users").doc(elem.sellerId).get());
-
-          if (result.exists) {
-            MyFireBaseSellers()
-                .sellers
-                .add(UserModel.fromFirestore(result, null));
-          }
+          MyFireBaseSellers().updateSellersWithId(elem.sellerId!);
         }
       }
       notifyListeners();
@@ -155,14 +157,7 @@ class MyFireBaseTransactions with ChangeNotifier {
             .sellers
             .where((val) => val.id == elem.buyerId)
             .isEmpty) {
-          final result =
-              (await _db.collection("users").doc(elem.buyerId).get());
-
-          if (result.exists) {
-            MyFireBaseSellers()
-                .sellers
-                .add(UserModel.fromFirestore(result, null));
-          }
+          MyFireBaseSellers().updateSellersWithId(elem.buyerId!);
         }
       }
       notifyListeners();

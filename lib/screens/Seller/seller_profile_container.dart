@@ -55,24 +55,6 @@ class SellerProfileContainer extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  print('share points ko dabaya');
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.paid),
-                    SizedBox(width: 8),
-                    Text("Share points",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-              Divider(
-                color: Colors.black54,
-                thickness: 1,
-              ),
-              TextButton(
-                onPressed: () {
                   print('manage your acccount ko dabaya');
                 },
                 child: Row(
@@ -86,7 +68,7 @@ class SellerProfileContainer extends StatelessWidget {
                 ),
               ),
               Divider(
-                color: Colors.black54,
+                color: Colors.black26,
                 thickness: 1,
               ),
               TextButton(
