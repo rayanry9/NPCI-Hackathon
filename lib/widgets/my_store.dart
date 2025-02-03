@@ -1,7 +1,4 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:uperks/services/firebase_auth.dart';
-import 'package:uperks/services/firebase_stores.dart';
 
 class MyStore extends StatelessWidget{
   const MyStore({super.key});

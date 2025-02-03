@@ -5,11 +5,14 @@ import 'package:uperks/constants/theme.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/firebase_options.dart';
 import 'package:uperks/screens/Seller/home_seller.dart';
+import 'package:uperks/screens/Seller/notifications_seller.dart';
 import 'package:uperks/screens/Seller/signup_form.dart';
 import 'package:uperks/screens/get_started.dart';
 import 'package:uperks/screens/Customer/home.dart';
 import 'package:uperks/screens/register.dart';
 import 'package:uperks/services/firebase_auth.dart';
+import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
 void main() async {
@@ -27,9 +30,19 @@ void main() async {
       await MyFireBaseTransactions().updateRequestsCustomer();
     }
   }
-  runApp(MyApp(
-    userDataFilled: userDataFilled,
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MyFireBaseTransactions()),
+        ChangeNotifierProvider(create: (context) => MyFireBaseStores()),
+        ChangeNotifierProvider(create: (context) => MyFireBaseSellers()),
+        ChangeNotifierProvider(create: (context) => MyFireBaseAuth()),
+      ],
+      child: MyApp(
+        userDataFilled: userDataFilled,
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -48,31 +61,12 @@ class MyApp extends StatelessWidget {
               : (userDataFilled ? '/home_seller' : '/signUp'))
           : '/get_started',
       routes: {
-        '/home': (context) {
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (context) => MyFireBaseAuth()),
-              ChangeNotifierProvider(
-                create: (context) => MyFireBaseTransactions(),
-              ),
-            ],
-            child: Home(),
-          );
-        },
+        '/home': (context) => Home(),
         '/get_started': (context) => GetStarted(),
         '/register': (context) => Register(),
         '/signUp': (context) => SignUpForm(),
-        '/home_seller': (context) {
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (context) => MyFireBaseAuth()),
-              ChangeNotifierProvider(
-                create: (context) => MyFireBaseTransactions(),
-              ),
-            ],
-            child: HomeSeller(),
-          );
-        },
+        '/home_seller': (context) => HomeSeller(),
+        '/notifications_seller': (context) => NotificationsSeller(),
       },
     );
   }

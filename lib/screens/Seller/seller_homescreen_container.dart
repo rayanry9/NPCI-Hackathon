@@ -13,7 +13,7 @@ class SellerHomescreenContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SellerButtonsHomescreen(),
-            MyStore(),
+            //MyStore(),
           ],
         ),
       ),

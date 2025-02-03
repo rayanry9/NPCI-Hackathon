@@ -66,7 +66,7 @@ class HomeSellerState extends State<HomeSeller> {
             child: IconButton(
               icon: const Icon(Icons.notifications, color: Colors.blue),
               onPressed: () {
-								Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NotificationsSeller()));
+                Navigator.of(context).pushNamed("/notifications_seller");
               },
             ),
           ),

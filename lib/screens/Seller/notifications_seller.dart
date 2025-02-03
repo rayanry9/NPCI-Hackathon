@@ -8,9 +8,8 @@ class NotificationsSeller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Consumer<MyFireBaseTransactions>(builder: (context, data, _) {
+    return Scaffold(
+      body: Consumer<MyFireBaseTransactions>(builder: (context, data, _) {
         return ListView.builder(
           itemCount: data.requests.length,
           itemBuilder: (context, index) {
