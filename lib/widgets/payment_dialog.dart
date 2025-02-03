@@ -106,7 +106,8 @@ class PaymentDialogState extends State<PaymentDialog> {
                   "fafa",
                   enteredAmount,
                   (enteredAmount / 10).floor(),
-                  widget.type);
+                  widget.type,
+                  false);
               // TODO : add check if failed
               final id =
                   (await MyFireBaseTransactions().addTransaction(transact));

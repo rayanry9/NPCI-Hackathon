@@ -11,6 +11,7 @@ class TransactionModel {
   final String? buyerId;
   final String? storeId;
   final TransactionType? type;
+  final bool? acceptStatus;
   DateTime? transactionDate;
 
   TransactionModel(
@@ -21,16 +22,12 @@ class TransactionModel {
       this.transactionAmount,
       this.rewardPoints,
       this.type,
+      this.acceptStatus,
       this.transactionDate);
 
-  TransactionModel.withoutId(
-    this.buyerId,
-    this.sellerId,
-    this.storeId,
-    this.transactionAmount,
-    this.rewardPoints,
-    this.type,
-  )   : id = "",
+  TransactionModel.withoutId(this.buyerId, this.sellerId, this.storeId,
+      this.transactionAmount, this.rewardPoints, this.type, this.acceptStatus)
+      : id = "",
         transactionDate = DateTime.now();
 
   factory TransactionModel.fromFirestore(
@@ -47,6 +44,7 @@ class TransactionModel {
       data["type"] == TransactionType.gainPoints.name
           ? TransactionType.gainPoints
           : TransactionType.redeemPoints,
+      data["acceptStatus"],
       DateTime.fromMillisecondsSinceEpoch(data["date"]),
     );
   }
@@ -67,6 +65,7 @@ class TransactionModel {
       Random().nextDouble() * 10000,
       Random().nextInt(1000),
       TransactionType.values[Random().nextInt(2)],
+      true,
     );
   }
 
@@ -79,6 +78,7 @@ class TransactionModel {
       if (rewardPoints != null) 'rewardPoints': rewardPoints,
       if (type != null) 'type': type!.name,
       'date': transactionDate!.millisecondsSinceEpoch,
+      if (acceptStatus != null) 'acceptStatus': acceptStatus,
     };
   }
 }
