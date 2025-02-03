@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 import 'package:uperks/widgets/payment_dialog.dart';
 import 'package:uperks/widgets/scanner.dart';
@@ -49,13 +50,17 @@ class HomeBalance extends StatelessWidget {
                       if (await MyFireBaseSellers()
                           .updateSellersWithId(qrValue)) {
                         if (context.mounted) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => PaymentDialog(
-                              type: TransactionType.gainPoints,
-                              id: qrValue,
-                            ),
-                          );
+                          await MyFireBaseStores()
+                              .updateStoreWithOwnerId(qrValue);
+                          if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => PaymentDialog(
+                                type: TransactionType.gainPoints,
+                                id: qrValue,
+                              ),
+                            );
+                          }
                         }
                       } else {
                         if (context.mounted) {
@@ -97,13 +102,17 @@ class HomeBalance extends StatelessWidget {
                       if (await MyFireBaseSellers()
                           .updateSellersWithId(qrValue)) {
                         if (context.mounted) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => PaymentDialog(
-                              type: TransactionType.redeemPoints,
-                              id: qrValue,
-                            ),
-                          );
+                          await MyFireBaseStores()
+                              .updateStoreWithOwnerId(qrValue);
+                          if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => PaymentDialog(
+                                type: TransactionType.redeemPoints,
+                                id: qrValue,
+                              ),
+                            );
+                          }
                         }
                       } else {
                         if (context.mounted) {

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For TextInputFormatter
 import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/models/store_model.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 import 'package:uperks/widgets/request_sent.dart';
 
@@ -51,7 +53,7 @@ class PaymentDialogState extends State<PaymentDialog> {
                   .copyWith(color: Colors.black),
             ),
             Text(
-              "Store {Store Name}",
+              "Store ${MyFireBaseStores().stores.getStoreFromOwnerId(widget.id).storeName}",
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
@@ -98,16 +100,30 @@ class PaymentDialogState extends State<PaymentDialog> {
             if (enteredAmount != 0 &&
                 _amountController.text != "" &&
                 enteredAmount != null) {
-              print('Entered amount: ${enteredAmount}');
-
               final transact = TransactionModel.withoutId(
                   MyFireBaseAuth().user!.id,
                   widget.id,
-                  "fafa",
+                  MyFireBaseStores()
+                      .stores
+                      .getStoreFromOwnerId(widget.id)
+                      .storeId,
                   enteredAmount,
-                  (enteredAmount / 10).floor(),
+                  enteredAmount >
+                          MyFireBaseStores()
+                              .stores
+                              .getStoreFromOwnerId(widget.id)
+                              .offerThreshold
+                      ? (enteredAmount *
+                              MyFireBaseStores()
+                                  .stores
+                                  .getStoreFromOwnerId(widget.id)
+                                  .offerPercent /
+                              100)
+                          .floor()
+                      : 0,
                   widget.type,
                   AcceptStatus.pending);
+
               // TODO : add check if failed
               final id =
                   (await MyFireBaseTransactions().addTransaction(transact));

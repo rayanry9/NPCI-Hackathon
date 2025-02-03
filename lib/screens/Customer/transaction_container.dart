@@ -163,15 +163,18 @@ class TransactionContainerState extends State<TransactionContainer> {
                               .copyWith(color: Colors.black),
                         ),
                         Text(
-                          switch (transaction.type!) {
-                            TransactionType.sharePoints =>
-                              transaction.sellerId! == MyFireBaseAuth().user!.id
-                                  ? "Shared Given"
-                                  : "Shared Taken",
-                            TransactionType.gainPoints => "Earned",
-                            TransactionType.redeemPoints => "Redeemed",
-                            _ => "Others"
-                          },
+                          transaction.acceptStatus == AcceptStatus.accepted
+                              ? switch (transaction.type!) {
+                                  TransactionType.sharePoints =>
+                                    transaction.sellerId! ==
+                                            MyFireBaseAuth().user!.id
+                                        ? "Shared Given"
+                                        : "Shared Taken",
+                                  TransactionType.gainPoints => "Earned",
+                                  TransactionType.redeemPoints => "Redeemed",
+                                  _ => "Others"
+                                }
+                              : "Declined",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
