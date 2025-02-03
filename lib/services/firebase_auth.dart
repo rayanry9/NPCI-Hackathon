@@ -58,7 +58,6 @@ class MyFireBaseAuth with ChangeNotifier {
     (await _db.collection("users").doc(MyFireBaseAuth().user!.id).update(
         UserModel.toFirestoreForUpdate(
             name: name,
-            email: email,
             phoneNumber: phoneNumber,
             profilePicUrl: profilePicUrl,
             upiId: upiId)));

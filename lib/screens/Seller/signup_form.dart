@@ -19,7 +19,6 @@ class SignUpFormState extends State<SignUpForm> {
   String? upiID;
   String? address;
   String? phoneNumber;
-  String? emailId;
   double offerPercent = 10;
   double offerThreshold = 40;
 
@@ -29,7 +28,6 @@ class SignUpFormState extends State<SignUpForm> {
       MyFireBaseAuth()
           .updateUserData(
         name: sellerName,
-        email: emailId,
         phoneNumber: phoneNumber,
       )
           .then((_) {
@@ -166,28 +164,6 @@ class SignUpFormState extends State<SignUpForm> {
                     },
                     onSaved: (val) {
                       phoneNumber = val;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: "Email ID",
-                      labelStyle: TextStyle(color: Colors.black),
-                      errorStyle: TextStyle(color: Colors.black),
-                    ),
-                    style: TextStyle(color: Colors.black),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter email ID";
-                      } else if (!RegExp(
-                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                          .hasMatch(value)) {
-                        return "Enter a valid email";
-                      }
-                      return null;
-                    },
-                    onSaved: (val) {
-                      emailId = val;
                     },
                   ),
                   const SizedBox(height: 20),
