@@ -53,14 +53,7 @@ class MyFireBaseTransactions with ChangeNotifier {
             .sellers
             .where((val) => val.id == elem.sellerId)
             .isEmpty) {
-          final result =
-              (await _db.collection("users").doc(elem.sellerId).get());
-
-          if (result.exists) {
-            MyFireBaseSellers()
-                .sellers
-                .add(UserModel.fromFirestore(result, null));
-          }
+          await MyFireBaseSellers().updateSellersWithId(elem.sellerId!);
         }
       }
       notifyListeners();
@@ -96,14 +89,7 @@ class MyFireBaseTransactions with ChangeNotifier {
             .sellers
             .where((val) => val.id == elem.buyerId)
             .isEmpty) {
-          final result =
-              (await _db.collection("users").doc(elem.buyerId).get());
-
-          if (result.exists) {
-            MyFireBaseSellers()
-                .sellers
-                .add(UserModel.fromFirestore(result, null));
-          }
+          await MyFireBaseSellers().updateSellersWithId(elem.sellerId!);
         }
       }
       notifyListeners();
@@ -130,7 +116,7 @@ class MyFireBaseTransactions with ChangeNotifier {
             .sellers
             .where((val) => val.id == elem.sellerId)
             .isEmpty) {
-          MyFireBaseSellers().updateSellersWithId(elem.sellerId!);
+          await MyFireBaseSellers().updateSellersWithId(elem.sellerId!);
         }
       }
       notifyListeners();
@@ -157,7 +143,7 @@ class MyFireBaseTransactions with ChangeNotifier {
             .sellers
             .where((val) => val.id == elem.buyerId)
             .isEmpty) {
-          MyFireBaseSellers().updateSellersWithId(elem.buyerId!);
+          await MyFireBaseSellers().updateSellersWithId(elem.buyerId!);
         }
       }
       notifyListeners();
