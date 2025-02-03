@@ -54,14 +54,18 @@ class SellerTransactionContainerState
                 filteredData = data
                     .where((transaction) => MyFireBaseSellers()
                         .sellers
-                        .getNameFromId(transaction.sellerId!)
+                        .getNameFromId(transaction.buyerId!)
                         .toLowerCase()
                         .contains(searchQuery.toLowerCase()))
                     .toList();
               });
             },
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Colors.black),
             decoration: InputDecoration(
-              hintText: 'Search by seller...',
+              hintText: 'Search by buyer...',
               suffixIcon: IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
@@ -128,7 +132,7 @@ class SellerTransactionContainerState
                         Text(
                           MyFireBaseSellers()
                               .sellers
-                              .getNameFromId(transaction.sellerId!),
+                              .getNameFromId(transaction.buyerId!),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -160,9 +164,12 @@ class SellerTransactionContainerState
                               .copyWith(color: Colors.black),
                         ),
                         Text(
-                          transaction.type! == TransactionType.gainPoints
-                              ? "Earned"
-                              : "Redeemed",
+                          switch (transaction.type!) {
+                            TransactionType.buyPoints => "Bought",
+                            TransactionType.gainPoints => "Given",
+                            TransactionType.redeemPoints => "Redeemed",
+                            _ => "Others"
+                          },
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
