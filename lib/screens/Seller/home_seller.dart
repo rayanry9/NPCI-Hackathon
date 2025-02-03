@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uperks/screens/Customer/home.dart';
 import 'package:uperks/screens/Customer/homescreen_container.dart';
 import 'package:uperks/screens/Customer/profile_container.dart';
 import 'package:uperks/screens/Customer/transaction_container.dart';
@@ -8,14 +9,14 @@ import 'package:uperks/services/firebase_transactions.dart';
 
 enum NavigationTabs { home, transactions, profile }
 
-class SellerHome extends StatefulWidget {
-  const SellerHome({super.key});
+class HomeSeller extends StatefulWidget{
+  const HomeSeller({super.key});
 
   @override
-  SellerHomeState createState() => SellerHomeState();
+  HomeSellerState createState() => HomeSellerState();
 }
 
-class SellerHomeState extends State<SellerHome> {
+class HomeSellerState extends State<HomeSeller>{
   NavigationTabs selectedIndex = NavigationTabs.home;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -39,19 +40,12 @@ class SellerHomeState extends State<SellerHome> {
   Widget _getSelectedContainer() {
     switch (selectedIndex) {
       case NavigationTabs.home:
-        {
-          return HomescreenContainer();
-        }
+        return HomescreenContainer();
       case NavigationTabs.transactions:
         return TransactionContainer();
       case NavigationTabs.profile:
         return ProfileContainer();
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
