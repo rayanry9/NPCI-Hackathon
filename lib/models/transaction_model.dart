@@ -11,7 +11,7 @@ class TransactionModel {
   final String? buyerId;
   final String? storeId;
   final TransactionType? type;
-  final AcceptStatus? acceptStatus;
+  AcceptStatus acceptStatus;
   DateTime? transactionDate;
 
   TransactionModel(
@@ -41,14 +41,16 @@ class TransactionModel {
       data["storeId"],
       double.parse(data["transactionAmount"].toString()),
       int.parse(data["rewardPoints"].toString()),
-      switch (TransactionType.values.indexWhere((tran)=>tran.name.contains(data["type"]))) {
+      switch (TransactionType.values
+          .indexWhere((tran) => tran.name.contains(data["type"]))) {
         0 => TransactionType.gainPoints,
         1 => TransactionType.redeemPoints,
         2 => TransactionType.sharePoints,
         3 => TransactionType.buyPoints,
         _ => TransactionType.sharePoints
       },
-      switch (AcceptStatus.values.indexWhere((stat)=>stat.name.contains(["acceptStatus"].toString()))) {
+      switch (AcceptStatus.values.indexWhere(
+          (stat) => stat.name.contains(["acceptStatus"].toString()))) {
         0 => AcceptStatus.accepted,
         1 => AcceptStatus.declined,
         2 => AcceptStatus.pending,
@@ -87,13 +89,13 @@ class TransactionModel {
       if (rewardPoints != null) 'rewardPoints': rewardPoints,
       if (type != null) 'type': type!.name,
       'date': transactionDate!.millisecondsSinceEpoch,
-      if (acceptStatus != null) 'acceptStatus': acceptStatus!.name,
+      'acceptStatus': acceptStatus.name,
     };
   }
 }
 
 extension Calculations on List<TransactionModel> {
-  int get rewardPoints {
+  int get totalRewardPointsBalance {
     return where(
             (tranasctionModel) =>
                 tranasctionModel.type == TransactionType.gainPoints).fold<int>(
@@ -105,5 +107,9 @@ extension Calculations on List<TransactionModel> {
                 0,
                 (prevValue, transaction) =>
                     prevValue + transaction.rewardPoints!);
+  }
+
+  TransactionModel findTransactionFromId(String id) {
+    return firstWhere((trans) => trans.id == id);
   }
 }

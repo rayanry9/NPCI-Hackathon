@@ -85,10 +85,10 @@ class MyFireBaseTransactions with ChangeNotifier {
       for (var elem in _transactions) {
         if (MyFireBaseSellers()
             .sellers
-            .where((val) => val.id == elem.sellerId)
+            .where((val) => val.id == elem.buyerId)
             .isEmpty) {
           final result =
-              (await _db.collection("users").doc(elem.sellerId).get());
+              (await _db.collection("users").doc(elem.buyerId).get());
 
           if (result.exists) {
             MyFireBaseSellers()
@@ -153,10 +153,10 @@ class MyFireBaseTransactions with ChangeNotifier {
       for (var elem in _transactions) {
         if (MyFireBaseSellers()
             .sellers
-            .where((val) => val.id == elem.sellerId)
+            .where((val) => val.id == elem.buyerId)
             .isEmpty) {
           final result =
-              (await _db.collection("users").doc(elem.sellerId).get());
+              (await _db.collection("users").doc(elem.buyerId).get());
 
           if (result.exists) {
             MyFireBaseSellers()
@@ -171,6 +171,18 @@ class MyFireBaseTransactions with ChangeNotifier {
       print(e);
       return false;
     }
+  }
+
+  Future<bool> sellerRequestStatusChange(
+      String requestId, AcceptStatus status) async {
+    await _db.collection("transactions").doc("requestId").update({
+      "acceptStatus": status.name,
+    });
+
+    _requests.removeWhere((val) => val.id == requestId);
+    notifyListeners();
+    updateTransactionsSeller();
+    return true;
   }
 
   List<TransactionModel> get transactions {

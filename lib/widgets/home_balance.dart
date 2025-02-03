@@ -24,7 +24,7 @@ class HomeBalance extends StatelessWidget {
         Text(
           Provider.of<MyFireBaseTransactions>(context)
               .transactions
-              .rewardPoints
+							.totalRewardPointsBalance
               .toString(),
           style: Theme.of(context)
               .textTheme
