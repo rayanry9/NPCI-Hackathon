@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uperks/screens/Seller/notifications_seller.dart';
 import 'package:uperks/screens/Seller/seller_homescreen_container.dart';
 import 'package:uperks/screens/Seller/seller_profile_container.dart';
 import 'package:uperks/screens/Seller/seller_transaction_container.dart';
@@ -65,7 +66,7 @@ class HomeSellerState extends State<HomeSeller> {
             child: IconButton(
               icon: const Icon(Icons.notifications, color: Colors.blue),
               onPressed: () {
-                print("notifications ko dabaya");
+								Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NotificationsSeller()));
               },
             ),
           ),
