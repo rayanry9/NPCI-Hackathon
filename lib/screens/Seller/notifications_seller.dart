@@ -9,11 +9,16 @@ class NotificationsSeller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Requests"),
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
       body: Consumer<MyFireBaseTransactions>(builder: (context, data, _) {
         return ListView.builder(
           itemCount: data.requests.length,
           itemBuilder: (context, index) {
-            return NotificationCardAD(
+            return NotificationCardAd(
               transaction: data.requests[index],
             );
           },

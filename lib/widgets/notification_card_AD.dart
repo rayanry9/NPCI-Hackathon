@@ -1,79 +1,126 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/models/user_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
-class NotificationCardAd extends StatelessWidget{
-
+class NotificationCardAd extends StatelessWidget {
   final TransactionModel transaction;
   const NotificationCardAd({super.key, required this.transaction});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.blue, width: 1),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        spacing: 12,
         children: [
-          Column(
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                transaction.buyerId!,
-                style: TextStyle(fontSize: 10, color: Colors.black54),
+                MyFireBaseSellers().sellers.getNameFromId(transaction.buyerId!),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.black),
               ),
-              Text(
-                "Transaction Value: ",
-                  style: TextStyle(color: Colors.black54),
-                  textAlign: TextAlign.left,
-              ),
-              Text(
-                  transaction.transactionAmount!.toStringAsFixed(2),
-                  style: TextStyle(color: Colors.black54),
-              ),
-              Text(
-                "Reward Points Request: ",
-                style: TextStyle(color: Colors.black54),
-                textAlign: TextAlign.left,
-              ),
-              Text(
-                transaction.rewardPoints!.toString(),
-                style: TextStyle(color: Colors.black54),
-              ),
+              Row(
+                spacing: 12,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      MyFireBaseTransactions().sellerRequestStatusChange(
+                          transaction.id!, AcceptStatus.accepted);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen,
+                      minimumSize: Size.zero,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text("Accept",
+                        style: Theme.of(context).textTheme.bodyMedium!),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      MyFireBaseTransactions().sellerRequestStatusChange(
+                          transaction.id!, AcceptStatus.declined);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      minimumSize: Size.zero,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      "Decline",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
           Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                   MyFireBaseTransactions().sellerRequestStatusChange(transaction.id!, AcceptStatus.accepted);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-                ),
-                child: Text("Accept"),
-              ),
-              SizedBox(width: 15),
-              ElevatedButton(
-                onPressed: () {
-                    MyFireBaseTransactions().sellerRequestStatusChange(transaction.id!, AcceptStatus.declined);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
+              Column(
+                spacing: 8,
+                children: [
+                  Text(
+                    "Transaction Value",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.black54),
+                    textAlign: TextAlign.center,
                   ),
-                  child: Text("Decline"),
-                ),
+                  Text(
+                    transaction.transactionAmount!.toStringAsFixed(2),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              Column(
+                spacing: 8,
+                children: [
+                  Text(
+                    "Reward Points Request: ",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.black54),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    transaction.rewardPoints!.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
             ],
           ),
         ],
@@ -81,4 +128,3 @@ class NotificationCardAd extends StatelessWidget{
     );
   }
 }
-
