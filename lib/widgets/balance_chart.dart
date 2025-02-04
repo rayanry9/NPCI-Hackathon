@@ -188,6 +188,30 @@ class _BalanceChartState extends State<BalanceChart> {
                 );
               })),
         ),
+        const SizedBox(height: 10), // Space between chart and legend
+      // Legend Row
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildLegendItem(Colors.blue, "Gained Points"),
+          const SizedBox(width: 20),
+          _buildLegendItem(Colors.red, "Redeemed Points"),
+      ],
+      ),
+      ],
+    );
+  }
+
+  Widget _buildLegendItem(Color color, String text) {
+    return Row(
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 5),
+        Text(text, style: TextStyle(fontSize: 14)),
       ],
     );
   }
