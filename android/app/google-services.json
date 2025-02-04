@@ -56,6 +56,50 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612274265503:android:38e2f5cd54f3c898e271aa",
+        "android_client_info": {
+          "package_name": "com.npci_hackathon.huckers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612274265503-08p1jv9lpp37mjh2qu5bmtrduvnbgnv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.npci_hackathon.huckers",
+            "certificate_hash": "d9b10aa769ffeb0662c72ea79865987b8649e832"
+          }
+        },
+        {
+          "client_id": "612274265503-9mbmleuu9bp46tco7cmvboc0bkls5v61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCIbouI4NZJJsD2adwBSSbi9e-4u04W_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612274265503-9mbmleuu9bp46tco7cmvboc0bkls5v61.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "612274265503-c4r2qmmiq7d163pihu2080bje5innemv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.npciHackathon"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
