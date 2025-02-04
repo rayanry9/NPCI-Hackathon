@@ -12,82 +12,65 @@ class RequestSent extends StatelessWidget {
     return Dialog.fullscreen(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: IntrinsicHeight(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Spacer(),
-                    Column(
-                      children: [
-                        Icon(Icons.check_circle_rounded,
-                            size: 80, color: Colors.green),
-                        SizedBox(height: 20),
-                        Text(
-                          '${transaction.rewardPoints}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge!
-                              .copyWith(color: Colors.black),
-                        ),
-                        Text(
-                          'Reward Points',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(color: Colors.orange),
-                        ),
-                        Text(
-                          'Request Sent',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Column(
-                      children: [
-                        Text(
-                          'Store ${MyFireBaseStores().stores.getStoreFromStoreId(transaction.storeId!)}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.black54),
-                        ),
-                        Text(
-                          'Transaction Value: ${transaction.transactionAmount}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.black54),
-                        ),
-                        Text(
-                          'Transaction Date: ${transaction.transactionDate}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.black54),
-                        ),
-                        Text(
-                          'Transaction Id: ${transaction.id}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.black54),
-                        ),
-                        SizedBox(height: 40),
-                      ],
-                    ),
-                  ],
-                ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(Icons.check_circle_rounded,
+              size: 80, color: Colors.green),
+              SizedBox(height: 20),
+              Text(
+                '${transaction.rewardPoints}',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge!
+                    .copyWith(color: Colors.black),
               ),
-            ),
-          ),
+              Text(
+                'Reward Points',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: Colors.orange),
+              ),
+              Text(
+                'Request Sent',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.black),
+              ),
+              Text(
+                'Store ${MyFireBaseStores().stores.getStoreFromStoreId(transaction.storeId!)}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black54),
+              ),
+              Text(
+                'Transaction Value: ${transaction.transactionAmount}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black54),
+              ),
+              Text(
+                'Transaction Date: ${transaction.transactionDate}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black54),
+              ),
+              Text(
+                'Transaction Id: ${transaction.id}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black54),
+              ),          
+            ],
+          ),         
         ),
       ),
     );

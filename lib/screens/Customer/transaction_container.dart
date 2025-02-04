@@ -35,7 +35,10 @@ class TransactionContainerState extends State<TransactionContainer> {
       } else if (filterType == 'earned') {
         filteredData =
             data.where((t) => t.type == TransactionType.gainPoints).toList();
-      }
+      } else if (filterType == 'shared') {
+        filteredData =
+            data.where((t) => t.type == TransactionType.sharePoints).toList();
+      } 
     });
   }
 
@@ -66,7 +69,7 @@ class TransactionContainerState extends State<TransactionContainer> {
             decoration: InputDecoration(
               hintText: 'Search by seller...',
               suffixIcon: IconButton(
-                icon: Icon(Icons.search),
+                icon: Icon(Icons.tune),
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -94,6 +97,13 @@ class TransactionContainerState extends State<TransactionContainer> {
                               title: const Text("Earned"),
                               onTap: () {
                                 _filterTransactions('earned');
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text("Shared"),
+                              onTap: () {
+                                _filterTransactions('shared');
                                 Navigator.pop(context);
                               },
                             ),
