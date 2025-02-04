@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:uperks/constants/theme.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/firebase_options.dart';
+import 'package:uperks/screens/Customer/notifications_container.dart';
 import 'package:uperks/screens/Seller/home_seller.dart';
 import 'package:uperks/screens/Seller/notifications_seller.dart';
 import 'package:uperks/screens/Seller/signup_form.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         '/signUp': (context) => SignUpForm(),
         '/home_seller': (context) => HomeSeller(),
         '/notifications_seller': (context) => NotificationsSeller(),
+        '/notifications_customer': (context) => NotificationsContainer(),
       },
     );
   }

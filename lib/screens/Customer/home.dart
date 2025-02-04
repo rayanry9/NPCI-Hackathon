@@ -71,7 +71,7 @@ class HomeState extends State<Home> {
             child: IconButton(
               icon: const Icon(Icons.notifications, color: Colors.blue),
               onPressed: () {
-                print("notifications ko dabaya");
+                Navigator.of(context).pushNamed("/notifications_customer");
               },
             ),
           ),
