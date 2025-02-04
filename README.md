@@ -85,3 +85,5 @@ The notifications at the top of the app show all of the requests made by custome
 - Package name for the app is `com.npci_hackathon.huckers`
 - Run ```flutterfire configure``` to setup flutter with firebase.
 - Run ```flutter run``` to start a debug session on any devices or emulators connected to the workstation.
+
+A prebuilt version of the app can be download from ```releaseApp/```
