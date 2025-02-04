@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/widgets/my_store.dart';
 import 'package:uperks/widgets/seller_home_balance.dart';
 
 class SellerHomescreenContainer extends StatelessWidget {
@@ -11,8 +12,8 @@ class SellerHomescreenContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SellerHomeBalance()
-            //MyStore(),
+            SellerHomeBalance(),
+            MyStore(),
           ],
         ),
       ),

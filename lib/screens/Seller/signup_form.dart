@@ -19,8 +19,9 @@ class SignUpFormState extends State<SignUpForm> {
   String? upiID;
   String? address;
   String? phoneNumber;
-  double offerPercent = 10;
-  double offerThreshold = 40;
+  double? offerPercent;
+  double? offerThreshold;
+  StoreType? selectedCategory;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -36,8 +37,8 @@ class SignUpFormState extends State<SignUpForm> {
               MyFireBaseAuth().user!.id,
               address!,
               storeName!,
-              offerPercent,
-              offerThreshold,
+              offerPercent!,
+              offerThreshold!,
               upiID!,
               StoreType.cafe);
 
@@ -96,6 +97,42 @@ class SignUpFormState extends State<SignUpForm> {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
+                      labelText: "Offer Percent",
+                      suffixText: "%",
+                      labelStyle: TextStyle(color: Colors.black),
+                      errorStyle: TextStyle(color: Colors.black),
+                    ),
+                    style: TextStyle(color: Colors.black),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter offer percent";
+                      }
+                      return null;
+                    },
+                    onSaved: (val) {
+                      offerPercent = double.parse(val!);
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: "Offer Threshold",
+                      suffixText: "%",
+                      labelStyle: TextStyle(color: Colors.black),
+                      errorStyle: TextStyle(color: Colors.black),
+                    ),
+                    style: TextStyle(color: Colors.black),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter offer threshold";
+                      }
+                      return null;
+                    },
+                    onSaved: (val) {
+                      offerThreshold = double.parse(val!);
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
                       labelText: "Store Name",
                       labelStyle: TextStyle(color: Colors.black),
                       errorStyle: TextStyle(color: Colors.black),
@@ -109,6 +146,29 @@ class SignUpFormState extends State<SignUpForm> {
                     },
                     onSaved: (val) {
                       storeName = val;
+                    },
+                  ),
+                  DropdownButtonFormField<StoreType>(
+                    value: selectedCategory,
+                    decoration: const InputDecoration(
+                      labelText: "Category of Shop",
+                      border: OutlineInputBorder(),
+                    ),
+                    items: StoreType.values.map((StoreType type) {
+                      return DropdownMenuItem<StoreType>(
+                        value: type,
+                        child: Text(type.toString().split('.').last), 
+                      );
+                    }).toList(),
+                    onChanged: (StoreType? newValue) {
+                      setState(() {
+                        selectedCategory = newValue;
+                      });
+                    },
+                    validator: (value) =>
+                        value == null ? "Please select a category" : null,
+                    onSaved: (val) {
+                      selectedCategory = val;
                     },
                   ),
                   TextFormField(

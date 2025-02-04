@@ -63,7 +63,7 @@ class SellerProfileContainer extends StatelessWidget {
                     SizedBox(width: 8),
                     Text("Manage your account",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
+                            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                   ],
                 ),
               ),
@@ -71,19 +71,21 @@ class SellerProfileContainer extends StatelessWidget {
                 color: Colors.black26,
                 thickness: 1,
               ),
-              TextButton(
-                onPressed: () {
-                  print('help and feedback ko dabaya');
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.help),
-                    SizedBox(width: 8),
-                    Text("Help and feedback",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                  ],
-                ),
+              Row(
+                children: [
+              Icon(Icons.help),
+              SizedBox(width: 8),
+              Flexible(
+                child: 
+              Text(
+                "For any queries, kindly mail at ma24btech11018@iith.ac.in",
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                softWrap: true,
+                style: TextStyle(
+                        fontSize: 16, color: Colors.black,fontWeight: FontWeight.bold, ),),),
+              
+                ],
               ),
             ],
           ),

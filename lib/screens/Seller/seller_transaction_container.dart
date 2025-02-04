@@ -37,6 +37,10 @@ class SellerTransactionContainerState
         filteredData =
             data.where((t) => t.type == TransactionType.gainPoints).toList();
       }
+      else if (filterType == 'bought') {
+        filteredData =
+            data.where((t) => t.type == TransactionType.buyPoints).toList();
+      }
     });
   }
 
@@ -67,7 +71,7 @@ class SellerTransactionContainerState
             decoration: InputDecoration(
               hintText: 'Search by buyer...',
               suffixIcon: IconButton(
-                icon: Icon(Icons.search),
+                icon: Icon(Icons.tune),
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -95,6 +99,13 @@ class SellerTransactionContainerState
                               title: const Text("Earned"),
                               onTap: () {
                                 _filterTransactions('earned');
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text("Bought"),
+                              onTap: () {
+                                _filterTransactions('bought');
                                 Navigator.pop(context);
                               },
                             ),

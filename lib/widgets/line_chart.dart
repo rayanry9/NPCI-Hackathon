@@ -1,4 +1,3 @@
-/*
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +17,6 @@ class _BalanceChartState extends State<BalanceChart> {
 
   void addTransaction(int epochTime, double transactionAmount) {
     setState(() {
-      // Directly set the balance to the transaction amount (final balance)
       transactions.add({
         'date': epochTime,
         'balance': transactionAmount,
@@ -34,10 +32,28 @@ class _BalanceChartState extends State<BalanceChart> {
     }).toList();
   }
 
-  // This function is called when a transaction occurs
   void onTransactionOccurred(double transactionAmount) {
     int newEpochTime = DateTime.now().millisecondsSinceEpoch;
     addTransaction(newEpochTime, transactionAmount);
+  }
+
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    int index = value.toInt();
+    if (index >= 0 && index < transactions.length) {
+      int epochTime = transactions[index]['date'];
+      String month = DateFormat('MMM').format(
+        DateTime.fromMillisecondsSinceEpoch(epochTime),
+      );
+      return SideTitleWidget(
+        meta: meta,
+        child: Text(month, style: TextStyle(fontSize: 12)),
+      );
+    }
+    return Container();
+  }
+
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    return Text(value.toStringAsFixed(0), style: TextStyle(fontSize: 12));
   }
 
   @override
@@ -50,35 +66,29 @@ class _BalanceChartState extends State<BalanceChart> {
             LineChartData(
               gridData: FlGridData(show: false),
               titlesData: FlTitlesData(
-                bottomTitles: SideTitles(
-                  showTitles: true,
-                  getTitles: (value) {
-                    int index = value.toInt();
-                    if (index >= 0 && index < transactions.length) {
-                      int epochTime = transactions[index]['date'];
-                      String month = DateFormat('MMM').format(
-                        DateTime.fromMillisecondsSinceEpoch(epochTime),
-                      );
-                      return month;
-                    }
-                    return '';
-                  },
-                  reservedSize: 30, // Space for month labels
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: leftTitleWidgets,
+                    reservedSize: 40,
+                  ),
                 ),
-                leftTitles: SideTitles(
-                  showTitles: true,
-                  getTitles: (value) {
-                    return value.toString();
-                  },
-                  margin: 8,
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: bottomTitleWidgets,
+                    reservedSize: 30,
+                  ),
                 ),
               ),
-              borderData: FlBorderData(show: true),
+              borderData: FlBorderData(
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
               lineBarsData: [
                 LineChartBarData(
                   spots: getChartData(),
                   isCurved: true,
-                  colors: [Colors.blue],
+                  gradient: LinearGradient(colors: [Colors.blue, Colors.blueAccent]),
                   barWidth: 3,
                   belowBarData: BarAreaData(show: false),
                 ),
@@ -88,7 +98,7 @@ class _BalanceChartState extends State<BalanceChart> {
         ),
         ElevatedButton(
           onPressed: () {
-            double transactionAmount = 6500; // Example transaction amount
+            double transactionAmount = 6500;
             onTransactionOccurred(transactionAmount);
           },
           child: Text("Add Transaction"),
@@ -97,4 +107,4 @@ class _BalanceChartState extends State<BalanceChart> {
     );
   }
 }
-*/
+
