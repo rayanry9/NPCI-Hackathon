@@ -40,8 +40,7 @@ class SignUpFormState extends State<SignUpForm> {
               offerPercent!,
               offerThreshold!,
               upiID!,
-              StoreType.cafe);
-
+              selectedCategory!);
           MyFireBaseStores().addStore(store).then((val) {
             MyFireBaseStores().updateStoreWithStoreId(val!);
             if (context.mounted) {
@@ -168,8 +167,6 @@ class SignUpFormState extends State<SignUpForm> {
                         selectedCategory = newValue;
                       });
                     },
-                    validator: (value) =>
-                        value == null ? "Please select a category" : null,
                     onSaved: (val) {
                       selectedCategory = val;
                     },
