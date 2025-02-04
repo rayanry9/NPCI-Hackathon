@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/store_model.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase_auth.dart';
@@ -25,20 +26,37 @@ class RequestSent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.check_circle_rounded, size: 80, color: Colors.green),
+							transaction.type == TransactionType.gainPoints?
               Text(
                 '${transaction.rewardPoints}',
                 style: Theme.of(context)
                     .textTheme
                     .headlineLarge!
                     .copyWith(color: Colors.black),
+              ):
+              Text(
+                '${transaction.rewardPoints!/MyFireBaseAuth.customerRedeemRate!}',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge!
+                    .copyWith(color: Colors.black),
               ),
+							transaction.type == TransactionType.gainPoints?
               Text(
                 'Reward Points',
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall!
                     .copyWith(color: Colors.orange),
-              ),
+              ):
+              Text(
+                'Redeemed Amount',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: Colors.orange),
+              )
+							,
               Text(
                 'Request Sent',
                 style: Theme.of(context)
