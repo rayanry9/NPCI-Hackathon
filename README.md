@@ -24,7 +24,7 @@ Our solution to the unifying reward points across many businesses involves selli
 
 The App is made using ***Dart*** and ***Flutter*** with ***Firebase*** acting as the backend for it for authentication and database needs.
 
-![Get Started](screenshots/ss_15.png)
+<img src="screenshots/ss_15.jpg" height="400px"/>
 
 The app opens to a screen with a "Get Started" button for consumers to begin using the app, or for sellers to register their shop / business into the system. 
 
@@ -34,40 +34,43 @@ Consumer Interface:
 
 The consumer clicks 'Get Started' and uses their Google Account to sign into the app. Without any additional sign up requirements, the user gains direct access to their UPerks account. 
 
-![Home screen Customer](screenshots/ss_6.png)
+<img src="screenshots/ss_6.jpg" height="400px"/>
 
 The home screen has a banner which shows the customer how many reward points they have amassed. The Scan button allows them to scan a unique QR code at the business they are shopping at. After scanning this QR, the customer enters the amount that they have paid and sends a request to the business. The business approves this (as explained later) request to accredit the customer with the appropriate amount of rewards points (which is calculated automatically). This addition is updated on reloading the reward point counter. The redeem button works in the opposite way. It allows the customer to scan a QR code at any participating business to send a request to the seller by first entering the bill amount. Then, they can choose how many reward points to allocate ('Reward Points Using') to the purchase, which shows the exact discount received under the 'Redeem Amount.' After clicking 'Complete Transaction,' we plan on implementing integration with real money by linking the UPI accounts of buyers and sellers with the app.  
 
-![Notifications Customer](screenshots/ss_13.png)
+<img src="screenshots/ss_13.jpg" height="400px"/>
 On clicking the notifications icon, you can see all pending transactions that you have requested. Underneath your reward point balance, the 'Current Offers' section shows stores with their categories, address (in the app, we have used rrrrrrr as a placeholder) and the offer percent on each qualifying transactions. 
 
-![Transactions Customer](screenshots/ss_10.png)
+<img src="screenshots/ss_10.jpg" height="400px"/>
 The transactions page, accessible through the middle button on the navigation bar on the bottom of the screen shows a detailed history of the transactions made and reward points used by the customer. There is a search bar with filters at the top to look for transactions by the name of the store, or the category of the transaction (namely, redeemed, earned, and shared). 
 
-
-![Profile Customer](screenshots/ss_12.png)
+<img src="screenshots/ss_12.jpg" height="400px"/>
 The profile page, accessible through the rightmost button on the navigation bar on the bottom of the screen shows the user's profile with their name and User Id. A QR code is placed in the center of the screen, for future plans of implementing a way for users to share reward points with each other. 
 
 
-
-![Start Seller](screenshots/ss_15.png)
+<img src="screenshots/ss_15.jpg" height="400px"/>
 Seller Interface:
 A seller will click the 'SignUp Here' on the opening screen of the app, which redirects them to a screen that lets them sign in with their Google Account. After signing in, they fill out a form with all the specifications of their business to register it under our app. The offer percent is the amount of reward points that the store offers over the offers threshold they specify.
 
-![Form Seller](screenshots/ss_2.png)
+<img src="screenshots/ss_2.jpg" height="400px"/>
 After clicking submit, the seller is directed to the My Store Page. Here, they can view their available balance (that they can distribute to their customers). They may increase their balance by using the 'Buy Points' button. The 'Change Offer' button will be implemented soon, allowing the seller to change their offer percent as need be.
 
-![Home screen Seller](screenshots/ss_17.png)
+<img src="screenshots/ss_17.png" height="400px"/>
+
 A graph in the My Store Page will show the variation of cumulative reward points (in blue) and redeemed points (in red) at their business. 
 
-![Transactions Seller](screenshots/ss_19.png)
+<img src="screenshots/ss_19.png" height="400px"/>
+
 The transactions page shows a detailed history of the transactions made at or by the store. In the app we made, you will see a transaction with 'Admin.' This is the initial investment, the reward points that we provide the seller. Like in the customer's transaction page, there is a search bar where they can look for transactions by name of customer or category of transaction (namely, redeemed, earned, and bought). 
-![Transactions Customer](screenshots/ss_22.png)
 
-![Profile Seller](screenshots/ss_20.png)
-The profile page is structured similarly to that for the consumers. The business's QR code is already implemented, and  customers can use it to make transactions. There is an option to update the store location underneath the QR code. We will soon implement a way to update your location by clicking this option.    
+<img src="screenshots/ss_22.png" height="400px"/>
 
-![Notifications Seller](screenshots/ss_21.png)
+<img src="screenshots/ss_20.png" height="400px"/>
+
+The profile page is structured similarly to that for the consumers. The business's QR code is already implemented, and  customers can use it to make transactions. There is an option to update the store location underneath the QR code. We will soon implement a way to update your location by clicking this option. 
+
+<img src="screenshots/ss_21.png" height="400px"/>
+
 The notifications at the top of the app show all of the requests made by customers at the store. Here, the business owner will accept or decline the customers request for reward points. 
 
 
