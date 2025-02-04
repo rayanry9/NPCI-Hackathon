@@ -118,67 +118,60 @@ class SellerTransactionContainerState
           itemBuilder: (context, index) {
             final transaction = filteredData[index];
 
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 42),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          MyFireBaseSellers()
-                              .sellers
-                              .getNameFromId(transaction.buyerId!),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: Colors.black),
-                        ),
-                        Text(
-                          transaction.transactionDate!
-                              .toString()
-                              .substring(0, 10),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.grey),
-                        ),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        MyFireBaseSellers()
+                            .sellers
+                            .getNameFromId(transaction.buyerId!),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.black),
+                      ),
+                      Text(
+                        transaction.transactionDate!
+                            .toString()
+                            .substring(0, 10),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 130),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          transaction.rewardPoints.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: Colors.black),
-                        ),
-                        Text(
-                          transaction.acceptStatus == AcceptStatus.accepted
-                              ? switch (transaction.type!) {
-                                  TransactionType.buyPoints => "Bought",
-                                  TransactionType.gainPoints => "Given",
-                                  TransactionType.redeemPoints => "Redeemed",
-                                  _ => "Others"
-                                }
-                              : "Declined",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.grey),
-                        ),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        transaction.rewardPoints.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.black),
+                      ),
+                      Text(
+                        transaction.acceptStatus == AcceptStatus.accepted
+                            ? switch (transaction.type!) {
+                                TransactionType.buyPoints => "Bought",
+                                TransactionType.gainPoints => "Given",
+                                TransactionType.redeemPoints => "Redeemed",
+                                _ => "Others"
+                              }
+                            : "Declined",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey),
+                      ),
+                    ],
                   ),
                 ],
               ),
