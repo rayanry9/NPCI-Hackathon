@@ -25,6 +25,25 @@ class TransactionContainerState extends State<TransactionContainer> {
     super.initState();
   }
 
+  Color getColor(AcceptStatus status,TransactionType type){
+    switch(status){
+      case AcceptStatus.accepted:
+        switch(type){
+          case TransactionType.gainPoints:
+          return Colors.lightGreen;
+          case TransactionType.redeemPoints:
+          return Theme.of(context).primaryColor;
+          case TransactionType.sharePoints:
+            return Colors.blue;
+          case _: return Colors.black;
+        }
+      case AcceptStatus.declined:
+        return Colors.red;
+      case _:
+      return Colors.black;
+    }
+  }
+
   void _filterTransactions(String filterType) {
     setState(() {
       if (filterType == 'clear') {
@@ -164,7 +183,7 @@ class TransactionContainerState extends State<TransactionContainer> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(color: Colors.black),
+                            .copyWith(color: getColor(transaction.acceptStatus, transaction.type!)),
                       ),
                       Text(
                         transaction.acceptStatus == AcceptStatus.accepted

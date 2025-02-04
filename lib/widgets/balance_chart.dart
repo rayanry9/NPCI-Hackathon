@@ -61,8 +61,9 @@ class _BalanceChartState extends State<BalanceChart> {
     return Column(
       children: [
         AspectRatio(
-          aspectRatio: 1.7,
+          aspectRatio: 1,
           child: LineChart(
+            
             LineChartData(
               gridData: FlGridData(show: false),
               titlesData: FlTitlesData(
@@ -96,13 +97,13 @@ class _BalanceChartState extends State<BalanceChart> {
             ),
           ),
         ),
-        ElevatedButton(
+        /*ElevatedButton(
           onPressed: () {
             double transactionAmount = 6500;
             onTransactionOccurred(transactionAmount);
           },
           child: Text("Add Transaction"),
-        ),
+        ),*/
       ],
     );
   }

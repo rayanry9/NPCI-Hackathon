@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/widgets/balance_chart.dart';
 
 class MyStore extends StatelessWidget{
   const MyStore({super.key});
@@ -50,7 +51,7 @@ class MyStore extends StatelessWidget{
                 color: Colors.grey,
               ),
             ),
-            //LineChart(data)
+            BalanceChart()
           ],
         ),
       );

@@ -19,6 +19,25 @@ class SellerTransactionContainerState
   List<TransactionModel> filteredData = [];
   String searchQuery = "";
 
+  Color getColor(AcceptStatus status,TransactionType type){
+    switch(status){
+      case AcceptStatus.accepted:
+        switch(type){
+          case TransactionType.gainPoints:
+          return Theme.of(context).primaryColor;
+          case TransactionType.redeemPoints:
+          return Colors.lightGreen;
+          case TransactionType.buyPoints:
+            return Colors.blue;
+          case _: return Colors.black;
+        }
+      case AcceptStatus.declined:
+        return Colors.red;
+      case _:
+      return Colors.black;
+    }
+  }
+
   @override
   void initState() {
     data = MyFireBaseTransactions().transactions;
@@ -166,8 +185,9 @@ class SellerTransactionContainerState
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(color: Colors.black),
-                      ),
+                            .copyWith(color: getColor(transaction.acceptStatus, transaction.type!)),
+                            
+                        ),
                       Text(
                         transaction.acceptStatus == AcceptStatus.accepted
                             ? switch (transaction.type!) {
