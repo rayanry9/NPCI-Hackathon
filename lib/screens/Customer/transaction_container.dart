@@ -139,7 +139,7 @@ class TransactionContainerState extends State<TransactionContainer> {
                       Text(
                         MyFireBaseSellers()
                             .sellers
-                            .getNameFromId(transaction.buyerId!),
+                            .getNameFromId(transaction.sellerId!),
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!

@@ -56,8 +56,8 @@ class HomeBalance extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (context) => PaymentDialog(
-                                type: TransactionType.gainPoints,
-                                id: qrValue,
+                                transactionType: TransactionType.gainPoints,
+                                sellerId: qrValue,
                               ),
                             );
                           }
@@ -108,8 +108,8 @@ class HomeBalance extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (context) => PaymentDialog(
-                                type: TransactionType.redeemPoints,
-                                id: qrValue,
+                                transactionType: TransactionType.redeemPoints,
+                                sellerId: qrValue,
                               ),
                             );
                           }

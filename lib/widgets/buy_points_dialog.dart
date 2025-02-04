@@ -94,57 +94,41 @@ class PaymentDialog extends StatelessWidget {
             if (enteredAmount != 0 &&
                 _amountController.text != "" &&
                 enteredAmount != null) {
-              switch (transactionType) {
-                case TransactionType.gainPoints:
-                  final transact = TransactionModel.withoutId(
-                      MyFireBaseAuth().user!.id,
-                      sellerId,
-                      MyFireBaseStores()
-                          .stores
-                          .getStoreFromOwnerId(sellerId)
-                          .storeId,
-                      enteredAmount,
-                      enteredAmount >
+              final transact = TransactionModel.withoutId(
+                  MyFireBaseAuth().user!.id,
+                  sellerId,
+                  MyFireBaseStores()
+                      .stores
+                      .getStoreFromOwnerId(sellerId)
+                      .storeId,
+                  enteredAmount,
+                  enteredAmount >
+                          MyFireBaseStores()
+                              .stores
+                              .getStoreFromOwnerId(sellerId)
+                              .offerThreshold
+                      ? (enteredAmount *
                               MyFireBaseStores()
                                   .stores
                                   .getStoreFromOwnerId(sellerId)
-                                  .offerThreshold
-                          ? (enteredAmount *
-                                  MyFireBaseStores()
-                                      .stores
-                                      .getStoreFromOwnerId(sellerId)
-                                      .offerPercent /
-                                  100)
-                              .floor()
-                          : 0,
-                      transactionType,
-                      AcceptStatus.pending);
-
-                  final id =
-                      (await MyFireBaseTransactions().addTransaction(transact));
-
-                  transact.id = id;
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-
-                    showDialog(
-                        context: context,
-                        builder: (context) =>
-                            RequestSent(transaction: transact));
-                  }
-
-                  break;
-                case TransactionType.redeemPoints:
-                  showModalBottomSheet(
-                      context: context, builder: (context) => Container());
-                  break;
-                case TransactionType.sharePoints:
-                  break;
-                case _:
-                  break;
-              }
+                                  .offerPercent /
+                              100)
+                          .floor()
+                      : 0,
+                  transactionType,
+                  AcceptStatus.pending);
 
               // TODO : add check if failed
+              final id =
+                  (await MyFireBaseTransactions().addTransaction(transact));
+              transact.id = id;
+              if (context.mounted) {
+                Navigator.of(context).pop();
+
+                showDialog(
+                    context: context,
+                    builder: (context) => RequestSent(transaction: transact));
+              }
             } else {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text("Value cannot be 0")));

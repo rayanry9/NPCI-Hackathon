@@ -5,11 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/models/user_model.dart';
 
-enum SignInStatus {
-  error,
-  ok,
-  sellerDataNotFound,
-}
+enum SignInStatus { error, ok, sellerDataNotFound, wrongSignIn }
 
 class MyFireBaseAuth with ChangeNotifier {
   static bool isAuth = (FirebaseAuth.instance.currentUser != null);
@@ -68,8 +64,8 @@ class MyFireBaseAuth with ChangeNotifier {
       return SignInStatus.ok;
     } else {
       try {
-        final GoogleSignInAccount? googleUser =
-            await GoogleSignIn(scopes: ["email"]).signIn();
+        final GoogleSignIn signIn = GoogleSignIn(scopes: ["email"]);
+        final GoogleSignInAccount? googleUser = await signIn.signIn();
 
         // Obtain the auth details from the request
         final GoogleSignInAuthentication? googleAuth =
@@ -90,9 +86,18 @@ class MyFireBaseAuth with ChangeNotifier {
         isAuth = true;
         if (userData.exists) {
           _user = UserModel.fromFirestore(userData, null);
-          if (_user!.phoneNumber == null ||
-              _user!.phoneNumber == "null" ||
-              _user!.phoneNumber == "") {
+          if (_user!.userType != userType) {
+            isAuth = false;
+            _user = null;
+            await FirebaseAuth.instance.signOut();
+            await signIn.disconnect();
+
+            return SignInStatus.wrongSignIn;
+          }
+          if ((_user!.phoneNumber == null ||
+                  _user!.phoneNumber == "null" ||
+                  _user!.phoneNumber == "") &&
+              userType == UserType.seller) {
             return SignInStatus.sellerDataNotFound;
           }
         } else {
@@ -107,6 +112,7 @@ class MyFireBaseAuth with ChangeNotifier {
         return SignInStatus.ok;
       } catch (e) {
         print(e);
+        isAuth = false;
         return SignInStatus.error;
       }
     }
