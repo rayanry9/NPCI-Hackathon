@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uperks/models/store_model.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_stores.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 import 'package:uperks/widgets/balance_chart.dart';
 
 class MyStore extends StatelessWidget {
@@ -95,7 +96,7 @@ class MyStore extends StatelessWidget {
               ),
             ],
           ),
-          BalanceChart()
+					if(MyFireBaseTransactions().transactions.isNotEmpty) BalanceChart()
         ],
       ),
     );
