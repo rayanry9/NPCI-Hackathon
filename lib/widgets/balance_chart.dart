@@ -88,6 +88,13 @@ class _BalanceChartState extends State<BalanceChart> {
                     gridData: FlGridData(show: false),
                     titlesData: FlTitlesData(
                         leftTitles: AxisTitles(
+                          axisNameWidget: Text(
+                            "Points",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: Colors.black),
+                          ),
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: leftTitleWidgets,
@@ -95,6 +102,13 @@ class _BalanceChartState extends State<BalanceChart> {
                           ),
                         ),
                         bottomTitles: AxisTitles(
+                          axisNameWidget: Text(
+                            "Time",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: Colors.black),
+                          ),
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: bottomTitleWidgets,
@@ -121,15 +135,24 @@ class _BalanceChartState extends State<BalanceChart> {
                     lineBarsData: [
                       // Original Balance Graph (Blue)
                       LineChartBarData(
-                        spots: getChartData(data.transactions
-                            .where((trans) =>
-                                trans.type! == TransactionType.gainPoints)
-                            .map((elem) => {
-                                  'date': elem
-                                      .transactionDate!.millisecondsSinceEpoch,
-                                  'balance': elem.rewardPoints
-                                })
-                            .toList()),
+                        spots: getChartData(() {
+                          var dat = data.transactions
+                              .where((trans) =>
+                                  trans.type! == TransactionType.gainPoints)
+                              .map((elem) => {
+                                    'date': elem.transactionDate!
+                                        .millisecondsSinceEpoch,
+                                    'balance': elem.rewardPoints
+                                  })
+                              .toList()
+                              .reversed
+                              .toList();
+                          for (int i = 1; i < dat.length; i++) {
+                            dat[i]["balance"] =
+                                dat[i]["balance"]! + dat[i - 1]["balance"]!;
+                          }
+                          return dat;
+                        }()),
                         isCurved: true,
                         gradient: LinearGradient(
                             colors: [Colors.blue, Colors.blueAccent]),
@@ -138,15 +161,22 @@ class _BalanceChartState extends State<BalanceChart> {
                       ),
                       // Second Random Data Set (Red)
                       LineChartBarData(
-                        spots: getChartData(data.transactions
-                            .where((trans) =>
-                                trans.type! == TransactionType.redeemPoints)
-                            .map((elem) => {
-                                  'date': elem
-                                      .transactionDate!.millisecondsSinceEpoch,
-                                  'balance': elem.rewardPoints
-                                })
-                            .toList()),
+                        spots: getChartData(() {
+                          var dat = data.transactions
+                              .where((trans) =>
+                                  trans.type! == TransactionType.redeemPoints)
+                              .map((elem) => {
+                                    'date': elem.transactionDate!
+                                        .millisecondsSinceEpoch,
+                                    'balance': elem.rewardPoints
+                                  })
+                              .toList();
+                          for (int i = 1; i < dat.length; i++) {
+                            dat[i]["balance"] =
+                                dat[i]["balance"]! + dat[i - 1]["balance"]!;
+                          }
+                          return dat;
+                        }()),
                         isCurved: true,
                         gradient: LinearGradient(
                             colors: [Colors.red, Colors.redAccent]),

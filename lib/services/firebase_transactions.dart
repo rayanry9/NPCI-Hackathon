@@ -119,8 +119,6 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
 
-      print(_transactions.last.rewardPoints);
-
       _transactions
           .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
 
