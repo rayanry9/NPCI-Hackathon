@@ -157,7 +157,10 @@ class SignUpFormState extends State<SignUpForm> {
                     items: StoreType.values.map((StoreType type) {
                       return DropdownMenuItem<StoreType>(
                         value: type,
-                        child: Text(type.toString().split('.').last), 
+                        child: Text(
+                          type.toString().split('.').last,
+                        ), 
+                        
                       );
                     }).toList(),
                     onChanged: (StoreType? newValue) {

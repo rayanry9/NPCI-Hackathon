@@ -8,23 +8,21 @@ class BalanceChart extends StatefulWidget {
 }
 
 class _BalanceChartState extends State<BalanceChart> {
-  List<Map<String, dynamic>> transactions = [
+  List<Map<String, dynamic>> transactions1 = [
     {'date': 1704067200000, 'balance': 5000}, // 1 Jan 2024
     {'date': 1706745600000, 'balance': 5500}, // 1 Feb 2024
     {'date': 1709251200000, 'balance': 5300}, // 1 Mar 2024
     {'date': 1711929600000, 'balance': 6000}, // 1 Apr 2024
   ];
 
-  void addTransaction(int epochTime, double transactionAmount) {
-    setState(() {
-      transactions.add({
-        'date': epochTime,
-        'balance': transactionAmount,
-      });
-    });
-  }
+  List<Map<String, dynamic>> transactions2 = [
+    {'date': 1704067200000, 'balance': 3000}, // 1 Jan 2024
+    {'date': 1706745600000, 'balance': 4500}, // 1 Feb 2024
+    {'date': 1709251200000, 'balance': 4000}, // 1 Mar 2024
+    {'date': 1711929600000, 'balance': 5200}, // 1 Apr 2024
+  ];
 
-  List<FlSpot> getChartData() {
+  List<FlSpot> getChartData(List<Map<String, dynamic>> transactions) {
     return transactions.asMap().entries.map((entry) {
       int index = entry.key;
       double balance = entry.value['balance'].toDouble();
@@ -32,15 +30,10 @@ class _BalanceChartState extends State<BalanceChart> {
     }).toList();
   }
 
-  void onTransactionOccurred(double transactionAmount) {
-    int newEpochTime = DateTime.now().millisecondsSinceEpoch;
-    addTransaction(newEpochTime, transactionAmount);
-  }
-
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     int index = value.toInt();
-    if (index >= 0 && index < transactions.length) {
-      int epochTime = transactions[index]['date'];
+    if (index >= 0 && index < transactions1.length) {
+      int epochTime = transactions1[index]['date'];
       String month = DateFormat('MMM').format(
         DateTime.fromMillisecondsSinceEpoch(epochTime),
       );
@@ -61,51 +54,70 @@ class _BalanceChartState extends State<BalanceChart> {
     return Column(
       children: [
         AspectRatio(
-          aspectRatio: 1,
-          child: LineChart(
-            
-            LineChartData(
-              gridData: FlGridData(show: false),
-              titlesData: FlTitlesData(
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    getTitlesWidget: leftTitleWidgets,
-                    reservedSize: 40,
+          aspectRatio: 1.4,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 0.0, right: 0.0),
+            child: LineChart(
+              LineChartData(
+                gridData: FlGridData(show: false),
+                titlesData: FlTitlesData(
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: leftTitleWidgets,
+                      reservedSize: 0,
+                    ),
                   ),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    getTitlesWidget: bottomTitleWidgets,
-                    reservedSize: 30,
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: bottomTitleWidgets,
+                      reservedSize: 0,
+                    ),
                   ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      //getTitlesWidget: bottomTitleWidgets,
+                      reservedSize: 0,
+                    ),
+                  ),
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      //getTitlesWidget: rightTitleWidgets,
+                      reservedSize: 0,
+                    ),
+                  )
                 ),
-              ),
-              borderData: FlBorderData(
-                border: Border.all(color: Colors.grey, width: 1),
-              ),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: getChartData(),
-                  isCurved: true,
-                  gradient: LinearGradient(colors: [Colors.blue, Colors.blueAccent]),
-                  barWidth: 3,
-                  belowBarData: BarAreaData(show: false),
+                borderData: FlBorderData(
+                  border: Border.all(color: Colors.grey, width: 1),
                 ),
-              ],
+                lineBarsData: [
+                  // Original Balance Graph (Blue)
+                  LineChartBarData(
+                    spots: getChartData(transactions1),
+                    isCurved: true,
+                    gradient: LinearGradient(colors: [Colors.blue, Colors.blueAccent]),
+                    barWidth: 3,
+                    belowBarData: BarAreaData(show: false),
+                  ),
+                  // Second Random Data Set (Red)
+                  LineChartBarData(
+                    spots: getChartData(transactions2),
+                    isCurved: true,
+                    gradient: LinearGradient(colors: [Colors.red, Colors.redAccent]),
+                    barWidth: 3,
+                    belowBarData: BarAreaData(show: false),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        /*ElevatedButton(
-          onPressed: () {
-            double transactionAmount = 6500;
-            onTransactionOccurred(transactionAmount);
-          },
-          child: Text("Add Transaction"),
-        ),*/
       ],
     );
   }
 }
+
 
