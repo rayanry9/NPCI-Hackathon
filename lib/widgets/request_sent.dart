@@ -17,9 +17,7 @@ class RequestSent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.check_circle_rounded,
-              size: 80, color: Colors.green),
-              SizedBox(height: 20),
+              Icon(Icons.check_circle_rounded, size: 80, color: Colors.green),
               Text(
                 '${transaction.rewardPoints}',
                 style: Theme.of(context)
@@ -42,7 +40,7 @@ class RequestSent extends StatelessWidget {
                     .copyWith(color: Colors.black),
               ),
               Text(
-                'Store ${MyFireBaseStores().stores.getStoreFromStoreId(transaction.storeId!)}',
+                'Store ${MyFireBaseStores().stores.getStoreFromStoreId(transaction.storeId!).storeName}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -68,9 +66,9 @@ class RequestSent extends StatelessWidget {
                     .textTheme
                     .bodyMedium!
                     .copyWith(color: Colors.black54),
-              ),          
+              ),
             ],
-          ),         
+          ),
         ),
       ),
     );

@@ -8,14 +8,20 @@ import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
+import 'package:uperks/widgets/payment_dialog_bottom_sheet.dart';
 import 'package:uperks/widgets/request_sent.dart';
 
-class PaymentDialog extends StatelessWidget {
+class PaymentDialog extends StatefulWidget {
   final String sellerId;
   final TransactionType transactionType;
-  PaymentDialog(
+  const PaymentDialog(
       {super.key, required this.transactionType, required this.sellerId});
 
+  @override
+  State<StatefulWidget> createState() => PaymentDialogState();
+}
+
+class PaymentDialogState extends State<PaymentDialog> {
   final TextEditingController _amountController = TextEditingController();
 
   @override
@@ -40,14 +46,14 @@ class PaymentDialog extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              "Requesting ${MyFireBaseSellers().sellers.getNameFromId(sellerId)}",
+              "Requesting ${MyFireBaseSellers().sellers.getNameFromId(widget.sellerId)}",
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
                   .copyWith(color: Colors.black),
             ),
             Text(
-              "Store ${MyFireBaseStores().stores.getStoreFromOwnerId(sellerId).storeName}",
+              "Store ${MyFireBaseStores().stores.getStoreFromOwnerId(widget.sellerId).storeName}",
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
@@ -57,7 +63,7 @@ class PaymentDialog extends StatelessWidget {
             // TextField for user input
             IntrinsicWidth(
               child: TextField(
-                controller: TextEditingController(),
+                controller: _amountController,
                 keyboardType: TextInputType.numberWithOptions(
                     signed: true, decimal: true),
                 autofocus: true,
@@ -94,30 +100,30 @@ class PaymentDialog extends StatelessWidget {
             if (enteredAmount != 0 &&
                 _amountController.text != "" &&
                 enteredAmount != null) {
-              switch (transactionType) {
+              switch (widget.transactionType) {
                 case TransactionType.gainPoints:
                   final transact = TransactionModel.withoutId(
                       MyFireBaseAuth().user!.id,
-                      sellerId,
+                      widget.sellerId,
                       MyFireBaseStores()
                           .stores
-                          .getStoreFromOwnerId(sellerId)
+                          .getStoreFromOwnerId(widget.sellerId)
                           .storeId,
                       enteredAmount,
                       enteredAmount >
                               MyFireBaseStores()
                                   .stores
-                                  .getStoreFromOwnerId(sellerId)
+                                  .getStoreFromOwnerId(widget.sellerId)
                                   .offerThreshold
                           ? (enteredAmount *
                                   MyFireBaseStores()
                                       .stores
-                                      .getStoreFromOwnerId(sellerId)
+                                      .getStoreFromOwnerId(widget.sellerId)
                                       .offerPercent /
                                   100)
                               .floor()
                           : 0,
-                      transactionType,
+                      widget.transactionType,
                       AcceptStatus.pending);
 
                   final id =
@@ -135,8 +141,37 @@ class PaymentDialog extends StatelessWidget {
 
                   break;
                 case TransactionType.redeemPoints:
-                  showModalBottomSheet(
-                      context: context, builder: (context) => Container());
+                  final rewardPoints = await showModalBottomSheet(
+                      context: context,
+                      builder: (context) => PaymentDialogBottomSheet(
+                          sellerId: widget.sellerId,
+                          transactionValue: enteredAmount));
+
+                  final transact = TransactionModel.withoutId(
+                      MyFireBaseAuth().user!.id,
+                      widget.sellerId,
+                      MyFireBaseStores()
+                          .stores
+                          .getStoreFromOwnerId(widget.sellerId)
+                          .storeId,
+                      enteredAmount,
+                      rewardPoints,
+                      widget.transactionType,
+                      AcceptStatus.pending);
+
+                  final id =
+                      (await MyFireBaseTransactions().addTransaction(transact));
+
+                  transact.id = id;
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            RequestSent(transaction: transact));
+                  }
+
                   break;
                 case TransactionType.sharePoints:
                   break;
