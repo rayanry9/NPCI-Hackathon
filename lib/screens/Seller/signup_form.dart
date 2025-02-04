@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/constants/store_type.dart';
+import 'package:uperks/constants/transaction_type.dart';
 import 'package:uperks/models/store_model.dart';
+import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_stores.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -43,6 +46,14 @@ class SignUpFormState extends State<SignUpForm> {
               selectedCategory!);
           MyFireBaseStores().addStore(store).then((val) {
             MyFireBaseStores().updateStoreWithStoreId(val!);
+            MyFireBaseTransactions().addTransaction(TransactionModel.withoutId(
+                MyFireBaseAuth().user!.id,
+                "admin",
+                val,
+                -1,
+                10000,
+                TransactionType.buyPoints,
+                AcceptStatus.accepted));
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -158,8 +169,7 @@ class SignUpFormState extends State<SignUpForm> {
                         value: type,
                         child: Text(
                           type.toString().split('.').last,
-                        ), 
-                        
+                        ),
                       );
                     }).toList(),
                     onChanged: (StoreType? newValue) {

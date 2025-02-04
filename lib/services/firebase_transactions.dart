@@ -106,6 +106,19 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
 
+      _transactions.addAll((await _db
+              .collection("transactions")
+              .where("type", isEqualTo: "buyPoints")
+              .where(
+                "buyerId",
+                isEqualTo: MyFireBaseAuth().user!.id,
+              )
+              .where("acceptStatus", isEqualTo: AcceptStatus.accepted.name)
+              .get())
+          .docs
+          .map((val) => TransactionModel.fromFirestore(val, null))
+          .toList());
+
       _transactions
           .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
 
@@ -130,7 +143,8 @@ class MyFireBaseTransactions with ChangeNotifier {
       _requests = (await _db
               .collection("transactions")
               .where("buyerId", isEqualTo: MyFireBaseAuth().user!.id)
-              .where("acceptStatus", isEqualTo: AcceptStatus.pending.name)
+              .where("acceptStatus",
+                  isEqualTo: AcceptStatus.pending.name.toString())
               .get())
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uperks/models/store_model.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase_stores.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 class RequestSent extends StatelessWidget {
   final TransactionModel transaction;

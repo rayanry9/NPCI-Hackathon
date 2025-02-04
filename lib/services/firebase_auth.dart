@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
+import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 enum SignInStatus { error, ok, sellerDataNotFound, wrongSignIn }
 
@@ -12,6 +14,8 @@ class MyFireBaseAuth with ChangeNotifier {
   static final _db = FirebaseFirestore.instance;
   static MyFireBaseAuth? _instance;
   static UserModel? _user;
+  static int? _customerRedeemRate;
+  static int? _sellerBuyRate;
 
   factory MyFireBaseAuth() {
     _instance ??= MyFireBaseAuth._init();
@@ -36,6 +40,12 @@ class MyFireBaseAuth with ChangeNotifier {
           return false;
         }
       }
+      _customerRedeemRate =
+          (await _db.collection("constants").doc("rates").get())
+              .data()?["customerRedeem"];
+      _sellerBuyRate = (await _db.collection("constants").doc("rates").get())
+          .data()?["sellerBuy"];
+
       return true;
     } else if (user != null) {
       return true;
@@ -109,6 +119,15 @@ class MyFireBaseAuth with ChangeNotifier {
               .set(_user!.toFirestore());
         }
 
+        _customerRedeemRate =
+            (await _db.collection("constants").doc("rates").get())
+                .data()?["customerRedeem"];
+        _sellerBuyRate = (await _db.collection("constants").doc("rates").get())
+            .data()?["sellerBuy"];
+        if (userType == UserType.seller) {
+          return SignInStatus.sellerDataNotFound;
+        }
+
         return SignInStatus.ok;
       } catch (e) {
         print(e);
@@ -120,5 +139,13 @@ class MyFireBaseAuth with ChangeNotifier {
 
   UserModel? get user {
     return _user;
+  }
+
+  static int? get customerRedeemRate {
+    return _customerRedeemRate;
+  }
+
+  static int? get sellerBuyRate {
+    return _sellerBuyRate;
   }
 }

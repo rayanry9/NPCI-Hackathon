@@ -19,22 +19,23 @@ class SellerTransactionContainerState
   List<TransactionModel> filteredData = [];
   String searchQuery = "";
 
-  Color getColor(AcceptStatus status,TransactionType type){
-    switch(status){
+  Color getColor(AcceptStatus status, TransactionType type) {
+    switch (status) {
       case AcceptStatus.accepted:
-        switch(type){
+        switch (type) {
           case TransactionType.gainPoints:
-          return Theme.of(context).primaryColor;
+            return Theme.of(context).primaryColor;
           case TransactionType.redeemPoints:
-          return Colors.lightGreen;
+            return Colors.lightGreen;
           case TransactionType.buyPoints:
             return Colors.blue;
-          case _: return Colors.black;
+          case _:
+            return Colors.black;
         }
       case AcceptStatus.declined:
         return Colors.red;
       case _:
-      return Colors.black;
+        return Colors.black;
     }
   }
 
@@ -55,8 +56,7 @@ class SellerTransactionContainerState
       } else if (filterType == 'earned') {
         filteredData =
             data.where((t) => t.type == TransactionType.gainPoints).toList();
-      }
-      else if (filterType == 'bought') {
+      } else if (filterType == 'bought') {
         filteredData =
             data.where((t) => t.type == TransactionType.buyPoints).toList();
       }
@@ -158,9 +158,13 @@ class SellerTransactionContainerState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        MyFireBaseSellers()
-                            .sellers
-                            .getNameFromId(transaction.buyerId!),
+                        transaction.type != TransactionType.buyPoints
+                            ? MyFireBaseSellers()
+                                .sellers
+                                .getNameFromId(transaction.buyerId!)
+                            : MyFireBaseSellers()
+                                .sellers
+                                .getNameFromId(transaction.sellerId!),
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
@@ -182,12 +186,10 @@ class SellerTransactionContainerState
                     children: [
                       Text(
                         transaction.rewardPoints.toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(color: getColor(transaction.acceptStatus, transaction.type!)),
-                            
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: getColor(
+                                transaction.acceptStatus, transaction.type!)),
+                      ),
                       Text(
                         transaction.acceptStatus == AcceptStatus.accepted
                             ? switch (transaction.type!) {

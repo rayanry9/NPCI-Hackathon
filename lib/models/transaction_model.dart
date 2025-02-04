@@ -39,9 +39,9 @@ class TransactionModel {
       data["sellerId"],
       data["storeId"],
       double.parse(data["transactionAmount"].toString()),
-      int.parse(data["rewardPoints"].toString()),
+      double.parse(data["rewardPoints"].toString()).floor(),
       switch (TransactionType.values
-          .indexWhere((tran) => tran.name.contains(data["type"]))) {
+          .indexWhere((tran) => tran.name.contains(data["type"].toString()))) {
         0 => TransactionType.gainPoints,
         1 => TransactionType.redeemPoints,
         2 => TransactionType.sharePoints,
@@ -84,8 +84,8 @@ class TransactionModel {
       if (buyerId != null) "buyerId": buyerId,
       if (sellerId != null) "sellerId": sellerId,
       if (storeId != null) "storeId": storeId,
-      if (transactionAmount != null) "transactionAmount": transactionAmount,
-      if (rewardPoints != null) 'rewardPoints': rewardPoints,
+      "transactionAmount": transactionAmount ?? 0,
+      'rewardPoints': rewardPoints ?? 0,
       if (type != null) 'type': type!.name,
       'date': transactionDate!.millisecondsSinceEpoch,
       'acceptStatus': acceptStatus.name,
@@ -109,6 +109,14 @@ extension Calculations on List<TransactionModel> {
                 0,
                 (prevValue, transaction) =>
                     prevValue + transaction.rewardPoints!);
+  }
+
+  int get totalPendingRedeems {
+    return where((model) => model.acceptStatus == AcceptStatus.pending)
+        .where((tranasctionModel) =>
+            tranasctionModel.type == TransactionType.redeemPoints)
+        .fold<int>(0,
+            (prevValue, transaction) => prevValue + transaction.rewardPoints!);
   }
 
   int get totalRewardPointsBalanceSeller {

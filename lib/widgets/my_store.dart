@@ -1,59 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/models/store_model.dart';
+import 'package:uperks/services/firebase_auth.dart';
+import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/widgets/balance_chart.dart';
 
-class MyStore extends StatelessWidget{
+class MyStore extends StatelessWidget {
   const MyStore({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "My Store",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 2,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              "My Store",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(color: Colors.black),
             ),
-            const SizedBox(height: 10),
-            RichText(
-              text: const TextSpan(
-                text: "Store Name",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: " Cafe",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                MyFireBaseStores()
+                    .stores
+                    .getStoreFromOwnerId(MyFireBaseAuth().user!.id)
+                    .storeName,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: Colors.black),
               ),
-            ),
-            const SizedBox(height: 5),
-            const Text(
-              "105 3rd Road, Richmond, VA, 73494",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
+              Spacer(),
+              Text(
+                MyFireBaseStores()
+                    .stores
+                    .getStoreFromOwnerId(MyFireBaseAuth().user!.id)
+                    .type
+                    .name
+                    .replaceRange(
+                        0,
+                        1,
+                        MyFireBaseStores()
+                            .stores
+                            .getStoreFromOwnerId(MyFireBaseAuth().user!.id)
+                            .type
+                            .name
+                            .characters
+                            .toList()[0]
+                            .toUpperCase()),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          const Text(
+            "105 3rd Road, Richmond, VA, 73494",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
             ),
-            BalanceChart()
-          ],
-        ),
-      );
+          ),
+          const SizedBox(height: 8),
+          BalanceChart()
+        ],
+      ),
+    );
   }
 }

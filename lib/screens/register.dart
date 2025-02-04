@@ -28,7 +28,7 @@ class Register extends StatelessWidget {
             ),
             SizedBox(height: 40),
             SignInWithGoogleButton(
-              userType: fromType!.toString().contains("seller")
+              userType: fromType!.toString().toLowerCase().contains("seller")
                   ? UserType.seller
                   : UserType.customer,
             ),
