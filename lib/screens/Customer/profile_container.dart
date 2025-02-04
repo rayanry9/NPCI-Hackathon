@@ -71,37 +71,13 @@ class ProfileContainer extends StatelessWidget {
                 color: Colors.black54,
                 thickness: 1,
               ),
-              TextButton(
-                onPressed: () {
-                  print('manage your acccount ko dabaya');
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.account_circle),
-                    SizedBox(width: 8),
-                    Text("Manage your account",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-              Divider(
-                color: Colors.black54,
-                thickness: 1,
-              ),
-              TextButton(
-                onPressed: () {
-                  print('help and feedback ko dabaya');
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.help),
-                    SizedBox(width: 8),
-                    Text("Help and feedback",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                  ],
-                ),
+              Text(
+                "For any queries, kindly mail at ma24btech11018@iith.ac.in",
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                softWrap: true,
+                style: TextStyle(
+                        fontSize: 16, color: Colors.black,fontWeight: FontWeight.bold, ),
               ),
             ],
           ),

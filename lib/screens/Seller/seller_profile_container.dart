@@ -55,17 +55,39 @@ class SellerProfileContainer extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  print('manage your acccount ko dabaya');
+                  print('update your location ko dabaya');
+                  {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      ),
+                      builder: (context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Turn on your location to update your location",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+                              ),
+                              SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context); 
+                                },
+                                child: Text("Update"),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  };
                 },
-                child: Row(
-                  children: [
-                    Icon(Icons.account_circle),
-                    SizedBox(width: 8),
-                    Text("Manage your account",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                  ],
-                ),
+                child: Text('Update Location'),
               ),
               Divider(
                 color: Colors.black26,

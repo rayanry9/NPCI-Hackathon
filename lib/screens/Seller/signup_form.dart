@@ -126,7 +126,7 @@ class SignUpFormState extends State<SignUpForm> {
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: "Offer Threshold",
-                      suffixText: "%",
+                      suffixText: "₹",
                       labelStyle: TextStyle(color: Colors.black),
                       errorStyle: TextStyle(color: Colors.black),
                     ),
@@ -169,7 +169,9 @@ class SignUpFormState extends State<SignUpForm> {
                         value: type,
                         child: Text(
                           type.toString().split('.').last,
-                        ),
+                          style: TextStyle(color: Colors.black),
+                        ), 
+                        
                       );
                     }).toList(),
                     onChanged: (StoreType? newValue) {
