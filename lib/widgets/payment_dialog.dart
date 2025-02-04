@@ -163,7 +163,7 @@ class PaymentDialogState extends State<PaymentDialog> {
                       (await MyFireBaseTransactions().addTransaction(transact));
 
                   transact.id = id;
-                  if (context.mounted) {
+                  if (context.mounted && rewardPoints != null) {
                     Navigator.of(context).pop();
 
                     showDialog(
