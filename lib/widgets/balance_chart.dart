@@ -189,15 +189,15 @@ class _BalanceChartState extends State<BalanceChart> {
               })),
         ),
         const SizedBox(height: 10), // Space between chart and legend
-      // Legend Row
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildLegendItem(Colors.blue, "Gained Points"),
-          const SizedBox(width: 20),
-          _buildLegendItem(Colors.red, "Redeemed Points"),
-      ],
-      ),
+        // Legend Row
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildLegendItem(Colors.blue, "Gained Points"),
+            const SizedBox(width: 20),
+            _buildLegendItem(Colors.red, "Redeemed Points"),
+          ],
+        ),
       ],
     );
   }
@@ -211,7 +211,11 @@ class _BalanceChartState extends State<BalanceChart> {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 5),
-        Text(text, style: TextStyle(fontSize: 14)),
+        Text(text,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: Colors.black)),
       ],
     );
   }

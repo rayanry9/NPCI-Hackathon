@@ -60,7 +60,8 @@ class SellerProfileContainer extends StatelessWidget {
                     showModalBottomSheet(
                       context: context,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(16)),
                       ),
                       builder: (context) {
                         return Padding(
@@ -71,12 +72,15 @@ class SellerProfileContainer extends StatelessWidget {
                               Text(
                                 "Turn on your location to update your location",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
                               ),
                               SizedBox(height: 16),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.pop(context); 
+                                  Navigator.pop(context);
                                 },
                                 child: Text("Update"),
                               ),
@@ -85,7 +89,8 @@ class SellerProfileContainer extends StatelessWidget {
                         );
                       },
                     );
-                  };
+                  }
+                  ;
                 },
                 child: Text('Update Location'),
               ),
@@ -93,21 +98,27 @@ class SellerProfileContainer extends StatelessWidget {
                 color: Colors.black26,
                 thickness: 1,
               ),
-              Row(
-                children: [
-              Icon(Icons.help),
-              SizedBox(width: 8),
-              Flexible(
-                child: 
-              Text(
-                "For any queries, kindly mail at ma24btech11018@iith.ac.in",
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                softWrap: true,
-                style: TextStyle(
-                        fontSize: 16, color: Colors.black,fontWeight: FontWeight.bold, ),),),
-              
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Icon(Icons.help),
+                    SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        "For any queries, kindly mail at ma24btech11018@iith.ac.in",
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        softWrap: true,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

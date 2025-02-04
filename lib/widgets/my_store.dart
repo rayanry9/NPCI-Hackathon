@@ -64,14 +64,37 @@ class MyStore extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          const Text(
-            "105 3rd Road, Richmond, VA, 73494",
+          Text(
+            MyFireBaseStores()
+                .stores
+                .getStoreFromOwnerId(MyFireBaseAuth().user!.id)
+                .address,
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey,
             ),
           ),
           const SizedBox(height: 8),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Offer Percent: ${MyFireBaseStores().stores.getStoreFromOwnerId(MyFireBaseAuth().user!.id).offerPercent.toStringAsFixed(0)}%",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black54),
+              ),
+              Text(
+                "Offer Threshold: ${MyFireBaseStores().stores.getStoreFromOwnerId(MyFireBaseAuth().user!.id).offerPercent}",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black54),
+              ),
+            ],
+          ),
           BalanceChart()
         ],
       ),

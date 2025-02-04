@@ -19,15 +19,6 @@ class PaymentDialogBottomSheetState extends State<PaymentDialogBottomSheet> {
   int _sliderCurrentValue = 1;
   @override
   Widget build(BuildContext context) {
-    print((min(
-                (MyFireBaseTransactions()
-                            .transactions
-                            .totalRewardPointsBalanceCustomer -
-                        MyFireBaseTransactions().requests.totalPendingRedeems)
-                    .toDouble(),
-                widget.transactionValue * MyFireBaseAuth.customerRedeemRate!) /
-            MyFireBaseAuth.customerRedeemRate!)
-        .floor());
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -92,12 +83,13 @@ class PaymentDialogBottomSheetState extends State<PaymentDialogBottomSheet> {
             Slider(
               min: 1,
               max: min(
-                  (MyFireBaseTransactions()
-                              .transactions
-                              .totalRewardPointsBalanceCustomer -
-                          MyFireBaseTransactions().requests.totalPendingRedeems)
-                      .toDouble(),
-                  widget.transactionValue * MyFireBaseAuth.customerRedeemRate!),
+                (MyFireBaseTransactions()
+                            .transactions
+                            .totalRewardPointsBalanceCustomer -
+                        MyFireBaseTransactions().requests.totalPendingRedeems)
+                    .toDouble(),
+                widget.transactionValue * MyFireBaseAuth.customerRedeemRate!,
+              ),
               divisions: (min(
                                   (MyFireBaseTransactions()
                                               .transactions

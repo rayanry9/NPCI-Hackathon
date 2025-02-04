@@ -70,15 +70,26 @@ class ProfileContainer extends StatelessWidget {
                 thickness: 1,
               ),
 							*/
-        Text(
-          "For any queries, kindly mail at ma24btech11018@iith.ac.in",
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          softWrap: true,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              Icon(Icons.help),
+              SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  "For any queries, kindly mail at ma24btech11018@iith.ac.in",
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
