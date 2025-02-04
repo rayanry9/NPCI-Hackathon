@@ -87,7 +87,7 @@ class MyStore extends StatelessWidget {
                     .copyWith(color: Colors.black54),
               ),
               Text(
-                "Offer Threshold: ${MyFireBaseStores().stores.getStoreFromOwnerId(MyFireBaseAuth().user!.id).offerPercent}",
+                "Offer Threshold: ${MyFireBaseStores().stores.getStoreFromOwnerId(MyFireBaseAuth().user!.id).offerThreshold}",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
