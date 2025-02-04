@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/services/firebase_sellers.dart';
 import 'package:uperks/services/firebase_stores.dart';
@@ -90,6 +91,17 @@ class HomeBalance extends StatelessWidget {
             Expanded(
               child: OutlinedButton(
                 onPressed: () async {
+                  if (MyFireBaseTransactions()
+                          .transactions
+                          .totalRewardPointsBalanceCustomer <=
+                      0) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("No Points to Redeem"),
+                      ),
+                    );
+                    return;
+                  }
                   final qrValue = (await Scanner.scanQrCode(context));
                   if (context.mounted) {
                     if (qrValue == null) {
@@ -101,15 +113,45 @@ class HomeBalance extends StatelessWidget {
                     } else {
                       if (await MyFireBaseSellers()
                           .updateSellersWithId(qrValue)) {
-                        if (context.mounted) {
-                          await MyFireBaseStores()
-                              .updateStoreWithOwnerId(qrValue);
+                        if (MyFireBaseSellers()
+                                .sellers
+                                .where((val) => val.id == qrValue)
+                                .firstOrNull !=
+                            null) {
+                          if (MyFireBaseSellers()
+                                  .sellers
+                                  .where((val) => val.id == qrValue)
+                                  .first
+                                  .userType ==
+                              UserType.seller) {
+                            if (context.mounted) {
+                              await MyFireBaseStores()
+                                  .updateStoreWithOwnerId(qrValue);
+                              if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => PaymentDialog(
+                                    transactionType:
+                                        TransactionType.redeemPoints,
+                                    sellerId: qrValue,
+                                  ),
+                                );
+                              }
+                            }
+                          } else {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Cannot send to peers"),
+                                ),
+                              );
+                            }
+                          }
+                        } else {
                           if (context.mounted) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => PaymentDialog(
-                                transactionType: TransactionType.redeemPoints,
-                                sellerId: qrValue,
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Cannot send to peers"),
                               ),
                             );
                           }

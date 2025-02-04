@@ -19,6 +19,15 @@ class PaymentDialogBottomSheetState extends State<PaymentDialogBottomSheet> {
   int _sliderCurrentValue = 1;
   @override
   Widget build(BuildContext context) {
+    print((min(
+                (MyFireBaseTransactions()
+                            .transactions
+                            .totalRewardPointsBalanceCustomer -
+                        MyFireBaseTransactions().requests.totalPendingRedeems)
+                    .toDouble(),
+                widget.transactionValue * MyFireBaseAuth.customerRedeemRate!) /
+            MyFireBaseAuth.customerRedeemRate!)
+        .floor());
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -90,17 +99,31 @@ class PaymentDialogBottomSheetState extends State<PaymentDialogBottomSheet> {
                       .toDouble(),
                   widget.transactionValue * MyFireBaseAuth.customerRedeemRate!),
               divisions: (min(
-                          (MyFireBaseTransactions()
-                                      .transactions
-                                      .totalRewardPointsBalanceCustomer -
-                                  MyFireBaseTransactions()
-                                      .requests
-                                      .totalPendingRedeems)
-                              .toDouble(),
-                          widget.transactionValue *
-                              MyFireBaseAuth.customerRedeemRate!) /
-                      MyFireBaseAuth.customerRedeemRate!)
-                  .floor(),
+                                  (MyFireBaseTransactions()
+                                              .transactions
+                                              .totalRewardPointsBalanceCustomer -
+                                          MyFireBaseTransactions()
+                                              .requests
+                                              .totalPendingRedeems)
+                                      .toDouble(),
+                                  widget.transactionValue *
+                                      MyFireBaseAuth.customerRedeemRate!) /
+                              MyFireBaseAuth.customerRedeemRate!)
+                          .floor() >
+                      0
+                  ? (min(
+                              (MyFireBaseTransactions()
+                                          .transactions
+                                          .totalRewardPointsBalanceCustomer -
+                                      MyFireBaseTransactions()
+                                          .requests
+                                          .totalPendingRedeems)
+                                  .toDouble(),
+                              widget.transactionValue *
+                                  MyFireBaseAuth.customerRedeemRate!) /
+                          MyFireBaseAuth.customerRedeemRate!)
+                      .floor()
+                  : null,
               value: _sliderCurrentValue.toDouble(),
               onChanged: (val) {
                 setState(() {

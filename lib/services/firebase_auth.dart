@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uperks/constants/user_type.dart';
 import 'package:uperks/models/transaction_model.dart';
 import 'package:uperks/models/user_model.dart';
+import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
 enum SignInStatus { error, ok, sellerDataNotFound, wrongSignIn }
@@ -119,13 +120,10 @@ class MyFireBaseAuth with ChangeNotifier {
               .set(_user!.toFirestore());
         }
 
-        _customerRedeemRate =
-            (await _db.collection("constants").doc("rates").get())
-                .data()?["customerRedeem"];
-        _sellerBuyRate = (await _db.collection("constants").doc("rates").get())
-            .data()?["sellerBuy"];
+        getRates();
+
         if (userType == UserType.seller) {
-          return SignInStatus.sellerDataNotFound;
+          MyFireBaseStores().updateStoreWithOwnerId(_user!.id);
         }
 
         return SignInStatus.ok;
@@ -135,6 +133,13 @@ class MyFireBaseAuth with ChangeNotifier {
         return SignInStatus.error;
       }
     }
+  }
+
+  static Future<void> getRates() async {
+    _customerRedeemRate = (await _db.collection("constants").doc("rates").get())
+        .data()?["customerRedeem"];
+    _sellerBuyRate = (await _db.collection("constants").doc("rates").get())
+        .data()?["sellerBuy"];
   }
 
   UserModel? get user {

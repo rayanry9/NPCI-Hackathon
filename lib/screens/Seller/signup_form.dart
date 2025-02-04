@@ -170,8 +170,7 @@ class SignUpFormState extends State<SignUpForm> {
                         child: Text(
                           type.toString().split('.').last,
                           style: TextStyle(color: Colors.black),
-                        ), 
-                        
+                        ),
                       );
                     }).toList(),
                     onChanged: (StoreType? newValue) {

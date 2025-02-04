@@ -37,8 +37,18 @@ class NotificationCardAd extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      MyFireBaseTransactions().sellerRequestStatusChange(
-                          transaction.id!, AcceptStatus.accepted);
+                      if (MyFireBaseTransactions()
+                                  .transactions
+                                  .totalRewardPointsBalanceSeller -
+                              transaction.rewardPoints! >=
+                          0) {
+                        MyFireBaseTransactions().sellerRequestStatusChange(
+                            transaction.id!, AcceptStatus.accepted);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                "Not Enough Balance to give Redeem Points")));
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lightGreen,

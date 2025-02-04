@@ -6,57 +6,55 @@ class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 20),
-          Center(
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey[300],
-                  child: Icon(Icons.person, size: 40, color: Colors.blue),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  MyFireBaseAuth().user!.name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Colors.black),
-                ),
-                Text(
-                  "User ID: ${MyFireBaseAuth().user!.id}",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.black),
-                ),
-              ],
-            ),
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        Center(
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.grey[300],
+                child: Icon(Icons.person, size: 40, color: Colors.blue),
+              ),
+              SizedBox(height: 8),
+              Text(
+                MyFireBaseAuth().user!.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.black),
+              ),
+              Text(
+                "User ID: ${MyFireBaseAuth().user!.id}",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
+            ],
           ),
-          SizedBox(height: 20),
-          QrImageView(
-            data: MyFireBaseAuth().user!.id,
-            version: QrVersions.auto,
-            size: 150.0,
-          ),
-          SizedBox(height: 10),
-          Text(
-            "Your QR code",
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: Colors.black),
-          ),
-          SizedBox(height: 20),
+        ),
+        SizedBox(height: 20),
+        QrImageView(
+          data: MyFireBaseAuth().user!.id,
+          version: QrVersions.auto,
+          size: 150.0,
+        ),
+        SizedBox(height: 10),
+        Text(
+          "Your QR code",
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(color: Colors.black),
+        ),
+        SizedBox(height: 20),
+        /*
           Column(
             children: [
               TextButton(
-                onPressed: () {
-                  print('share points ko dabaya');
-                },
+                onPressed: () async {},
                 child: Row(
                   children: [
                     Icon(Icons.paid),
@@ -71,18 +69,21 @@ class ProfileContainer extends StatelessWidget {
                 color: Colors.black54,
                 thickness: 1,
               ),
-              Text(
-                "For any queries, kindly mail at ma24btech11018@iith.ac.in",
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                softWrap: true,
-                style: TextStyle(
-                        fontSize: 16, color: Colors.black,fontWeight: FontWeight.bold, ),
-              ),
-            ],
+							*/
+        Text(
+          "For any queries, kindly mail at ma24btech11018@iith.ac.in",
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          softWrap: true,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
+        ),
+      ],
     );
+    //],
+    //),
   }
 }

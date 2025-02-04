@@ -146,32 +146,32 @@ class PaymentDialogState extends State<PaymentDialog> {
                       builder: (context) => PaymentDialogBottomSheet(
                           sellerId: widget.sellerId,
                           transactionValue: enteredAmount));
+                  if (rewardPoints != null && rewardPoints != 0) {
+                    final transact = TransactionModel.withoutId(
+                        MyFireBaseAuth().user!.id,
+                        widget.sellerId,
+                        MyFireBaseStores()
+                            .stores
+                            .getStoreFromOwnerId(widget.sellerId)
+                            .storeId,
+                        enteredAmount,
+                        rewardPoints,
+                        widget.transactionType,
+                        AcceptStatus.pending);
 
-                  final transact = TransactionModel.withoutId(
-                      MyFireBaseAuth().user!.id,
-                      widget.sellerId,
-                      MyFireBaseStores()
-                          .stores
-                          .getStoreFromOwnerId(widget.sellerId)
-                          .storeId,
-                      enteredAmount,
-                      rewardPoints,
-                      widget.transactionType,
-                      AcceptStatus.pending);
+                    final id = (await MyFireBaseTransactions()
+                        .addTransaction(transact));
 
-                  final id =
-                      (await MyFireBaseTransactions().addTransaction(transact));
+                    transact.id = id;
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
 
-                  transact.id = id;
-                  if (context.mounted && rewardPoints != null) {
-                    Navigator.of(context).pop();
-
-                    showDialog(
-                        context: context,
-                        builder: (context) =>
-                            RequestSent(transaction: transact));
+                      showDialog(
+                          context: context,
+                          builder: (context) =>
+                              RequestSent(transaction: transact));
+                    }
                   }
-
                   break;
                 case TransactionType.sharePoints:
                   break;

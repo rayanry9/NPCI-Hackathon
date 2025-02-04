@@ -4,6 +4,7 @@ import 'package:uperks/screens/Customer/homescreen_container.dart';
 import 'package:uperks/screens/Customer/profile_container.dart';
 import 'package:uperks/screens/Customer/transaction_container.dart';
 import 'package:uperks/services/firebase_auth.dart';
+import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
 enum NavigationTabs { home, transactions, profile }
@@ -32,7 +33,7 @@ class HomeState extends State<Home> {
   }
 
   Future<void> refreshScreen() async {
-    print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
+    MyFireBaseStores().getAllStores();
     await MyFireBaseTransactions().updateTransactionsCustomer();
     await MyFireBaseTransactions().updateRequestsCustomer();
   }
@@ -49,7 +50,11 @@ class HomeState extends State<Home> {
   }
 
   @override
+  @override
   void initState() {
+    MyFireBaseStores().getAllStores();
+    MyFireBaseTransactions().updateTransactionsCustomer();
+    MyFireBaseTransactions().updateRequestsCustomer();
     super.initState();
   }
 
@@ -66,15 +71,22 @@ class HomeState extends State<Home> {
         ),
         scrolledUnderElevation: 0,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.notifications, color: Colors.blue),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/notifications_customer");
-              },
-            ),
-          ),
+          Consumer<MyFireBaseTransactions>(builder: (context, data, _) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: IconButton(
+                icon: Icon(
+                    data.requests.isEmpty
+                        ? Icons.notifications
+                        : Icons.notification_important,
+                    color: Colors.blue),
+                onPressed: () {
+                  MyFireBaseTransactions().updateRequestsCustomer();
+                  Navigator.of(context).pushNamed("/notifications_customer");
+                },
+              ),
+            );
+          }),
         ],
         backgroundColor: Colors.white,
       ),

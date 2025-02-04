@@ -1,6 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/services/firebase_transactions.dart';
 
 class BalanceChart extends StatefulWidget {
   @override
@@ -50,74 +53,112 @@ class _BalanceChartState extends State<BalanceChart> {
   }
 
   @override
+  void initState() {
+    transactions1 = MyFireBaseTransactions()
+        .transactions
+        .where((val) => val.type == TransactionType.buyPoints)
+        .map((elem) => {
+              'date': elem.transactionDate!.millisecondsSinceEpoch,
+              'balance': elem.rewardPoints!
+            })
+        .toList();
+    transactions2 = MyFireBaseTransactions()
+        .transactions
+        .where((val) => val.type == TransactionType.redeemPoints)
+        .map((elem) => {
+              'date': elem.transactionDate!.millisecondsSinceEpoch,
+              'balance': elem.rewardPoints!
+            })
+        .toList();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         AspectRatio(
           aspectRatio: 1.4,
           child: Padding(
-            padding: const EdgeInsets.only(top: 0.0, right: 0.0),
-            child: LineChart(
-              LineChartData(
-                gridData: FlGridData(show: false),
-                titlesData: FlTitlesData(
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: leftTitleWidgets,
-                      reservedSize: 0,
+              padding: const EdgeInsets.only(top: 0.0, right: 0.0),
+              child:
+                  Consumer<MyFireBaseTransactions>(builder: (context, data, _) {
+                return LineChart(
+                  LineChartData(
+                    gridData: FlGridData(show: false),
+                    titlesData: FlTitlesData(
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: leftTitleWidgets,
+                            reservedSize: 0,
+                          ),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: bottomTitleWidgets,
+                            reservedSize: 0,
+                          ),
+                        ),
+                        topTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            //getTitlesWidget: bottomTitleWidgets,
+                            reservedSize: 0,
+                          ),
+                        ),
+                        rightTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            //getTitlesWidget: rightTitleWidgets,
+                            reservedSize: 0,
+                          ),
+                        )),
+                    borderData: FlBorderData(
+                      border: Border.all(color: Colors.grey, width: 1),
                     ),
+                    lineBarsData: [
+                      // Original Balance Graph (Blue)
+                      LineChartBarData(
+                        spots: getChartData(data.transactions
+                            .where((trans) =>
+                                trans.type! == TransactionType.gainPoints)
+                            .map((elem) => {
+                                  'date': elem
+                                      .transactionDate!.millisecondsSinceEpoch,
+                                  'balance': elem.rewardPoints
+                                })
+                            .toList()),
+                        isCurved: true,
+                        gradient: LinearGradient(
+                            colors: [Colors.blue, Colors.blueAccent]),
+                        barWidth: 3,
+                        belowBarData: BarAreaData(show: false),
+                      ),
+                      // Second Random Data Set (Red)
+                      LineChartBarData(
+                        spots: getChartData(data.transactions
+                            .where((trans) =>
+                                trans.type! == TransactionType.redeemPoints)
+                            .map((elem) => {
+                                  'date': elem
+                                      .transactionDate!.millisecondsSinceEpoch,
+                                  'balance': elem.rewardPoints
+                                })
+                            .toList()),
+                        isCurved: true,
+                        gradient: LinearGradient(
+                            colors: [Colors.red, Colors.redAccent]),
+                        barWidth: 3,
+                        belowBarData: BarAreaData(show: false),
+                      ),
+                    ],
                   ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: bottomTitleWidgets,
-                      reservedSize: 0,
-                    ),
-                  ),
-                  topTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      //getTitlesWidget: bottomTitleWidgets,
-                      reservedSize: 0,
-                    ),
-                  ),
-                  rightTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      //getTitlesWidget: rightTitleWidgets,
-                      reservedSize: 0,
-                    ),
-                  )
-                ),
-                borderData: FlBorderData(
-                  border: Border.all(color: Colors.grey, width: 1),
-                ),
-                lineBarsData: [
-                  // Original Balance Graph (Blue)
-                  LineChartBarData(
-                    spots: getChartData(transactions1),
-                    isCurved: true,
-                    gradient: LinearGradient(colors: [Colors.blue, Colors.blueAccent]),
-                    barWidth: 3,
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                  // Second Random Data Set (Red)
-                  LineChartBarData(
-                    spots: getChartData(transactions2),
-                    isCurved: true,
-                    gradient: LinearGradient(colors: [Colors.red, Colors.redAccent]),
-                    barWidth: 3,
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                );
+              })),
         ),
       ],
     );
   }
 }
-
-

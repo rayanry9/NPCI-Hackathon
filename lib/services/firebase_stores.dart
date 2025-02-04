@@ -4,7 +4,7 @@ import 'package:uperks/models/store_model.dart';
 
 class MyFireBaseStores with ChangeNotifier {
   final _db = FirebaseFirestore.instance;
-  final List<StoreModel> _stores = [];
+  List<StoreModel> _stores = [];
 
   static MyFireBaseStores? _instance;
 
@@ -49,6 +49,15 @@ class MyFireBaseStores with ChangeNotifier {
         return false;
       }
     }
+  }
+
+  void getAllStores() {
+    _db.collection("stores").get().then((val) {
+      _stores =
+          val.docs.map((doc) => StoreModel.fromFirestore(doc, null)).toList();
+      print(_stores.first);
+      notifyListeners();
+    });
   }
 
   List<StoreModel> get stores {

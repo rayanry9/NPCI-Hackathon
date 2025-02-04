@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uperks/screens/Seller/notifications_seller.dart';
 import 'package:uperks/screens/Seller/seller_homescreen_container.dart';
 import 'package:uperks/screens/Seller/seller_profile_container.dart';
 import 'package:uperks/screens/Seller/seller_transaction_container.dart';
@@ -34,8 +33,8 @@ class HomeSellerState extends State<HomeSeller> {
 
   Future<void> refreshScreen() async {
     print('refresh ho gaya, gol gol ghumne waali cheez aa gayi');
-    await MyFireBaseTransactions().updateTransactionsSeller();
     await MyFireBaseTransactions().updateRequestsSeller();
+    await MyFireBaseTransactions().updateTransactionsSeller();
   }
 
   Widget _getSelectedContainer() {
@@ -47,6 +46,13 @@ class HomeSellerState extends State<HomeSeller> {
       case NavigationTabs.profile:
         return SellerProfileContainer();
     }
+  }
+
+  @override
+  void initState() {
+    MyFireBaseTransactions().updateTransactionsSeller();
+    MyFireBaseTransactions().updateRequestsSeller();
+    super.initState();
   }
 
   @override
@@ -62,15 +68,22 @@ class HomeSellerState extends State<HomeSeller> {
         ),
         scrolledUnderElevation: 0,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.notifications, color: Colors.blue),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/notifications_seller");
-              },
-            ),
-          ),
+          Consumer<MyFireBaseTransactions>(builder: (context, data, _) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: IconButton(
+                icon: Icon(
+                    data.requests.isEmpty
+                        ? Icons.notifications
+                        : Icons.notification_important,
+                    color: Colors.blue),
+                onPressed: () {
+                  MyFireBaseTransactions().updateRequestsSeller();
+                  Navigator.of(context).pushNamed("/notifications_seller");
+                },
+              ),
+            );
+          }),
         ],
         backgroundColor: Colors.white,
       ),

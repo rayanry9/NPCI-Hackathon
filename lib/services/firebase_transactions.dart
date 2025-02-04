@@ -7,8 +7,8 @@ import 'package:uperks/constants/transaction_type.dart';
 
 class MyFireBaseTransactions with ChangeNotifier {
   final _db = FirebaseFirestore.instance;
-  List<TransactionModel> _transactions = [];
-  List<TransactionModel> _requests = [];
+  static List<TransactionModel> _transactions = [];
+  static List<TransactionModel> _requests = [];
 
   static MyFireBaseTransactions? _instance;
 
@@ -119,6 +119,8 @@ class MyFireBaseTransactions with ChangeNotifier {
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList());
 
+      print(_transactions.last.rewardPoints);
+
       _transactions
           .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));
 
@@ -178,6 +180,19 @@ class MyFireBaseTransactions with ChangeNotifier {
           .docs
           .map((val) => TransactionModel.fromFirestore(val, null))
           .toList();
+
+      _transactions.addAll((await _db
+              .collection("transactions")
+              .where("type", isEqualTo: "buyPoints")
+              .where(
+                "buyerId",
+                isEqualTo: MyFireBaseAuth().user!.id,
+              )
+              .where("acceptStatus", isEqualTo: AcceptStatus.pending.name)
+              .get())
+          .docs
+          .map((val) => TransactionModel.fromFirestore(val, null))
+          .toList());
 
       _requests
           .sort((a, b) => b.transactionDate!.compareTo(a.transactionDate!));

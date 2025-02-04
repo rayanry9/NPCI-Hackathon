@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uperks/models/store_model.dart';
 import 'package:uperks/models/transaction_model.dart';
+import 'package:uperks/services/firebase_auth.dart';
 import 'package:uperks/services/firebase_stores.dart';
 import 'package:uperks/services/firebase_transactions.dart';
 
@@ -10,6 +11,11 @@ class RequestSent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (transaction.sellerId == MyFireBaseAuth().user!.id) {
+      MyFireBaseTransactions().updateRequestsSeller();
+    } else {
+      MyFireBaseTransactions().updateRequestsCustomer();
+    }
     return Dialog.fullscreen(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: Scaffold(

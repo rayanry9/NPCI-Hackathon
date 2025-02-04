@@ -21,9 +21,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await MyFireBaseSellers().updateSellersWithId("admin");
+  await MyFireBaseAuth.getRates();
   final bool userDataFilled = await MyFireBaseAuth().updateUser();
   if (MyFireBaseAuth.isAuth) {
     if (MyFireBaseAuth().user!.userType == UserType.seller) {
+      await MyFireBaseStores()
+          .updateStoreWithOwnerId(MyFireBaseAuth().user!.id);
       await MyFireBaseTransactions().updateTransactionsSeller();
       await MyFireBaseTransactions().updateRequestsSeller();
     } else {

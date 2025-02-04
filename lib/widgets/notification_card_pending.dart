@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uperks/constants/transaction_type.dart';
+import 'package:uperks/models/store_model.dart';
 import 'package:uperks/models/transaction_model.dart';
-import 'package:uperks/models/user_model.dart';
-import 'package:uperks/services/firebase_sellers.dart';
+import 'package:uperks/services/firebase_stores.dart';
 
 class NotificationCardPending extends StatelessWidget {
   final TransactionModel transaction;
@@ -24,9 +25,10 @@ class NotificationCardPending extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                MyFireBaseSellers()
-                    .sellers
-                    .getNameFromId(transaction.sellerId!),
+                MyFireBaseStores()
+                    .stores
+                    .getStoreFromOwnerId(transaction.sellerId!)
+                    .storeName,
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
@@ -36,7 +38,11 @@ class NotificationCardPending extends StatelessWidget {
                 spacing: 12,
                 children: [
                   Text(
-                    "Pending",
+                    "Pending ${switch (transaction.type) {
+                      TransactionType.gainPoints => "Gain",
+                      TransactionType.redeemPoints => "Redeem",
+                      _ => "",
+                    }}",
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
